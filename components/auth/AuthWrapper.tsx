@@ -4,13 +4,13 @@ import Link from "next/link";
 import {
   Card,
   CardContent,
-  CardHeader,
-  CardFooter,
+
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { SocialSignIn } from "./Social/SocialSignIn";
 import { signOut } from "next-auth/react";
 import { usePathname} from "next/navigation";
+import Image from "next/image";
 
 type AuthWrapperProps = {
   children: React.ReactNode;
@@ -96,7 +96,7 @@ export function AuthWrapper({
             </div>
           </div>
           <div className="relative hidden bg-muted md:block">
-            <img
+            <Image
               src={src}
               alt={alt}
               className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"

@@ -6,9 +6,8 @@ import { useState } from "react";
 import { VerPhoneOtpForm } from "@/components/auth/register/VerPhoneOtpForm";
 import { EnterPassComReg } from "@/components/auth/register/EnterPassComReg";
 
-
 export default function RegisterPage() {
-  const [name, setName] = useState<string | null>(null);
+  const [name] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
   const [phonenumber, setPhonenumber] = useState<string | null>(null);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
@@ -27,18 +26,28 @@ export default function RegisterPage() {
             }}
           />
         ) : !isEmailVerified ? (
-          <VerEmailOtpForm email={email} onSuccess={() => setIsEmailVerified(true)} />
+          <VerEmailOtpForm
+            email={email}
+            onSuccess={() => setIsEmailVerified(true)}
+          />
         ) : !phonenumber ? (
-          <EnterPhoneNoForm  email={email} onSuccess={(submittedPhone) => setPhonenumber(submittedPhone)} />
+          <EnterPhoneNoForm
+            email={email}
+            onSuccess={(submittedPhone) => setPhonenumber(submittedPhone)}
+          />
         ) : !isPhoneVerified ? (
           <VerPhoneOtpForm
             phonenumber={phonenumber}
             onSuccess={() => setIsPhoneVerified(true)}
           />
         ) : (
-          <EnterPassComReg name={name!} email={email!} phonenumber={phonenumber!}/>
+          <EnterPassComReg
+            name={name!}
+            email={email!}
+            phonenumber={phonenumber!}
+          />
         )}
       </div>
     </div>
   );
-};
+}

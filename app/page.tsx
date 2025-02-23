@@ -9,13 +9,13 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
 import { UserButton } from "@/components/auth/user/user-button";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -27,7 +27,7 @@ export default function Home() {
             href="/"
             className="flex items-center space-x-4 rtl:space-x-reverse"
           >
-            <img
+            <Image
               src="https://auth.js.org/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo.048131a8.png&w=384&q=75"
               className="h-8"
               alt="authjs logo"
