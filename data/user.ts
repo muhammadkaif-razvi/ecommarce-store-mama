@@ -1,4 +1,6 @@
 "use server";
+export const runtime = "nodejs"; 
+
 import { db } from "@/lib/db";
 
 
@@ -45,15 +47,7 @@ export async function getUserByEmailOrPhone(emailOrPhone: string) {
     where: {
       OR: [{ email: emailOrPhone }, { phonenumber: emailOrPhone }],
     },
-    // select: { 
-    //   id: true, 
-    //   email: true, 
-    //   phonenumber: true,
-    //   emailVerified: true,
-    //   phoneNumberVerified: true,
-    //   password: true,
-    //   isTwoFactorEnabled: true // ✅ Ensure this field is selected
-    // }
+   
   });
 } 
 

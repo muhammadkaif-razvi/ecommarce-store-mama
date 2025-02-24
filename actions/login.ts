@@ -1,4 +1,5 @@
 "use server";
+export const runtime = "nodejs";
 import * as z from "zod";
 import { LoginSchema } from "@/schemas";
 import { signIn } from "@/auth";

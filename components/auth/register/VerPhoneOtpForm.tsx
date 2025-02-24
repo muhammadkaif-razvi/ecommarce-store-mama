@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/form";
 import { FormError } from "@/components/auth/form-error";
 import FormSuccess from "@/components/auth/form-success";
-import { Loader2 } from "lucide-react";
 import { AuthWrapper } from "@/components/auth/AuthWrapper";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { verifyPhoneOTPStep } from "@/actions/verifysms";

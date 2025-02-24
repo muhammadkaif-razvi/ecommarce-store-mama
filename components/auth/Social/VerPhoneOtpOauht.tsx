@@ -36,9 +36,8 @@ export const VerPhoneOtpOauthForm = ({
   useEffect(() => {
     const loginButton = document.querySelector('a[href="/verify-phone"]'); // Select Login button
     if (loginButton) {
-      loginButton.addEventListener("click", (e) => {
-        // e.preventDefault(); // Stop default navigation
-        signOut(); // Logout and redirect
+      loginButton.addEventListener("click", () => {
+        signOut(); 
       });
     }
   }, []);

@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 import { db } from "@/lib/db";
 
 export const getTwoFactorTokenbyToken = async (token: string) => {

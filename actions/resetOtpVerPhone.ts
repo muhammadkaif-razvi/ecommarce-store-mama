@@ -1,6 +1,5 @@
 "use server";
 import { z } from "zod";
-import { db } from "@/lib/db";
 import { getUserByPhoneNumber } from "@/data/user";
 import { PhoneResetPassSchema } from "@/schemas";
 import { getResetPasswordTokenByTokenPhone } from "@/data/password-reset-token";

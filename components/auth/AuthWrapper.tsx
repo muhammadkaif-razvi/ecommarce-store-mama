@@ -1,5 +1,5 @@
 "use client";
-import { JSX, useEffect } from "react";
+import { JSX} from "react";
 import Link from "next/link";
 import {
   Card,

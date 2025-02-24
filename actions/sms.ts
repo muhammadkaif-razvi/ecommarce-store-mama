@@ -1,4 +1,5 @@
 "use server";
+export const runtime = "nodejs";
 import { z } from "zod";
 import { sendVerificationSMS } from "@/lib/SMS";
 import { generateVerificationTokenByPhoneNumber } from "@/lib/tokens";

@@ -1,11 +1,11 @@
+export const runtime = "nodejs";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 import GitHub from "next-auth/providers/github";
 import { NextAuthConfig } from "next-auth";
-export const runtime = "nodejs";
 import bcrypt from "bcryptjs";
 import { LoginSchema } from "@/schemas";
-import { getUserByEmailOrPhone, getUserByPhoneNumber } from "@/data/user";
+import { getUserByEmailOrPhone } from "@/data/user";
 
 export const authConfig: NextAuthConfig = {
   providers: [

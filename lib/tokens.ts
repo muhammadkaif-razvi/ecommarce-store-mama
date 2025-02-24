@@ -1,3 +1,5 @@
+export const runtime = "nodejs"; 
+
 import { getVerificationOtpByEmail, getVerificationTokenByPhoneNumber } from "@/data/verificiation-tokens";
 import { db } from "@/lib/db";
 import crypto from "crypto";

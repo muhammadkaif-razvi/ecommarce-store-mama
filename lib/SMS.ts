@@ -1,10 +1,11 @@
-import twilio from "twilio";
+// import twilio from "twilio";
 
-const accountSid = process.env.TWILIO_ACCOUNT_SID!;
-const authToken = process.env.TWILIO_AUTH_TOKEN!;
-const serviceId = process.env.TWILLO_SERVICE_ID!;
+// const accountSid = process.env.TWILIO_ACCOUNT_SID!;
+// const authToken = process.env.TWILIO_AUTH_TOKEN!;
+// const serviceId = process.env.TWILLO_SERVICE_ID!;
 
-const client = twilio(accountSid, authToken); // ✅ Initialize Twilio client
+// const client = twilio(accountSid, authToken);
+
 
 export const sendVerificationSMS = async (
   phonenumber: string,

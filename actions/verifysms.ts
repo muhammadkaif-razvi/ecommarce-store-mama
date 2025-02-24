@@ -1,4 +1,5 @@
 "use server";
+export const runtime = "nodejs";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { getVerificationTokenByPhoneNumber } from "@/data/verificiation-tokens";

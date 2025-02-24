@@ -1,4 +1,5 @@
 "use server";
+export const runtime = "nodejs";
 import { z } from "zod";
 import { getUserByEmailOrPhone } from "@/data/user";
 import {  ResetPasswordEnterSchema } from "@/schemas";
