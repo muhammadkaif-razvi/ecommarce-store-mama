@@ -1,8 +1,5 @@
 "use client";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { NewPasswordSchema } from "@/schemas";
+
 import Image from "next/image"
 import { AuthWrapper } from "@/components/auth/AuthWrapper";
 export const EmailSentMessage = () => {

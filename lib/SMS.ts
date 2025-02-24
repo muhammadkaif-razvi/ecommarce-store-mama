@@ -23,7 +23,7 @@ export const sendVerificationSMS = async (
 //       .then(verification => console.log(verification.sid));
 
     console.log(`✅ SMS Sent to ${phonenumber} with OTP: ${token}`);
-  } catch (error) {
+  } catch  {
     throw new Error("Failed to send verification SMS");
   }
 };
@@ -44,7 +44,7 @@ export const sendResetPasswordSMS = async (
 //       .then(verification => console.log(verification.sid));
 
     console.log(`✅ SMS Sent to ${phonenumber} with OTP: ${token}`);
-  } catch (error) {
+  } catch {
     throw new Error("Failed to send verification SMS");
   }
 };

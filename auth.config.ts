@@ -1,21 +1,21 @@
 export const runtime = "nodejs";
+
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 import GitHub from "next-auth/providers/github";
 import { NextAuthConfig } from "next-auth";
-import bcrypt from "bcryptjs";
 import { LoginSchema } from "@/schemas";
 import { getUserByEmailOrPhone } from "@/data/user";
 
 export const authConfig: NextAuthConfig = {
   providers: [
-    Google({ 
-      clientId: process.env.GOOGLE_CLIENT_ID!, 
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET! 
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
-    GitHub({ 
-      clientId: process.env.GITHUB_CLIENT_ID!, 
-      clientSecret: process.env.GITHUB_CLIENT_SECRET! 
+    GitHub({
+      clientId: process.env.GITHUB_CLIENT_ID!,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
     }),
     Credentials({
       credentials: {
@@ -32,9 +32,14 @@ export const authConfig: NextAuthConfig = {
           };
 
           const user = await getUserByEmailOrPhone(emailOrPhone);
-          
-          if (!user?.emailVerified || !user?.phoneNumberVerified  || !user.password) return null;
 
+          if (
+            !user?.emailVerified ||
+            !user?.phoneNumberVerified ||
+            !user.password
+          )
+            return null;
+          const bcrypt = await import("bcryptjs");
           const passwordMatch = await bcrypt.compare(password, user.password);
 
           if (passwordMatch) return user;
@@ -42,8 +47,6 @@ export const authConfig: NextAuthConfig = {
 
         return null;
       },
-    
     }),
-    
   ],
 } satisfies NextAuthConfig;
