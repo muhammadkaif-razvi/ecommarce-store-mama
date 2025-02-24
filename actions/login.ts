@@ -8,7 +8,7 @@ import { sendTwoFactorTokenEmail } from "@/lib/mail";
 import { getTwoFactorTokenbyEmail } from "@/data/two-factor-token";
 import { db } from "@/lib/db";
 import { getTwoFactorConfirmationbyUserId } from "@/data/two-factor-confirmation";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { DEFAULT_REDIRECT_URL } from "@/routes";
 import { getUserByEmailOrPhone } from "@/data/user";
 
