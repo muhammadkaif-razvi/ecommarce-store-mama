@@ -1,5 +1,4 @@
 "use server";
-export const runtime = "nodejs";
 import { getUserByEmail } from "@/data/user";
 import { db } from "@/lib/db";
 import { sendEmailOTP } from "@/lib/mail";

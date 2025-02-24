@@ -1,5 +1,4 @@
 "use server";
-export const runtime = "nodejs";
 import { getUserByEmail } from "@/data/user";
 import { getVerificationOtpByEmail } from "@/data/verificiation-tokens";
 import { db } from "@/lib/db";
