@@ -8,7 +8,7 @@ import { sendTwoFactorTokenEmail } from "@/lib/mail";
 import { getTwoFactorTokenbyEmail } from "@/data/two-factor-token";
 import { db } from "@/lib/db";
 import { getTwoFactorConfirmationbyUserId } from "@/data/two-factor-confirmation";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import { DEFAULT_REDIRECT_URL } from "@/routes";
 import { getUserByEmailOrPhone } from "@/data/user";
 
@@ -34,14 +34,12 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   }
   if (!existingUser.password) {
     return { error: "This email is used with Google or Github" };
-
   }
   const isPasswordCorrect = await bcrypt.compare(
     password,
     existingUser.password
   );
   if (!isPasswordCorrect) return { error: "Password Not Match!" };
-
 
   if (existingUser.isTwoFactorEnabled && existingUser.email) {
     if (code) {
@@ -74,23 +72,21 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     }
   }
 
-
   try {
-      await signIn("credentials", {
-        emailOrPhone: existingUser.email || existingUser.phonenumber,
-        password,
-        redirectTo: DEFAULT_REDIRECT_URL,
-      });
-    return {success :" Logging in shortly..."}
-   
-    } catch (error) {
+    await signIn("credentials", {
+      emailOrPhone: existingUser.email || existingUser.phonenumber,
+      password,
+      redirectTo: DEFAULT_REDIRECT_URL,
+    });
+    return { success: " Logging in shortly..." };
+  } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
           return { error: "Invalid credentials!" };
-         default:
-         return { error: "Something went wrong!" };
-       }
+        default:
+          return { error: "Something went wrong!" };
+      }
     }
     throw error;
   }

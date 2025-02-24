@@ -3,7 +3,7 @@ import * as z from "zod";
 import { NewPasswordSchema } from "@/schemas";
 import { db } from "@/lib/db";
 import { getPasswordResetTokenByTokenEmail } from "@/data/password-reset-token";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import { getUserByEmail } from "@/data/user";
 import { signIn } from "@/auth";
 import { DEFAULT_REDIRECT_URL } from "@/routes";
@@ -55,14 +55,12 @@ export async function newPassword(
       where: { id: existingToken.id },
     });
 
-
-      await signIn("credentials", {
-        emailOrPhone: existingToken.email,
-        password,
-        redirectTo: DEFAULT_REDIRECT_URL,
-      });
-      return { success: "Password reset successfully! Logging in shortly..." };
-
+    await signIn("credentials", {
+      emailOrPhone: existingToken.email,
+      password,
+      redirectTo: DEFAULT_REDIRECT_URL,
+    });
+    return { success: "Password reset successfully! Logging in shortly..." };
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {

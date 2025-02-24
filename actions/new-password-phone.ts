@@ -1,6 +1,6 @@
 "use server";
 import * as z from "zod";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import { db } from "@/lib/db";
 import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
@@ -8,7 +8,6 @@ import { AuthError } from "next-auth";
 import { NewPasswordSchema } from "@/schemas";
 import { getUserByPhoneNumber } from "@/data/user";
 import { DEFAULT_REDIRECT_URL } from "@/routes";
-
 
 export async function newPasswordPhone(
   values: z.infer<typeof NewPasswordSchema>,
@@ -51,8 +50,6 @@ export async function newPasswordPhone(
       where: { id: existingUser.id },
       data: { password: hashedPassword },
     });
-
-
 
     await signIn("credentials", {
       emailOrPhone: existingUser.email,

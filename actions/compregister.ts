@@ -1,7 +1,7 @@
 "use server";
 import { db } from "@/lib/db";
 import { z } from "zod";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 import { Step5Schema } from "@/schemas";
 import { getUserByEmail, getUserByPhoneNumber } from "@/data/user";
 import { signIn } from "@/auth";
