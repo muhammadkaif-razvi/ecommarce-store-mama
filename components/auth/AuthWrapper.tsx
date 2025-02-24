@@ -28,7 +28,6 @@ type AuthWrapperProps = {
 
 interface WrapperProps {
   className?: string;
-  [key: string]: any;
 }
 
 export function AuthWrapper({
