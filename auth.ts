@@ -1,5 +1,3 @@
-export const runtime = "nodejs";
-
 import NextAuth from "next-auth";
 import { authConfig } from "@/auth.config";
 import { db } from "@/lib/db";
@@ -55,7 +53,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
       if (session?.user) {
         session.user.name = token.name as string;
-        session.user.email = token.email as string;}
+        session.user.email = token.email as string;
+      }
 
       return session;
     },

@@ -1,5 +1,4 @@
-export const runtime = "nodejs";
-
+"use server"
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 import GitHub from "next-auth/providers/github";
