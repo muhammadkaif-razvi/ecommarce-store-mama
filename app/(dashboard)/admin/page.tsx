@@ -15,7 +15,6 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState<{ id: string; email: string; role: string; createdAt: string }[]>([]);
 
-  // Redirect if not admin
   useEffect(() => {
     if (!user) return;
     if (user.role !== "ADMIN") router.push("/");
@@ -25,11 +24,11 @@ export default function AdminPage() {
   async function fetchUsers() {
     try {
       const res = await fetch("/api/admin");
-  
+
       if (!res.ok) {
         throw new Error(`HTTP Error: ${res.status}`);
       }
-  
+
       const data = await res.json();
       setUsers(data);
     } catch (error) {
@@ -38,37 +37,36 @@ export default function AdminPage() {
       setLoading(false);
     }
   }
-  
 
   if (!user || loading) {
     return (
-      <div className="flex h-screen items-center justify-center">
-        <Loader2 className="w-8 h-8 animate-spin text-gray-600" />
+      <div className="flex items-center justify-center h-full">
+        <Loader2 className="w-10 h-10 animate-spin text-gray-600" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen p-6">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">Admin Dashboard</h1>
+    <div className="h-full p-6">
+      <h1 className="text-3xl font-bold text-gray-900 mb-6">Admin Dashboard</h1>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-        <Card className="bg-blue-500 text-white">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+        <Card className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg">
           <CardHeader>
-            <CardTitle>Total Users</CardTitle>
+            <CardTitle className="text-lg">Total Users</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-xl font-semibold">{users.length}</p>
+            <p className="text-3xl font-semibold">{users.length}</p>
           </CardContent>
         </Card>
       </div>
 
       {/* Users Table */}
-      <div className="bg-white shadow-md rounded-lg overflow-hidden">
+      <div className="bg-white shadow-md rounded-lg overflow-hidden border">
         <Table>
           <TableHeader>
-            <TableRow>
+            <TableRow className="bg-gray-100 text-gray-800">
               <TableHead>ID</TableHead>
               <TableHead>Email</TableHead>
               <TableHead>Role</TableHead>
@@ -77,10 +75,14 @@ export default function AdminPage() {
           </TableHeader>
           <TableBody>
             {users.map((u) => (
-              <TableRow key={u.id}>
+              <TableRow key={u.id} className="hover:bg-gray-50 transition">
                 <TableCell>{u.id}</TableCell>
                 <TableCell>{u.email}</TableCell>
-                <TableCell>{u.role}</TableCell>
+                <TableCell>
+                  <span className={`px-2 py-1 rounded-md text-sm font-semibold ${u.role === "ADMIN" ? "bg-red-500 text-white" : "bg-blue-500 text-white"}`}>
+                    {u.role}
+                  </span>
+                </TableCell>
                 <TableCell>{new Date(u.createdAt).toLocaleDateString()}</TableCell>
               </TableRow>
             ))}
@@ -89,10 +91,7 @@ export default function AdminPage() {
       </div>
 
       {/* Logout Button */}
-      <Button
-        onClick={() => signOut()}
-        className="mt-6 bg-red-500 hover:bg-red-600 text-white"
-      >
+      <Button onClick={() => signOut()} className="mt-6 bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg shadow-md">
         Logout
       </Button>
     </div>
