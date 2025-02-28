@@ -1,5 +1,47 @@
-// src/schemas/index.ts
 import { z } from "zod";
+import { UserRole } from "@prisma/client";
+
+export const settingsSchema = z
+  .object({
+    name: z
+      .string()
+      .min(2, "Name must be at least 2 characters long")
+      .max(50, "Name cannot be longer than 50 characters")
+      .optional(),
+
+    phonenumber: z
+      .string()
+      .regex(/^\+91\d{10}$/, "Invalid phone number format")
+      .optional(),
+    email: z.optional(z.string().email("Invalid email format")),
+    password: z.optional(
+      z.string().min(6, "Password must be at least 6 characters")
+    ),
+    newPassword: z.optional(
+      z.string().min(6, "Password must be at least 6 characters")
+    ),
+    isTwoFactorEnabled: z.optional(z.boolean()),
+    role: z.enum([UserRole.ADMIN, UserRole.USER]).optional(),
+  })
+  .refine(
+    (data) => {
+      if (data.newPassword && !data.password) {return false;}
+      return true;
+    },
+    {
+      message: "Current password is required",
+      path: ["password"],
+    }
+  )  .refine(
+    (data) => {
+      if (data.password && !data.newPassword)  {return false;}
+      return true;
+    },
+    {
+      message: "New password is required",
+      path: ["newPassword"],
+    }
+  );
 
 export const NewPasswordSchema = z
   .object({
@@ -35,8 +77,6 @@ export const PhoneResetPassSchema = z.object({
     .length(6, "OTP must be exactly 6 digits")
     .regex(/^\d{6}$/, "OTP must contain only numbers"),
 });
-
-
 
 export const LoginSchema = z.object({
   emailOrPhone: z.string().refine(
@@ -82,7 +122,7 @@ export const Step2Schema = z.object({
  * - User provides their phone number.
  */
 export const Step3Schema = z.object({
-  // Use the same field name as in your form ("phonenumber")
+  email: z.string().email("Invalid email format"),
   phonenumber: z.string().regex(/^\+91\d{10}$/, {
     message: "Please enter a valid phone number, e.g. +911234567890",
   }),

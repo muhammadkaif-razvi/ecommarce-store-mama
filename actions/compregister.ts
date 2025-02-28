@@ -38,7 +38,7 @@ export const completeRegistration = async (
     await db.user.update({
       where: { id: user.id },
       data: {
-        
+        name,
         phonenumber,
         password: hashedPassword,
       },

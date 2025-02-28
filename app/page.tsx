@@ -17,6 +17,7 @@ import { UserButton } from "@/components/auth/user/user-button";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 
+
 export default function Home() {
   const { data: session } = useSession();
   return (
@@ -44,26 +45,28 @@ export default function Home() {
               <UserButton />
             ) : (
               <>
-              <Link href="/login">
-                <button
-                  type="button"
-                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
-                  login
-                </button>
-              </Link>
-              <Link href="/register">
-                <button
-                  type="button"
-                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
-                  register
-                </button>
-              </Link>
-            </>            )}
+                <Link href="/login">
+                  <button
+                    type="button"
+                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  >
+                    login
+                  </button>
+                </Link>
+                <Link href="/register">
+                  <button
+                    type="button"
+                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  >
+                    register
+                  </button>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </nav>
+ 
       <Card className="my-10 h-full w-auto ">
         <CardHeader>
           <CardTitle>FAQ</CardTitle>

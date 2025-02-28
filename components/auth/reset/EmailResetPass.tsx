@@ -22,15 +22,13 @@ import { useSearchParams } from "next/navigation";
 import { newPassword } from "@/actions/new-password";
 import { useSession } from "next-auth/react";
 export const EmailResetPassForm = () => {
-
-const searchParams = useSearchParams();
-const token = searchParams.get("token");
-
+  const searchParams = useSearchParams();
+  const token = searchParams.get("token");
 
   const [error, setError] = useState<string | undefined>(undefined);
   const [success, setSuccess] = useState<string | undefined>(undefined);
   const [isPending, startTransition] = useTransition();
-  const {update} = useSession();
+  const { update } = useSession();
 
   const form = useForm<z.infer<typeof NewPasswordSchema>>({
     resolver: zodResolver(NewPasswordSchema),
@@ -40,22 +38,20 @@ const token = searchParams.get("token");
     },
   });
 
-  const onSubmit =  (values: z.infer<typeof NewPasswordSchema>) => {
+  const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
     setError("");
     setSuccess("");
     startTransition(() => {
-        newPassword(values, token).then((data) => {
-        if (data?.error) {
-          setError(data.error);
-         }
-          else if (data?.success) {
-          setSuccess(data.success);
-        }
-      }).then(() => {
-update();
-      });
-    
-    
+      newPassword(values, token)
+        .then((data) => {
+          if (data?.error) {
+            setError(data.error);
+          } else if (data?.success) {
+            setSuccess(data.success);
+            update();
+          }
+        })
+      
     });
   };
 
@@ -71,49 +67,47 @@ update();
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-      
           <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPending}
-                      placeholder="********"
-                      type="password"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="confirmPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Confirm Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPending}
-                      placeholder="********"
-                      type="password"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Password</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    disabled={isPending}
+                    placeholder="********"
+                    type="password"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="confirmPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Confirm Password</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    disabled={isPending}
+                    placeholder="********"
+                    type="password"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormError message={error} />
           <FormSuccess message={success} />
           <Button type="submit" className="w-full" disabled={isPending}>
             {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : "Enter"}
           </Button>
-       
         </form>
       </Form>
     </AuthWrapper>

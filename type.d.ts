@@ -10,7 +10,7 @@ export type ExtendedUser = DefaultSession["user"] & {
   phoneNumberVerified?: Date | null;
   phoneNumberVerified?: Date | null;
   emailVerified?: Date | null;
-
+  isOAuth?: boolean;
 };
 
 declare module "next-auth" {

@@ -1,18 +1,13 @@
 import { auth } from "@/auth";
+import { ExtendedUser } from "@/type.d"; // Ensure this type is defined
 
-export const currentUser = async () => {
-  const session = await auth();
-  
-  if (!session?.user) return null;
+export const currentUser = async (): Promise<ExtendedUser | null> => {
+  try {
+    const session = await auth();
 
-  return {
-    id: session.user.id ?? "", // Ensure id is always a string
-    email: session.user.email ?? "N/A",
-    role: session.user.role ?? "N/A",
-    phonenumber: session.user.phonenumber ?? "N/A",
-    isTwoFactorEnabled: session.user.isTwoFactorEnabled ?? false,
-    phoneNumberVerified: session.user.phoneNumberVerified ?? null,
-    emailVerified: session.user.emailVerified ?? null,
-    name: session.user.name ?? "N/A",
-  };
+    return session?.user ?? null;
+  } catch (error) {
+    console.error("Error fetching current user:", error);
+    return null;
+  }
 };

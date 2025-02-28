@@ -41,7 +41,6 @@ export const initiateEmailVerificationStep = async (values: z.infer<typeof Step1
     // ✅ Continue OTP process
     const verificationToken = await generateVerificationOtp(normalizedEmail);
     await sendEmailOTP(normalizedEmail, verificationToken.token);
-    console.log(verificationToken.token);
     return { success: "OTP resent. Please check your inbox." };
   }
 

@@ -1,8 +1,8 @@
 "use server"
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
+const resend = new Resend(process.env.RESEND_API_KEY);
+const domain = process.env.NEXT_PUBLIC_URL;
 
 
 export const sendEmailOTP = async (
@@ -38,7 +38,7 @@ export const sendResetPasswordEmail = async (
   email: string,
   token: string,
 ) => {
-  const resetPasswordLink = `http://localhost:3000/new-password?token=${token}`;
+  const resetPasswordLink = `${domain}/new-password?token=${token}`;
   await resend.emails.send({
     from: "onboarding@resend.dev",
     to: email,
@@ -53,4 +53,5 @@ export const sendResetPasswordEmail = async (
   });
   console.log(`Email sent to ${email} with reset password link: ${resetPasswordLink}`);
 };
+
 

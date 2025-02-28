@@ -12,7 +12,10 @@ import bcrypt from "bcryptjs";
 import { DEFAULT_REDIRECT_URL } from "@/routes";
 import { getUserByEmailOrPhone } from "@/data/user";
 
-export const login = async (values: z.infer<typeof LoginSchema>) => {
+export const login = async (
+  values: z.infer<typeof LoginSchema>,
+  callbackUrl?: string | null,
+) => {
   const validatedFields = LoginSchema.safeParse(values);
 
   if (!validatedFields.success) {
@@ -76,7 +79,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     await signIn("credentials", {
       emailOrPhone: existingUser.email || existingUser.phonenumber,
       password,
-      redirectTo: DEFAULT_REDIRECT_URL,
+      redirectTo:  callbackUrl || DEFAULT_REDIRECT_URL,
     });
     return { success: " Logging in shortly..." };
   } catch (error) {

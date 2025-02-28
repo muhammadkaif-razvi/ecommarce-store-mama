@@ -22,7 +22,6 @@ export const getVerificationEmailTokenByToken = async (token: string) => {
 
 
 
-
 export const getVerificationOtpByEmail = async (email: string) => {
   try {
     const verificationToken = await db.emailVerificationToken.findFirst({

@@ -3,10 +3,11 @@ import { authConfig } from "@/auth.config";
 import { db } from "@/lib/db";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { getUserById } from "./data/user";
+import { getAccountByUserId } from "./data/account";
 
 const prisma = db;
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+export const { handlers, auth, signIn, signOut, } = NextAuth({
   pages: {
     signIn: "/login",
     error: "error",
@@ -34,35 +35,33 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
       return true;
     },
-    session: async ({ session, token, user }) => {
+    async session({ session, token }) {
       if (token?.id && session?.user) {
         session.user.id = token.id as string;
-      }
-      if (token?.phoneNumberVerified && session?.user) {
         session.user.phoneNumberVerified =
-          token.phoneNumberVerified as Date | null;
-      }
-      if (token?.phonenumber && session?.user) {
+        token.phoneNumberVerified as Date | null;
         session.user.phonenumber = token.phonenumber as string;
-      }
-      if (token?.emailVerified && session?.user) {
         session.user.emailVerified = token.emailVerified as Date | null;
-      }
-      if (token?.role && session?.user) {
         session.user.role = token.role as "USER" | "ADMIN";
-      }
-      if (session?.user) {
         session.user.name = token.name as string;
         session.user.email = token.email as string;
+        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean; 
+        session.user.isOAuth = token.isOAuth as boolean;
       }
 
-      return session;
+      return session; 
     },
+
     jwt: async ({ token }) => {
       if (!token.sub) return token;
       const existingUser = await getUserById(token.sub);
 
       if (!existingUser) return token;
+
+     const existingAccount = await getAccountByUserId(existingUser.id);
+      
+
+      token.isOAuth = !!existingAccount;
       token.name = existingUser.name;
       token.email = existingUser.email;
       token.id = existingUser.id;
@@ -70,6 +69,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       token.phoneNumberVerified = existingUser.phoneNumberVerified;
       token.emailVerified = existingUser.emailVerified;
       token.role = existingUser.role;
+      token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
 
       return token;
     },

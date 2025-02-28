@@ -13,11 +13,9 @@ const VerifyPhonePage = () => {
 
   useEffect(() => {
     if (user?.phoneNumberVerified) {
-      router.push("/settings");
+      router.push(" /profile");
     }
   }, [user?.phoneNumberVerified, router]);
-
-
 
   return (
     <div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10">
@@ -41,4 +39,3 @@ const VerifyPhonePage = () => {
 };
 
 export default VerifyPhonePage;
-

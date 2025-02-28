@@ -10,7 +10,8 @@ import { cn } from "@/lib/utils";
 import { SocialSignIn } from "./Social/SocialSignIn";
 import { signOut } from "next-auth/react";
 import { usePathname} from "next/navigation";
-// import Image from "next/image";
+import Image from "next/image";
+
 
 type AuthWrapperProps = {
   children: React.ReactNode;
@@ -95,7 +96,7 @@ export function AuthWrapper({
             </div>
           </div>
           <div className="relative hidden bg-muted md:block">
-            <img
+            <Image
               src={src}
               alt={alt}
           

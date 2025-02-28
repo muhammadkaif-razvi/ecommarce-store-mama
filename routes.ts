@@ -4,25 +4,15 @@
  * /@type {string[]}
  */
 
- export const publicRoutes = [
-  "/", 
- 
-  
-];
-export const adminRoutes = [
-  "/admin",
-];
+export const publicRoutes = ["/"];
+export const adminRoutes = ["/admin"];
 
 /*
  *An array of routes that are protected
  * There routes are accessible to authenticated users
  * /@type {string[]}
  */
-export const protectedRoutes = [
-  "/settings",
-   "/new-verification",
-
-];
+export const protectedRoutes = [" /profile", "/new-verification", "/settings"];
 
 /*
  *An array of routes that are auth routes
@@ -31,11 +21,11 @@ export const protectedRoutes = [
  */
 export const authRoutes = [
   "/login",
-   "/register", 
-   "/error",
-   "/reset-password",
-   "/new-password",
-  ];
+  "/register",
+  "/error",
+  "/reset-password",
+  "/new-password",
+];
 
 /*
  *The prefix for the api auth routes
@@ -43,4 +33,4 @@ export const authRoutes = [
  */
 export const apiAuthPrefix = "/api/auth";
 
-export const DEFAULT_REDIRECT_URL = "/settings";
+export const DEFAULT_REDIRECT_URL = "/profile";

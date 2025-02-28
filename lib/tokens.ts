@@ -1,6 +1,5 @@
-export const runtime = "nodejs"; 
 
-import { getVerificationOtpByEmail, getVerificationTokenByPhoneNumber } from "@/data/verificiation-tokens";
+import { getVerificationOtpByEmail,  getVerificationTokenByPhoneNumber } from "@/data/verificiation-tokens";
 import { db } from "@/lib/db";
 import crypto from "crypto";
 import { getTwoFactorTokenbyEmail } from "@/data/two-factor-token";
@@ -25,6 +24,8 @@ export const generatePasswordResetTokenByEmail = async (email: string) => {
   });
   return passwordResetToken;
 }
+
+
 
 // Generate reset password token for phone.
 export const generateResetPasswordTokenByPhoneNumber = async (

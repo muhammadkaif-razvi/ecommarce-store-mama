@@ -1,16 +1,8 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { ExtendedUser } from "@/type.d"; // Ensure ExtendedUser has all fields
 
 interface UserInfoProps {
-  user: {
-    id: string;
-    email: string;
-    role?: string;
-    phonenumber?: string;
-    isTwoFactorEnabled?: boolean;
-    phoneNumberVerified?: Date | null;
-    emailVerified?: Date | null;
-    name?: string;
-  };
+  user: ExtendedUser;
   label: string;
 }
 
@@ -18,14 +10,19 @@ export const UserInfo: React.FC<UserInfoProps> = ({ user, label }) => {
   return (
     <Card className="shadow-lg border border-gray-200 rounded-xl">
       <CardHeader>
-        <p className="text-2xl font-semibold text-center text-gray-800">{label}</p>
+        <p className="text-2xl font-semibold text-center text-gray-800">
+          {label}
+        </p>
       </CardHeader>
       <CardContent className="space-y-3">
-        <InfoItem title="User ID" value={user.id} />
-        <InfoItem title="Email" value={user.email} />
+        <InfoItem title="User ID" value={user.id ?? "N/A"} />
+        <InfoItem title="Email" value={user.email ?? "N/A"} />
         <InfoItem title="Role" value={user.role ?? "N/A"} />
         <InfoItem title="Phone Number" value={user.phonenumber ?? "N/A"} />
-        <InfoItem title="Two-Factor Enabled" value={user.isTwoFactorEnabled ? "Yes" : "No"} />
+        <InfoItem
+          title="Two-Factor Enabled"
+          value={user.isTwoFactorEnabled ? "Yes" : "No"}
+        />
         <InfoItem title="Phone Verified" value={formatDate(user.phoneNumberVerified)} />
         <InfoItem title="Email Verified" value={formatDate(user.emailVerified)} />
         <InfoItem title="Name" value={user.name ?? "N/A"} />

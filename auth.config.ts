@@ -40,7 +40,17 @@ export const authConfig: NextAuthConfig = {
             return null;
           const passwordMatch = await bcrypt.compare(password, user.password);
 
-          if (passwordMatch) return user;
+          if (passwordMatch){  return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            image: user.image,
+            phonenumber: user.phonenumber ?? undefined,  
+            emailVerified: user.emailVerified,
+            phoneNumberVerified: user.phoneNumberVerified,
+            role: user.role,
+            isTwoFactorEnabled: user.isTwoFactorEnabled,
+          };};
         }
 
         return null;

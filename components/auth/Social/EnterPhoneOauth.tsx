@@ -19,6 +19,8 @@ import { FormError } from "@/components/auth/form-error";
 import FormSuccess from "@/components/auth/form-success";
 import { Loader2 } from "lucide-react";
 import { AuthWrapper } from "@/components/auth/AuthWrapper";
+import { useCurrentUser } from "@/hooks/use-current-user";
+
 
 export const EnterPhoneNoOauthForm = ({
   onSuccess,
@@ -30,11 +32,13 @@ export const EnterPhoneNoOauthForm = ({
   const [error, setError] = useState<string | undefined>(undefined);
   const [success, setSuccess] = useState<string | undefined>(undefined);
   const [isPending, startTransition] = useTransition();
+  const user = useCurrentUser();
 
   const form = useForm<z.infer<typeof Step3Schema>>({
     resolver: zodResolver(Step3Schema),
     defaultValues: {
       phonenumber: "",
+      email: user?.email || undefined,
     },
   });
 
@@ -67,6 +71,24 @@ export const EnterPhoneNoOauthForm = ({
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <FormField
+            control={form.control}
+            name = "email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    disabled
+                    placeholder="abc@xyz.com"
+                    type="email"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="phonenumber"
@@ -79,6 +101,12 @@ export const EnterPhoneNoOauthForm = ({
                     disabled={isPending}
                     placeholder="+911234567890"
                     type="tel"
+                    onChange={(e) => {
+                      let value = e.target.value;
+                      if (!value.startsWith("+91")) {
+                        value = "+91" + value.replace(/^(\+91)?/, ""); // Ensure +91 is always present
+                      }
+                      field.onChange(value);                    }}
                   />
                 </FormControl>
                 <FormMessage />

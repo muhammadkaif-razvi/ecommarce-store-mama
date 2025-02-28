@@ -18,6 +18,7 @@ import FormSuccess from "@/components/auth/form-success";
 import { AuthWrapper } from "@/components/auth/AuthWrapper";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
 import { resetOtpVerPhone } from "@/actions/resetOtpVerPhone";
+import { useSession } from "next-auth/react";
 
 export const EnterOtpResetForm = ({
   phonenumber,
@@ -29,7 +30,7 @@ export const EnterOtpResetForm = ({
   const [error, setError] = useState<string | undefined>(undefined);
   const [success, setSuccess] = useState<string | undefined>(undefined);
   const [isPending, startTransition] = useTransition();
-
+  const {update} = useSession();
   const form = useForm<z.infer<typeof PhoneResetPassSchema>>({
     resolver: zodResolver(PhoneResetPassSchema),
     defaultValues: {
@@ -48,6 +49,7 @@ export const EnterOtpResetForm = ({
         } else {
           setSuccess(data.success);
           onSuccess();
+          update();
         }
       });
     });
