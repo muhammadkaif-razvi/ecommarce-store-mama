@@ -2,7 +2,7 @@
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useTransition,  } from "react";
+import { useState, useTransition } from "react";
 import { ResetPasswordEnterSchema } from "@/schemas";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,8 +20,11 @@ import { Loader2 } from "lucide-react";
 import { AuthWrapper } from "@/components/auth/AuthWrapper";
 import { resetPasswordEnter } from "@/actions/reset-pass-enter";
 
-export const ResetPasswordEnter = ({onSuccess}: {onSuccess: (value: string) => void}) => {
-
+export const ResetPasswordEnter = ({
+  onSuccess,
+}: {
+  onSuccess: (value: string) => void;
+}) => {
   const [error, setError] = useState<string | undefined>(undefined);
   const [success, setSuccess] = useState<string | undefined>(undefined);
   const [isPending, startTransition] = useTransition();
@@ -29,11 +32,9 @@ export const ResetPasswordEnter = ({onSuccess}: {onSuccess: (value: string) => v
   const form = useForm<z.infer<typeof ResetPasswordEnterSchema>>({
     resolver: zodResolver(ResetPasswordEnterSchema),
     defaultValues: {
-   emailOrPhone: "",
+      emailOrPhone: "",
     },
   });
-
-
 
   const onSubmit = (values: z.infer<typeof ResetPasswordEnterSchema>) => {
     setError("");
@@ -45,13 +46,11 @@ export const ResetPasswordEnter = ({onSuccess}: {onSuccess: (value: string) => v
             form.reset();
             setError(data.error);
           }
-          if(data?.success){
+          if (data?.success) {
             form.reset();
             setSuccess(data.success);
             onSuccess(values.emailOrPhone);
-
           }
-        
         })
         .catch(() => {
           setError("Something went wrong!");
@@ -66,42 +65,36 @@ export const ResetPasswordEnter = ({onSuccess}: {onSuccess: (value: string) => v
       BesiderHrefLabel="Back to login?"
       BackHref="/login"
       BackHrefLabel="Login"
-      src="https://th.bing.com/th/id/R.3c1dd9a48beba7547417fb546fba5b8d?rik=9B0iVSi%2bYi9wRA&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f0%2f7%2f3%2f820767-full-hd-nature-wallpapers-1920x1080-for-meizu.jpg&ehk=BGgL4g9sk2uysoCXn6sslXVXvfyXDH16ISeI2ZB475o%3d&risl=&pid=ImgRaw&r=0"
+      src="/authimage.jpg"
       alt="Jungle Image"
-      
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-   
-          
-              <FormField
-                control={form.control}
-                name="emailOrPhone"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email or Phone</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        disabled={isPending}
-                        placeholder="abc@ex.com or +911234567890"
-                        type="text"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-       
-         
-          
+          <FormField
+            control={form.control}
+            name="emailOrPhone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email or Phone</FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    disabled={isPending}
+                    placeholder="abc@ex.com or +911234567890"
+                    type="text"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-          <FormError message={error } />
+          <FormError message={error} />
           <FormSuccess message={success} />
           <Button type="submit" className="w-full" disabled={isPending}>
             {isPending ? (
               <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
+            ) : (
               "Reset Password"
             )}{" "}
           </Button>

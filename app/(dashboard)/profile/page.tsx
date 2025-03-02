@@ -1,19 +1,32 @@
 "use client";
 import { UserInfo } from "@/components/auth/user/user-info";
 import { useCurrentUser } from "@/hooks/use-current-user";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react"; // Import useEffect
 
-export default  function ProfilePage() {
+export default function ProfilePage() {
   const user = useCurrentUser();
+  const { update } = useSession();
 
+  // Use useEffect to call update() when user is null
+  useEffect(() => {
+    if (!user) {
+      update();
+    }
+  }, [user, update]); // Add user and update as dependencies
+
+  // If there's no user, show a loading state or nothing
   if (!user) {
-    return <p className="text-center text-red-500">User not found</p>;
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
+        Loading...
+      </div>
+    );
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-6 space-y-6">
- 
-      <UserInfo user={user} label="User Information" />
-      
+    <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
+      <UserInfo user={user} />
     </div>
   );
 }

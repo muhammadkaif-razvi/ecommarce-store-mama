@@ -10,7 +10,6 @@ import { AuthError } from "next-auth";
 
 export const completeRegistration = async (
   values: z.infer<typeof Step5Schema>,
-  name: string,
   email: string,
   phonenumber: string
 ) => {
@@ -38,12 +37,11 @@ export const completeRegistration = async (
     await db.user.update({
       where: { id: user.id },
       data: {
-        name,
         phonenumber,
         password: hashedPassword,
       },
     });
-
+ console.log(email);
 
       await signIn("credentials", {
         emailOrPhone: email,

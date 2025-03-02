@@ -1,17 +1,12 @@
 "use client";
-import { JSX} from "react";
+import { JSX } from "react";
 import Link from "next/link";
-import {
-  Card,
-  CardContent,
-
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { SocialSignIn } from "./Social/SocialSignIn";
 import { signOut } from "next-auth/react";
-import { usePathname} from "next/navigation";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
-
 
 type AuthWrapperProps = {
   children: React.ReactNode;
@@ -46,7 +41,6 @@ export function AuthWrapper({
   className,
   ...props
 }: AuthWrapperProps & WrapperProps): JSX.Element {
-
   const pathname = usePathname();
 
   const handleSignOut = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -55,8 +49,6 @@ export function AuthWrapper({
       signOut({ callbackUrl: "/" }); // Sign out and redirect
     }
   };
-
-
 
   return (
     <div
@@ -83,13 +75,15 @@ export function AuthWrapper({
                   </span>
                 </div>
               )}
-              {showSocial && (
-                <SocialSignIn />
-              )}
+              {showSocial && <SocialSignIn />}
 
               <div className="text-center text-sm inline">
                 {BesiderHrefLabel}
-                <Link href={BackHref} onClick={handleSignOut} className="underline underline-offset-4">
+                <Link
+                  href={BackHref}
+                  onClick={handleSignOut}
+                  className="underline underline-offset-4"
+                >
                   {BackHrefLabel}
                 </Link>
               </div>
@@ -99,7 +93,7 @@ export function AuthWrapper({
             <Image
               src={src}
               alt={alt}
-          
+              fill
               className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
             />
           </div>

@@ -64,13 +64,12 @@ export const LoginForm = () => {
             setSuccess(data.success);
           }
           if (data?.twoFactor) {
+            update();
             setSuccess("Code sent to your email");
             setShowTwoFactor(true);
           }
         })
-        .then(() => {
-          update();
-        });
+      
     });
   };
 
@@ -81,7 +80,7 @@ export const LoginForm = () => {
       BesiderHrefLabel="Already have an account?"
       BackHref="/register"
       BackHrefLabel="register"
-      src="https://th.bing.com/th/id/R.3c1dd9a48beba7547417fb546fba5b8d?rik=9B0iVSi%2bYi9wRA&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f0%2f7%2f3%2f820767-full-hd-nature-wallpapers-1920x1080-for-meizu.jpg&ehk=BGgL4g9sk2uysoCXn6sslXVXvfyXDH16ISeI2ZB475o%3d&risl=&pid=ImgRaw&r=0"
+      src="/authimage.jpg"
       alt="Jungle Image"
       showContinueSeparator
       continueLabel="or"

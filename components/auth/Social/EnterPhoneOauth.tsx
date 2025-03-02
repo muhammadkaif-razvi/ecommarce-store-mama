@@ -21,7 +21,6 @@ import { Loader2 } from "lucide-react";
 import { AuthWrapper } from "@/components/auth/AuthWrapper";
 import { useCurrentUser } from "@/hooks/use-current-user";
 
-
 export const EnterPhoneNoOauthForm = ({
   onSuccess,
   email,
@@ -46,8 +45,7 @@ export const EnterPhoneNoOauthForm = ({
     setError("");
     setSuccess("");
     startTransition(() => {
-   
-      initiatePhoneVerificationStep(values,email as string).then((data) => {
+      initiatePhoneVerificationStep(values, email as string).then((data) => {
         if (data.error) {
           setError(data.error);
         } else {
@@ -61,19 +59,19 @@ export const EnterPhoneNoOauthForm = ({
   return (
     <AuthWrapper
       mainhead="WELCOME"
-      headerLabel="Enter Phone Number to continue"  
+      headerLabel="Enter Phone Number to continue"
       BesiderHrefLabel="want to use another method or email click? "
       BackHref="/login"
       BackHrefLabel="here"
-      src="https://th.bing.com/th/id/R.3c1dd9a48beba7547417fb546fba5b8d?rik=9B0iVSi%2bYi9wRA&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f0%2f7%2f3%2f820767-full-hd-nature-wallpapers-1920x1080-for-meizu.jpg&ehk=BGgL4g9sk2uysoCXn6sslXVXvfyXDH16ISeI2ZB475o%3d&risl=&pid=ImgRaw&r=0"
+      src="/authimage.jpg"
       alt="Jungle Image"
       showContinueSeparator
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <FormField
+          <FormField
             control={form.control}
-            name = "email"
+            name="email"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email</FormLabel>
@@ -104,9 +102,10 @@ export const EnterPhoneNoOauthForm = ({
                     onChange={(e) => {
                       let value = e.target.value;
                       if (!value.startsWith("+91")) {
-                        value = "+91" + value.replace(/^(\+91)?/, ""); // Ensure +91 is always present
+                        value = "+91" + value.replace(/^(\+91)?/, ""); 
                       }
-                      field.onChange(value);                    }}
+                      field.onChange(value);
+                    }}
                   />
                 </FormControl>
                 <FormMessage />

@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
@@ -47,17 +46,17 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="h-full p-6">
-      <h1 className="text-3xl font-bold text-gray-900 mb-6">Admin Dashboard</h1>
+    <div className="h-full p-4  sm:p-6">
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">Admin Dashboard</h1>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6">
         <Card className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg">
           <CardHeader>
             <CardTitle className="text-lg">Total Users</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-3xl font-semibold">{users.length}</p>
+            <p className="text-2xl sm:text-3xl font-semibold">{users.length}</p>
           </CardContent>
         </Card>
       </div>
@@ -67,23 +66,29 @@ export default function AdminPage() {
         <Table>
           <TableHeader>
             <TableRow className="bg-gray-100 text-gray-800">
-              <TableHead>ID</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Role</TableHead>
-              <TableHead>Joined</TableHead>
+              <TableHead className="px-2 sm:px-4">ID</TableHead>
+              <TableHead className="px-2 sm:px-4">Email</TableHead>
+              <TableHead className="px-2 sm:px-4">Role</TableHead>
+              <TableHead className="px-2 sm:px-4">Joined</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {users.map((u) => (
               <TableRow key={u.id} className="hover:bg-gray-50 transition">
-                <TableCell>{u.id}</TableCell>
-                <TableCell>{u.email}</TableCell>
-                <TableCell>
-                  <span className={`px-2 py-1 rounded-md text-sm font-semibold ${u.role === "ADMIN" ? "bg-red-500 text-white" : "bg-blue-500 text-white"}`}>
+                <TableCell className="px-2 sm:px-4">{u.id}</TableCell>
+                <TableCell className="px-2 sm:px-4">{u.email}</TableCell>
+                <TableCell className="px-2 sm:px-4">
+                  <span
+                    className={`px-2 py-1 rounded-md text-sm font-semibold ${
+                      u.role === "ADMIN" ? "bg-red-500 text-white" : "bg-blue-500 text-white"
+                    }`}
+                  >
                     {u.role}
                   </span>
                 </TableCell>
-                <TableCell>{new Date(u.createdAt).toLocaleDateString()}</TableCell>
+                <TableCell className="px-2 sm:px-4">
+                  {new Date(u.createdAt).toLocaleDateString()}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -91,7 +96,10 @@ export default function AdminPage() {
       </div>
 
       {/* Logout Button */}
-      <Button onClick={() => signOut()} className="mt-6 bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg shadow-md">
+      <Button
+        onClick={() => signOut()}
+        className="mt-6 bg-red-500 hover:bg-red-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg shadow-md w-full sm:w-auto"
+      >
         Logout
       </Button>
     </div>

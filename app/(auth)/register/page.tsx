@@ -2,49 +2,95 @@
 import { EnterEmailForm } from "@/components/auth/register/EnterEmailForm";
 import { VerEmailOtpForm } from "@/components/auth/register/VerEmailOtpForm";
 import { EnterPhoneNoForm } from "@/components/auth/register/EnterPhoneNoForm";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { VerPhoneOtpForm } from "@/components/auth/register/VerPhoneOtpForm";
 import { EnterPassComReg } from "@/components/auth/register/EnterPassComReg";
 
 export default function RegisterPage() {
-  const [name] = useState<string | null>(null);
+  // State for registration
+  const [name, setName] = useState<string | null>(null);
   const [email, setEmail] = useState<string | null>(null);
   const [phonenumber, setPhonenumber] = useState<string | null>(null);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
+
+  // Load state from sessionStorage on mount
+  useEffect(() => {
+    const savedState = sessionStorage.getItem("registrationState");
+    if (savedState) {
+      const state = JSON.parse(savedState);
+      setName(state.name);
+      setEmail(state.email);
+      setPhonenumber(state.phonenumber);
+      setIsEmailVerified(state.isEmailVerified);
+      setIsPhoneVerified(state.isPhoneVerified);
+    }
+  }, []);
+
+  // Save state to sessionStorage on changes
+  useEffect(() => {
+    sessionStorage.setItem("registrationState", JSON.stringify({
+      name,
+      email,
+      phonenumber,
+      isEmailVerified,
+      isPhoneVerified,
+    }));
+  }, [name, email, phonenumber, isEmailVerified, isPhoneVerified]);
+
+  // Clear state when the component unmounts (user leaves the page)
+  useEffect(() => {
+    return () => {
+      sessionStorage.removeItem("registrationState");
+    };
+  }, []);
+
+  // Reset state if the user leaves the process incomplete
+  const resetState = () => {
+    setName(null);
+    setEmail(null);
+    setPhonenumber(null);
+    setIsEmailVerified(false);
+    setIsPhoneVerified(false);
+    sessionStorage.removeItem("registrationState");
+  };
 
   return (
     <div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10">
       <div className="w-full max-w-sm md:max-w-3xl">
         {!email ? (
           <EnterEmailForm
-            onSuccess={(submittedEmail, phoneNotVerified) => {
+            onSuccess={(submittedEmail) => {
               setEmail(submittedEmail);
-              if (phoneNotVerified) {
-                setIsEmailVerified(true);
-              }
+              
             }}
           />
         ) : !isEmailVerified ? (
           <VerEmailOtpForm
             email={email}
             onSuccess={() => setIsEmailVerified(true)}
+            onReset={resetState} // Allow resetting the state
           />
         ) : !phonenumber ? (
           <EnterPhoneNoForm
             email={email}
             onSuccess={(submittedPhone) => setPhonenumber(submittedPhone)}
+            onReset={resetState} // Allow resetting the state
           />
         ) : !isPhoneVerified ? (
           <VerPhoneOtpForm
             phonenumber={phonenumber}
             onSuccess={() => setIsPhoneVerified(true)}
+            onReset={resetState} // Allow resetting the state
           />
         ) : (
           <EnterPassComReg
-            name={name!}
             email={email!}
             phonenumber={phonenumber!}
+            onComplete={() => {
+              // Clear state on successful registration
+              resetState();
+            }}
           />
         )}
       </div>

@@ -16,7 +16,11 @@ import {
 import { FormError } from "@/components/auth/form-error";
 import FormSuccess from "@/components/auth/form-success";
 import { AuthWrapper } from "@/components/auth/AuthWrapper";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 import { verifyPhoneOTPStep } from "@/actions/verifysms";
 import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
@@ -31,13 +35,13 @@ export const VerPhoneOtpOauthForm = ({
   const [error, setError] = useState<string | undefined>(undefined);
   const [success, setSuccess] = useState<string | undefined>(undefined);
   const [isPending, startTransition] = useTransition();
-  const {update} = useSession();
+  const { update } = useSession();
 
   useEffect(() => {
     const loginButton = document.querySelector('a[href="/verify-phone"]'); // Select Login button
     if (loginButton) {
       loginButton.addEventListener("click", () => {
-        signOut(); 
+        signOut();
       });
     }
   }, []);
@@ -54,16 +58,18 @@ export const VerPhoneOtpOauthForm = ({
     setError("");
     setSuccess("");
     startTransition(() => {
-      verifyPhoneOTPStep(values).then((data) => {
-        if (data.error) {
-          setError(data.error);
-        } else {
-          setSuccess(data.success);
-          onSuccess();
-        }
-      }).then(() => {
-        update();
-      });
+      verifyPhoneOTPStep(values)
+        .then((data) => {
+          if (data.error) {
+            setError(data.error);
+          } else {
+            setSuccess(data.success);
+            onSuccess();
+          }
+        })
+        .then(() => {
+          update();
+        });
     });
   };
 
@@ -74,7 +80,7 @@ export const VerPhoneOtpOauthForm = ({
       BesiderHrefLabel="want to use another method or email click? "
       BackHref="/login"
       BackHrefLabel="here"
-      src="https://th.bing.com/th/id/R.3c1dd9a48beba7547417fb546fba5b8d?rik=9B0iVSi%2bYi9wRA&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f0%2f7%2f3%2f820767-full-hd-nature-wallpapers-1920x1080-for-meizu.jpg&ehk=BGgL4g9sk2uysoCXn6sslXVXvfyXDH16ISeI2ZB475o%3d&risl=&pid=ImgRaw&r=0"
+      src="/authimage.jpg"
       alt="Jungle Image"
     >
       <Form {...form}>

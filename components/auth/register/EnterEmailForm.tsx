@@ -21,7 +21,11 @@ import FormSuccess from "@/components/auth/form-success";
 import { Loader2 } from "lucide-react";
 import { AuthWrapper } from "@/components/auth/AuthWrapper";
 
-export const EnterEmailForm = ({onSuccess}:{onSuccess: (email: string, phoneNotVerified?:boolean) => void}) => {
+export const EnterEmailForm = ({onSuccess}:
+  {onSuccess:(
+    email: string, 
+    ) => void
+  }) => {
   const [error, setError] = useState<string | undefined>(undefined);
   const [success, setSuccess] = useState<string | undefined>(undefined);
   const [isPending, startTransition] = useTransition();
@@ -35,6 +39,7 @@ export const EnterEmailForm = ({onSuccess}:{onSuccess: (email: string, phoneNotV
   });
 
   const onSubmit =  (values: z.infer<typeof Step1Schema>) => {
+
     setError("");
     setSuccess("");
     startTransition( () => {
@@ -43,7 +48,7 @@ export const EnterEmailForm = ({onSuccess}:{onSuccess: (email: string, phoneNotV
           setError(data.error);
         } else {
           setSuccess(data.success);
-          onSuccess(values.email , data.phoneNotVerified); 
+          onSuccess(values.email); 
         }
       });
     });
@@ -56,7 +61,7 @@ export const EnterEmailForm = ({onSuccess}:{onSuccess: (email: string, phoneNotV
       BesiderHrefLabel="Already have an account?"
       BackHref="/login"
       BackHrefLabel="Login"
-      src="https://th.bing.com/th/id/R.3c1dd9a48beba7547417fb546fba5b8d?rik=9B0iVSi%2bYi9wRA&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f0%2f7%2f3%2f820767-full-hd-nature-wallpapers-1920x1080-for-meizu.jpg&ehk=BGgL4g9sk2uysoCXn6sslXVXvfyXDH16ISeI2ZB475o%3d&risl=&pid=ImgRaw&r=0"
+      src="/authimage.jpg"
       alt="Jungle Image"
       showContinueSeparator
       continueLabel="Or continue with"

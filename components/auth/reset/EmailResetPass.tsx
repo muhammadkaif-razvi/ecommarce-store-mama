@@ -42,16 +42,14 @@ export const EmailResetPassForm = () => {
     setError("");
     setSuccess("");
     startTransition(() => {
-      newPassword(values, token)
-        .then((data) => {
-          if (data?.error) {
-            setError(data.error);
-          } else if (data?.success) {
-            setSuccess(data.success);
-            update();
-          }
-        })
-      
+      newPassword(values, token).then((data) => {
+        if (data?.error) {
+          setError(data.error);
+        } else if (data?.success) {
+          setSuccess(data.success);
+          update();
+        }
+      });
     });
   };
 
@@ -62,7 +60,7 @@ export const EmailResetPassForm = () => {
       BesiderHrefLabel="Back to login?"
       BackHref="/login"
       BackHrefLabel="Login"
-      src="https://th.bing.com/th/id/R.3c1dd9a48beba7547417fb546fba5b8d?rik=9B0iVSi%2bYi9wRA&riu=http%3a%2f%2fgetwallpapers.com%2fwallpaper%2ffull%2f0%2f7%2f3%2f820767-full-hd-nature-wallpapers-1920x1080-for-meizu.jpg&ehk=BGgL4g9sk2uysoCXn6sslXVXvfyXDH16ISeI2ZB475o%3d&risl=&pid=ImgRaw&r=0"
+      src="/authimage.jpg"
       alt="Jungle Image"
     >
       <Form {...form}>
