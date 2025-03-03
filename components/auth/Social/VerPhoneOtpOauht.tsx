@@ -27,9 +27,11 @@ import { useSession } from "next-auth/react";
 
 export const VerPhoneOtpOauthForm = ({
   phonenumber,
+  otp,
   onSuccess,
 }: {
   phonenumber: string;
+  otp : string;
   onSuccess: () => void;
 }) => {
   const [error, setError] = useState<string | undefined>(undefined);
@@ -38,7 +40,7 @@ export const VerPhoneOtpOauthForm = ({
   const { update } = useSession();
 
   useEffect(() => {
-    const loginButton = document.querySelector('a[href="/verify-phone"]'); // Select Login button
+    const loginButton = document.querySelector('a[href="/verify-phone"]'); 
     if (loginButton) {
       loginButton.addEventListener("click", () => {
         signOut();
@@ -56,7 +58,7 @@ export const VerPhoneOtpOauthForm = ({
 
   const onSubmit = (values: z.infer<typeof Step4Schema>) => {
     setError("");
-    setSuccess("");
+    setSuccess(otp);
     startTransition(() => {
       verifyPhoneOTPStep(values)
         .then((data) => {

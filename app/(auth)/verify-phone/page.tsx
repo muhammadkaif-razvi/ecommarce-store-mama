@@ -10,10 +10,10 @@ const VerifyPhonePage = () => {
   const user = useCurrentUser();
   const router = useRouter();
   const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
-
+  const [otp, setOtp] = useState<string | null>(null);
 
   useEffect(() => {
-    if (user?.phoneNumberVerified ) {
+    if (user?.phoneNumberVerified) {
       router.push("/profile");
     }
   }, [user?.phoneNumberVerified, router]);
@@ -22,8 +22,7 @@ const VerifyPhonePage = () => {
     if (!user?.isOAuth) {
       router.push("/login");
     }
-  }, [user?.isOAuth, router]); 
-  
+  }, [user?.isOAuth, router]);
 
   return (
     <div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10">
@@ -32,11 +31,15 @@ const VerifyPhonePage = () => {
           <VerPhoneOtpOauthForm
             phonenumber={phoneNumber}
             onSuccess={() => {}}
+            otp={otp ?? ""}
           />
         ) : (
           <EnterPhoneNoOauthForm
             email={user?.email ?? ""}
-            onSuccess={(phonenumber) => setPhoneNumber(phonenumber)}
+            onSuccess={(phonenumber, otp) => {
+              setPhoneNumber(phonenumber);
+              setOtp(otp);
+            }}
           />
         )}
       </div>
@@ -44,4 +47,4 @@ const VerifyPhonePage = () => {
   );
 };
 
-export default VerifyPhonePage; 
+export default VerifyPhonePage;
