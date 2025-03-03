@@ -43,7 +43,6 @@ export const EnterPhoneNoForm = ({
   });
 
   const onSubmit = (values: z.infer<typeof Step3Schema>) => {
-    console.log(values.email);
     setError("");
     setSuccess("");
     startTransition(() => {

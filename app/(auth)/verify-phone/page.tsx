@@ -11,23 +11,29 @@ const VerifyPhonePage = () => {
   const router = useRouter();
   const [phoneNumber, setPhoneNumber] = useState<string | null>(null);
 
+
   useEffect(() => {
-    if (user?.phoneNumberVerified) {
-      router.push(" /profile");
+    if (user?.phoneNumberVerified ) {
+      router.push("/profile");
     }
   }, [user?.phoneNumberVerified, router]);
+
+  useEffect(() => {
+    if (!user?.isOAuth) {
+      router.push("/login");
+    }
+  }, [user?.isOAuth, router]); 
+  
 
   return (
     <div className="flex min-h-svh flex-col items-center justify-center bg-muted p-6 md:p-10">
       <div className="w-full max-w-sm md:max-w-3xl">
         {phoneNumber ? (
-          // Show OTP verification form after phone number is entered
           <VerPhoneOtpOauthForm
             phonenumber={phoneNumber}
-            onSuccess={() => ""} // Redirect after success
+            onSuccess={() => {}}
           />
         ) : (
-          // Show phone number input form first
           <EnterPhoneNoOauthForm
             email={user?.email ?? ""}
             onSuccess={(phonenumber) => setPhoneNumber(phonenumber)}
@@ -38,4 +44,4 @@ const VerifyPhonePage = () => {
   );
 };
 
-export default VerifyPhonePage;
+export default VerifyPhonePage; 

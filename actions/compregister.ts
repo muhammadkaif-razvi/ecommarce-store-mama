@@ -41,7 +41,6 @@ export const completeRegistration = async (
         password: hashedPassword,
       },
     });
- console.log(email);
 
       await signIn("credentials", {
         emailOrPhone: email,

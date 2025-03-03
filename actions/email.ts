@@ -28,7 +28,6 @@ export const initiateEmailVerificationStep = async (
   let existingUser = await getUserByEmail(normalizedEmail);
 
   if (existingUser) {
-    console.log("User already exists:", existingUser);
 
     // Update the user's name if it has changed
     if (existingUser.name !== normalizedName) {
@@ -73,7 +72,6 @@ export const initiateEmailVerificationStep = async (
   // Generate and send OTP for email verification
   const verificationToken = await generateVerificationOtp(normalizedEmail);
   await sendEmailOTP(normalizedEmail, verificationToken.token);
-  console.log(`Email sent to ${normalizedEmail} with OTP: ${verificationToken.token}`);
 
   return {
     success: "OTP sent. Please check your inbox.",

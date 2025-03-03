@@ -45,7 +45,9 @@ export const initiatePhoneVerificationStep = async (
   }
 
   const phoneToken = await generateVerificationTokenByPhoneNumber(phonenumber);
-  await sendVerificationSMS(phonenumber, phoneToken.token);
+  await sendVerificationSMS(phonenumber, phoneToken.token,
+    
+  );
 
   return { success: "Phone OTP sent. Please check your messages." };
 };

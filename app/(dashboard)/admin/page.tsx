@@ -40,18 +40,20 @@ export default function AdminPage() {
   if (!user || loading) {
     return (
       <div className="flex items-center justify-center h-full">
-        <Loader2 className="w-10 h-10 animate-spin text-gray-600" />
+        <Loader2 className="w-10 h-10 animate-spin text-gray-600 dark:text-gray-300" />
       </div>
     );
   }
 
   return (
-    <div className="h-full p-4  sm:p-6">
-      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6">Admin Dashboard</h1>
+    <div className="h-full mt-10 p-4 sm:p-6 bg-white dark:bg-gray-900">
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">
+        Admin Dashboard
+      </h1>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6">
-        <Card className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg">
+        <Card className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg dark:from-blue-600 dark:to-indigo-700">
           <CardHeader>
             <CardTitle className="text-lg">Total Users</CardTitle>
           </CardHeader>
@@ -62,10 +64,10 @@ export default function AdminPage() {
       </div>
 
       {/* Users Table */}
-      <div className="bg-white shadow-md rounded-lg overflow-hidden border">
+      <div className="bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden border dark:border-gray-700">
         <Table>
           <TableHeader>
-            <TableRow className="bg-gray-100 text-gray-800">
+            <TableRow className="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200">
               <TableHead className="px-2 sm:px-4">ID</TableHead>
               <TableHead className="px-2 sm:px-4">Email</TableHead>
               <TableHead className="px-2 sm:px-4">Role</TableHead>
@@ -74,19 +76,28 @@ export default function AdminPage() {
           </TableHeader>
           <TableBody>
             {users.map((u) => (
-              <TableRow key={u.id} className="hover:bg-gray-50 transition">
-                <TableCell className="px-2 sm:px-4">{u.id}</TableCell>
-                <TableCell className="px-2 sm:px-4">{u.email}</TableCell>
+              <TableRow
+                key={u.id}
+                className="hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+              >
+                <TableCell className="px-2 sm:px-4 text-gray-900 dark:text-gray-100">
+                  {u.id}
+                </TableCell>
+                <TableCell className="px-2 sm:px-4 text-gray-900 dark:text-gray-100">
+                  {u.email}
+                </TableCell>
                 <TableCell className="px-2 sm:px-4">
                   <span
                     className={`px-2 py-1 rounded-md text-sm font-semibold ${
-                      u.role === "ADMIN" ? "bg-red-500 text-white" : "bg-blue-500 text-white"
+                      u.role === "ADMIN"
+                        ? "bg-red-500 text-white"
+                        : "bg-blue-500 text-white"
                     }`}
                   >
                     {u.role}
                   </span>
                 </TableCell>
-                <TableCell className="px-2 sm:px-4">
+                <TableCell className="px-2 sm:px-4 text-gray-900 dark:text-gray-100">
                   {new Date(u.createdAt).toLocaleDateString()}
                 </TableCell>
               </TableRow>

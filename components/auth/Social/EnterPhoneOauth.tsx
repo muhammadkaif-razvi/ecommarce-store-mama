@@ -20,6 +20,7 @@ import FormSuccess from "@/components/auth/form-success";
 import { Loader2 } from "lucide-react";
 import { AuthWrapper } from "@/components/auth/AuthWrapper";
 import { useCurrentUser } from "@/hooks/use-current-user";
+import { useSession } from "next-auth/react";
 
 export const EnterPhoneNoOauthForm = ({
   onSuccess,
@@ -32,6 +33,7 @@ export const EnterPhoneNoOauthForm = ({
   const [success, setSuccess] = useState<string | undefined>(undefined);
   const [isPending, startTransition] = useTransition();
   const user = useCurrentUser();
+  const {update} = useSession();
 
   const form = useForm<z.infer<typeof Step3Schema>>({
     resolver: zodResolver(Step3Schema),
@@ -51,6 +53,7 @@ export const EnterPhoneNoOauthForm = ({
         } else {
           setSuccess(data.success);
           onSuccess(values.phonenumber);
+          update();
         }
       });
     });

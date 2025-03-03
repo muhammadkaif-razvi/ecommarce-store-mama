@@ -25,11 +25,11 @@ export const UserInfo = ({ user }: UserInfoProps) => {
   const router = useRouter();
 
   return (
-    <Card className="shadow-lg border border-gray-200 rounded-xl w-full max-w-lg lg:max-w-2xl min-h-fit max-h-[80vh] overflow-y-auto">
+    <Card className="shadow-lg border border-gray-200 dark:border-gray-700 rounded-xl w-full max-w-lg lg:max-w-2xl overflow-y-auto bg-white dark:bg-gray-900">
       {/* Card Header */}
       <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <InfoIcon className="h-5 w-5 text-purple-600" /> {/* Optional icon */}
+        <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
+          <InfoIcon className="h-5 w-5 text-purple-600 dark:text-purple-400" /> {/* Optional icon */}
           User Information
         </CardTitle>
       </CardHeader>
@@ -58,7 +58,7 @@ export const UserInfo = ({ user }: UserInfoProps) => {
         {/* Edit Profile Button */}
         <Button
           onClick={() => router.push("/settings")}
-          className="w-full sm:w-auto"
+          className="w-full sm:w-auto bg-purple-600 hover:bg-purple-700 text-white dark:bg-purple-700 dark:hover:bg-purple-800"
         >
           Edit Profile
         </Button>
@@ -73,9 +73,9 @@ const InfoItem: React.FC<{ title: string; value: string }> = ({
   value,
 }) => {
   return (
-    <div className="flex flex-row items-start sm:items-center justify-between rounded-lg border p-3 bg-gray-50 hover:bg-gray-100 transition-colors">
-      <p className="text-sm font-medium text-gray-700">{title}</p>
-      <p className="text-sm font-mono text-gray-900 break-all">{value}</p>
+    <div className="flex flex-row items-start sm:items-center justify-between rounded-lg border p-3 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors border-gray-200 dark:border-gray-700">
+      <p className="text-sm font-medium text-gray-700 dark:text-gray-300">{title}</p>
+      <p className="text-sm font-mono text-gray-900 dark:text-gray-100 break-all">{value}</p>
     </div>
   );
 };

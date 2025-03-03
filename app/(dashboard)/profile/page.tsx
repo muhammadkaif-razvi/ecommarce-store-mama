@@ -18,14 +18,14 @@ export default function ProfilePage() {
   // If there's no user, show a loading state or nothing
   if (!user) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
+      <div className="flex h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
         Loading...
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
+    <div className="flex h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
       <UserInfo user={user} />
     </div>
   );

@@ -12,7 +12,7 @@ export const adminRoutes = ["/admin"];
  * There routes are accessible to authenticated users
  * /@type {string[]}
  */
-export const protectedRoutes = [" /profile", "/new-verification", "/settings"];
+export const protectedRoutes = ["/profile", "/new-verification", "/settings"];
 
 /*
  *An array of routes that are auth routes
