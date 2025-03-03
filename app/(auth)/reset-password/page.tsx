@@ -21,9 +21,9 @@ const ResetPasswordPage = () => {
             onSuccess={(value: string, otp: string) => {
               setContactValue(value);
               setIsPhoneNumber(!value.includes("@"));
-              {
-                !value.includes("@") && setOtp(otp);
-              }
+
+              if (!value.includes("@")) setOtp(otp);
+
               setStep(2);
             }}
           />
