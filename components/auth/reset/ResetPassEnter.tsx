@@ -23,7 +23,7 @@ import { resetPasswordEnter } from "@/actions/reset-pass-enter";
 export const ResetPasswordEnter = ({
   onSuccess,
 }: {
-  onSuccess: (value: string) => void;
+  onSuccess: (value: string, otp: string) => void;
 }) => {
   const [error, setError] = useState<string | undefined>(undefined);
   const [success, setSuccess] = useState<string | undefined>(undefined);
@@ -49,7 +49,7 @@ export const ResetPasswordEnter = ({
           if (data?.success) {
             form.reset();
             setSuccess(data.success);
-            onSuccess(values.emailOrPhone);
+            onSuccess(values.emailOrPhone , data.otp ?? "");
           }
         })
         .catch(() => {

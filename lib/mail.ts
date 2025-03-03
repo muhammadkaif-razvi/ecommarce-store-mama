@@ -78,7 +78,7 @@ export const sendEmailOTP = async (email: string, token: string) => {
   };
 
   await transporter.sendMail(mailOptions);
-  console.log(`OTP email sent to ${email}: ${token}`);
+  // console.log(`OTP email sent to ${email}: ${token}`);
 };
 
 /**
@@ -93,8 +93,8 @@ export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
   };
 
   await transporter.sendMail(mailOptions);
-  console.log(`2FA email sent to ${email}: ${token}`);
-};
+  // console.log(`Two-factor token email sent to ${email}: ${token}`);
+  };
 
 /**
  * Send a password reset link via email
@@ -115,5 +115,5 @@ export const sendResetPasswordEmail = async (email: string, token: string) => {
   };
 
   await transporter.sendMail(mailOptions);
-  console.log(`Password reset email sent to ${email}: ${resetPasswordLink}`);
+  // console.log(`Reset password email sent to ${email}: ${resetPasswordLink}`);
 };

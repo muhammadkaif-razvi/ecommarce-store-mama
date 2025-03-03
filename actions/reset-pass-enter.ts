@@ -54,6 +54,6 @@ export const resetPasswordEnter = async (
     );
    
 
-    return { success: "OTP sent to phone number" };
+    return { success: "OTP sent to phone number",otp:passwordResetToken.token };
   }
 };
