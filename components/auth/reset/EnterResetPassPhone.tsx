@@ -23,19 +23,15 @@ import { useSession } from "next-auth/react";
 
 export const EnterResetPassPhoneForm = ({
   phonenumber,
-  otp,
 }: {
   phonenumber: string;
-  otp: string;
 }) => {
   const [error, setError] = useState<string | undefined>(undefined);
   const [success, setSuccess] = useState<string | undefined>(undefined);
   const [isPending, startTransition] = useTransition();
   const { update } = useSession();
 
- useEffect(() => {
-    setSuccess(`Your OTP: ${otp}`);
-  }, [otp]);
+
 
   const form = useForm<z.infer<typeof NewPasswordSchema>>({
     resolver: zodResolver(NewPasswordSchema),
@@ -47,7 +43,7 @@ export const EnterResetPassPhoneForm = ({
 
   const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
     setError("");
-    setSuccess(`Your OTP: ${otp}`);
+    setSuccess("");
     startTransition(() => {
       newPasswordPhone(values, phonenumber)
         .then((data) => {

@@ -2,7 +2,7 @@
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { PhoneResetPassSchema } from "@/schemas";
 import { Button } from "@/components/ui/button";
 import {
@@ -26,15 +26,23 @@ import { useSession } from "next-auth/react";
 
 export const EnterOtpResetForm = ({
   phonenumber,
+  otp,
   onSuccess,
 }: {
   phonenumber: string;
+  otp?: string;
   onSuccess: () => void;
 }) => {
   const [error, setError] = useState<string | undefined>(undefined);
   const [success, setSuccess] = useState<string | undefined>(undefined);
   const [isPending, startTransition] = useTransition();
   const { update } = useSession();
+
+  useEffect(() => {
+    setSuccess(`Your OTP: ${otp}`);
+  }, [otp]);
+
+
   const form = useForm<z.infer<typeof PhoneResetPassSchema>>({
     resolver: zodResolver(PhoneResetPassSchema),
     defaultValues: {
@@ -45,7 +53,7 @@ export const EnterOtpResetForm = ({
 
   const onSubmit = (values: z.infer<typeof PhoneResetPassSchema>) => {
     setError("");
-    setSuccess("");
+    setSuccess(`Your OTP: ${otp}`);
     startTransition(() => {
       resetOtpVerPhone(values).then((data) => {
         if (data.error) {
