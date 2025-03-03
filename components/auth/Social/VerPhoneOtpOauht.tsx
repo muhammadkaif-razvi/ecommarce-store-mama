@@ -31,7 +31,7 @@ export const VerPhoneOtpOauthForm = ({
   onSuccess,
 }: {
   phonenumber: string;
-  otp : string;
+  otp: string;
   onSuccess: () => void;
 }) => {
   const [error, setError] = useState<string | undefined>(undefined);
@@ -40,13 +40,17 @@ export const VerPhoneOtpOauthForm = ({
   const { update } = useSession();
 
   useEffect(() => {
-    const loginButton = document.querySelector('a[href="/verify-phone"]'); 
+    const loginButton = document.querySelector('a[href="/verify-phone"]');
     if (loginButton) {
       loginButton.addEventListener("click", () => {
         signOut();
       });
     }
   }, []);
+
+  useEffect(() => {
+    setSuccess(`Your OTP: ${otp}`);
+  }, [otp]);
 
   const form = useForm<z.infer<typeof Step4Schema>>({
     resolver: zodResolver(Step4Schema),
@@ -58,7 +62,7 @@ export const VerPhoneOtpOauthForm = ({
 
   const onSubmit = (values: z.infer<typeof Step4Schema>) => {
     setError("");
-    setSuccess(otp);
+    setSuccess(`Your OTP: ${otp}`);
     startTransition(() => {
       verifyPhoneOTPStep(values)
         .then((data) => {
