@@ -13,6 +13,8 @@ export default function RegisterPage() {
   const [phonenumber, setPhonenumber] = useState<string | null>(null);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
+  const [otp, setOtp] = useState<string | null>(null);
+
 
   // Load state from sessionStorage on mount
   useEffect(() => {
@@ -74,14 +76,20 @@ export default function RegisterPage() {
         ) : !phonenumber ? (
           <EnterPhoneNoForm
             email={email}
-            onSuccess={(submittedPhone) => setPhonenumber(submittedPhone)}
+            onSuccess={(submittedPhone) => {
+              setPhonenumber(submittedPhone)
+              setOtp(otp);
+
+            }}
             onReset={resetState} // Allow resetting the state
           />
         ) : !isPhoneVerified ? (
           <VerPhoneOtpForm
             phonenumber={phonenumber}
             onSuccess={() => setIsPhoneVerified(true)}
-            onReset={resetState} // Allow resetting the state
+            onReset={resetState} 
+            otp={otp ?? ""}
+
           />
         ) : (
           <EnterPassComReg

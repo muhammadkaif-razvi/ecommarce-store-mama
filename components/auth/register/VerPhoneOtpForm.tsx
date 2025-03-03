@@ -2,7 +2,7 @@
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { Step4Schema } from "@/schemas";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,16 +25,23 @@ import { verifyPhoneOTPStep } from "@/actions/verifysms";
 
 export const VerPhoneOtpForm = ({
   phonenumber,
+  otp,
   onSuccess,
   onReset,
 }: {
   phonenumber: string;
+  otp: string;
   onSuccess: () => void;
   onReset: () => void;
 }) => {
   const [error, setError] = useState<string | undefined>(undefined);
   const [success, setSuccess] = useState<string | undefined>(undefined);
   const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    setSuccess(`Your OTP: ${otp}`);
+  }, [otp]);
+
 
   const form = useForm<z.infer<typeof Step4Schema>>({
     resolver: zodResolver(Step4Schema),
@@ -46,7 +53,7 @@ export const VerPhoneOtpForm = ({
 
   const onSubmit = (values: z.infer<typeof Step4Schema>) => {
     setError("");
-    setSuccess("");
+    setSuccess(`Your OTP: ${otp}`);
     startTransition(() => {
       verifyPhoneOTPStep(values).then((data) => {
         if (data.error) {
