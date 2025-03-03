@@ -26,7 +26,7 @@ export const EnterPhoneNoForm = ({
   onReset,
 }: {
   email: string;
-  onSuccess: (phonenumber: string ,otp: string) => void;
+  onSuccess: (phonenumber: string,otp: string) => void;
   onReset: () => void;
 
 }) => {

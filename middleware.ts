@@ -42,6 +42,11 @@ export default auth(async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
+  // 🔹 Redirect logged-in users away from auth routes
+  if (isAuthRoute && isLoggedIn) {
+    return NextResponse.redirect(new URL(DEFAULT_REDIRECT_URL, nextUrl));
+  }
+
   // Redirect OAuth users with unverified phone numbers away from auth routes
   if (isAuthRoute) {
     if (isOAuthUser && !isPhoneVerified) {

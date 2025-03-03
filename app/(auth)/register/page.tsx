@@ -76,7 +76,7 @@ export default function RegisterPage() {
         ) : !phonenumber ? (
           <EnterPhoneNoForm
             email={email}
-            onSuccess={(submittedPhone) => {
+            onSuccess={(submittedPhone, otp) => {
               setPhonenumber(submittedPhone)
               setOtp(otp);
 
