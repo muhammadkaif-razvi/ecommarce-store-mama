@@ -1,26 +1,20 @@
-import { UserRole } from "@prisma/client";
-import NextAuth, { type DefaultSession } from "next-auth";
-
-// Extend the DefaultSession user with your custom properties
 export type ExtendedUser = DefaultSession["user"] & {
-  id:string;
+  id: string;
   name?: string;
   role?: UserRole;
   phonenumber?: string;
   isTwoFactorEnabled?: boolean;
   phoneNumberVerified?: Date | null;
-  phoneNumberVerified?: Date | null;
   emailVerified?: Date | null;
   isOAuth?: boolean;
+  stores?: { id: string; name: string }[]; // Include stores in session
 };
 
 declare module "next-auth" {
-  // Override the default Session interface to include ExtendedUser
   interface Session {
     user: ExtendedUser;
   }
-  
-  // Optionally, override the User interface (if you're adding custom properties to it)
+
   interface User {
     id: string;
     name?: string;
@@ -28,5 +22,6 @@ declare module "next-auth" {
     phonenumber?: string;
     phoneNumberVerified?: Date | null;
     emailVerified?: Date | null;
+    stores?: { id: string; name: string }[];
   }
 }

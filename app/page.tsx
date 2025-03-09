@@ -4,21 +4,21 @@ import { Hero } from "@/components/Hero";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { FaCogs, FaGoogle, FaGithub } from "react-icons/fa";
 import {
-  ShieldCheckIcon,
-  LockIcon,
-  SmartphoneIcon,
-  MailIcon,
-  KeyIcon,
-  CodeIcon,
-  DatabaseIcon,
-  ZapIcon,
-  UserCheckIcon,
   ShoppingCartIcon,
+  UsersIcon,
+  PackageIcon,
+  CreditCardIcon,
+  BarChartIcon,
+  SettingsIcon,
+  FileTextIcon,
+  TagIcon,
+  GlobeIcon,
+  BellIcon,
+  ShieldIcon,
 } from "lucide-react";
 
-export default function HomePage() {
+export default function AdminDashboard() {
   return (
     <div className="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
       {/* Hero Section */}
@@ -29,217 +29,169 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center mb-16">
             <h2 className="text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4">
-              Everything You Need for Secure Authentication
+              Manage Your E-commerce Store with Ease
             </h2>
             <p className="text-xl text-slate-600 dark:text-slate-400">
-              A complete authentication solution built with modern security
-              practices and developer-friendly tools.
+              A powerful admin CMS designed to streamline your e-commerce
+              operations.
             </p>
           </div>
 
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {/* 1. Security First */}
+            {/* 1. Product Management */}
             <Card className="hover:border-purple-500 transition-colors">
               <CardHeader>
                 <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/20">
-                  <ShieldCheckIcon className="w-7 h-7 text-purple-600 dark:text-purple-400" />
+                  <PackageIcon className="w-7 h-7 text-purple-600 dark:text-purple-400" />
                 </div>
                 <CardTitle className="text-slate-900 dark:text-slate-100">
-                  Security First
+                  Product Management
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-slate-600 dark:text-slate-400">
-                  OAuth 2.0, OpenID Connect, and JWT-based authentication for
-                  enterprise-grade security.
+                  Add, edit, and manage products with ease. Organize by
+                  categories, tags, and inventory.
                 </p>
               </CardContent>
             </Card>
 
-            {/* 2. Two-Factor Authentication */}
+            {/* 2. Order Management */}
             <Card className="hover:border-purple-500 transition-colors">
               <CardHeader>
                 <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/20">
-                  <LockIcon className="w-7 h-7 text-purple-600 dark:text-purple-400" />
+                  <ShoppingCartIcon className="w-7 h-7 text-purple-600 dark:text-purple-400" />
                 </div>
                 <CardTitle className="text-slate-900 dark:text-slate-100">
-                  2FA Support
+                  Order Management
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-slate-600 dark:text-slate-400">
-                  Enable two-factor authentication for enhanced account
-                  security.
+                  Track and manage orders, process refunds, and handle shipping.
                 </p>
               </CardContent>
             </Card>
 
-            {/* 3. Phone OTP Login */}
+            {/* 3. Customer Management */}
             <Card className="hover:border-purple-500 transition-colors">
               <CardHeader>
                 <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/20">
-                  <SmartphoneIcon className="w-7 h-7 text-purple-600 dark:text-purple-400" />
+                  <UsersIcon className="w-7 h-7 text-purple-600 dark:text-purple-400" />
                 </div>
                 <CardTitle className="text-slate-900 dark:text-slate-100">
-                  Phone OTP Login
+                  Customer Management
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-slate-600 dark:text-slate-400">
-                  Login with one-time passwords sent via SMS for quick access.
+                  Manage customer profiles, view order history, and send targeted
+                  promotions.
                 </p>
               </CardContent>
             </Card>
 
-            {/* 4. Email Magic Links */}
+            {/* 4. Payment Processing */}
             <Card className="hover:border-purple-500 transition-colors">
               <CardHeader>
                 <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/20">
-                  <MailIcon className="w-7 h-7 text-purple-600 dark:text-purple-400" />
+                  <CreditCardIcon className="w-7 h-7 text-purple-600 dark:text-purple-400" />
                 </div>
                 <CardTitle className="text-slate-900 dark:text-slate-100">
-                  Email Magic Links
+                  Payment Processing
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-slate-600 dark:text-slate-400">
-                  Passwordless login with secure magic links sent to your email.
+                  Integrate with multiple payment gateways for seamless
+                  transactions.
                 </p>
               </CardContent>
             </Card>
 
-            {/* 5. Social Login */}
+            {/* 5. Analytics & Reports */}
             <Card className="hover:border-purple-500 transition-colors">
               <CardHeader>
                 <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/20">
-                  <FaGoogle className="w-7 h-7 text-purple-600 dark:text-purple-400" />
+                  <BarChartIcon className="w-7 h-7 text-purple-600 dark:text-purple-400" />
                 </div>
                 <CardTitle className="text-slate-900 dark:text-slate-100">
-                  Social Login
+                  Analytics & Reports
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-slate-600 dark:text-slate-400">
-                  Login with Google, GitHub, and other social providers.
+                  Gain insights with detailed sales, customer, and product
+                  reports.
                 </p>
               </CardContent>
             </Card>
 
-            {/* 6. Password Recovery */}
+            {/* 6. Discounts & Promotions */}
             <Card className="hover:border-purple-500 transition-colors">
               <CardHeader>
                 <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/20">
-                  <KeyIcon className="w-7 h-7 text-purple-600 dark:text-purple-400" />
+                  <TagIcon className="w-7 h-7 text-purple-600 dark:text-purple-400" />
                 </div>
                 <CardTitle className="text-slate-900 dark:text-slate-100">
-                  Password Recovery
+                  Discounts & Promotions
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-slate-600 dark:text-slate-400">
-                  Reset passwords securely via SMS OTP or email magic links.
+                  Create and manage discounts, coupons, and promotional campaigns.
                 </p>
               </CardContent>
             </Card>
 
-            {/* 7. Developer Friendly */}
+            {/* 7. Multi-language Support */}
             <Card className="hover:border-purple-500 transition-colors">
               <CardHeader>
                 <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/20">
-                  <CodeIcon className="w-7 h-7 text-purple-600 dark:text-purple-400" />
+                  <GlobeIcon className="w-7 h-7 text-purple-600 dark:text-purple-400" />
                 </div>
                 <CardTitle className="text-slate-900 dark:text-slate-100">
-                  Developer Friendly
+                  Multi-language Support
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-slate-600 dark:text-slate-400">
-                  Built with Next.js, Prisma, and TypeScript for seamless
-                  integration.
+                  Support multiple languages for a global customer base.
                 </p>
               </CardContent>
             </Card>
 
-            {/* 8. Scalable Infrastructure */}
+            {/* 8. Notifications */}
             <Card className="hover:border-purple-500 transition-colors">
               <CardHeader>
                 <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/20">
-                  <DatabaseIcon className="w-7 h-7 text-purple-600 dark:text-purple-400" />
+                  <BellIcon className="w-7 h-7 text-purple-600 dark:text-purple-400" />
                 </div>
                 <CardTitle className="text-slate-900 dark:text-slate-100">
-                  Scalable Infrastructure
+                  Notifications
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-slate-600 dark:text-slate-400">
-                  Powered by NeonDB (PostgreSQL) for serverless scalability.
+                  Send automated notifications for orders, updates, and alerts.
                 </p>
               </CardContent>
             </Card>
 
-            {/* 9. High Performance */}
+            {/* 9. Security */}
             <Card className="hover:border-purple-500 transition-colors">
               <CardHeader>
                 <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/20">
-                  <ZapIcon className="w-7 h-7 text-purple-600 dark:text-purple-400" />
+                  <ShieldIcon className="w-7 h-7 text-purple-600 dark:text-purple-400" />
                 </div>
                 <CardTitle className="text-slate-900 dark:text-slate-100">
-                  High Performance
+                  Security
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-slate-600 dark:text-slate-400">
-                  Optimized for fast authentication with minimal latency.
-                </p>
-              </CardContent>
-            </Card>
-
-            {/* 10. User Management */}
-            <Card className="hover:border-purple-500 transition-colors">
-              <CardHeader>
-                <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/20">
-                  <UserCheckIcon className="w-7 h-7 text-purple-600 dark:text-purple-400" />
-                </div>
-                <CardTitle className="text-slate-900 dark:text-slate-100">
-                  User Management
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-slate-600 dark:text-slate-400">
-                  Easily manage users, roles, and permissions.
-                </p>
-              </CardContent>
-            </Card>
-
-            {/* 11. Customizable */}
-            <Card className="hover:border-purple-500 transition-colors">
-              <CardHeader>
-                <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/20">
-                  <FaCogs className="w-7 h-7 text-purple-600 dark:text-purple-400" />
-                </div>
-                <CardTitle className="text-slate-900 dark:text-slate-100">
-                  Fully Customizable
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-slate-600 dark:text-slate-400">
-                  Tailor the system to fit your application&apos;s needs.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="hover:border-purple-500 transition-colors">
-              <CardHeader>
-                <div className="mb-4 flex items-center justify-center w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/20">
-                  <FaGithub className="w-7 h-7 text-purple-600 dark:text-purple-400" />
-                </div>
-                <CardTitle className="text-slate-900 dark:text-slate-100">
-                  Open Source
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-slate-600 dark:text-slate-400">
-                  Built with open-source tools for transparency and flexibility.
+                  Advanced security features to protect your store and customer
+                  data.
                 </p>
               </CardContent>
             </Card>
@@ -248,11 +200,10 @@ export default function HomePage() {
       </section>
 
       {/* Call-to-Action Section */}
-
       <section className="py-24 bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-800 dark:to-indigo-800">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold text-white mb-6">
-            Get the Full Source Code
+            Get Started Today
           </h2>
           <p className="text-xl text-purple-100 dark:text-purple-200 mb-8">
             One-time purchase. Full source code included. Available on:
@@ -281,7 +232,7 @@ export default function HomePage() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <CodeIcon className="h-5 w-5" /> {/* Icon for Gumroad */}
+                <FileTextIcon className="h-5 w-5" />
                 Buy on Gumroad
               </Link>
             </Button>
