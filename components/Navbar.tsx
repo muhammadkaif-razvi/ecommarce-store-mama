@@ -8,6 +8,7 @@ import { useRef, useEffect, useState } from "react";
 import { ModeToggle } from "@/components/togglebtn";
 import Image from "next/image";
 import { MainNav } from "@/components/main-nav";
+import StoreSwitcher from "./store-switcher";
 
 export const Navbar = () => {
   const navRef = useRef<HTMLElement>(null);
@@ -54,9 +55,13 @@ export const Navbar = () => {
             height={35}
           />
         </Link>
-
         <div className="flex items-center space-x-4">
           {session?.user.stores.length > 0 && <MainNav />}
+          {session?.user.stores.length > 0 && (
+            <StoreSwitcher className="" items={session?.user.stores} />
+          )}
+
+
           <ModeToggle />
 
           {session?.user?.phoneNumberVerified ? (
