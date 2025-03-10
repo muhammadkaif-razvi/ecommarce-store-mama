@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json(newStore);
-  } catch (error) {
+  } catch{
     return new NextResponse("Database Error", { status: 500 });
   }
   

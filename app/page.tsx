@@ -10,7 +10,6 @@ import {
   PackageIcon,
   CreditCardIcon,
   BarChartIcon,
-  SettingsIcon,
   FileTextIcon,
   TagIcon,
   GlobeIcon,

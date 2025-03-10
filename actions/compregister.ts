@@ -11,7 +11,8 @@ import { AuthError } from "next-auth";
 export const completeRegistration = async (
   values: z.infer<typeof Step5Schema>,
   email: string,
-  phonenumber: string
+  phonenumber: string,
+  callbackUrl?: string | null,
 ) => {
   try {
     if (!values) return { error: "Invalid input data" };
@@ -45,7 +46,7 @@ export const completeRegistration = async (
       await signIn("credentials", {
         emailOrPhone: email,
         password,
-        redirectTo: DEFAULT_REDIRECT_URL,
+        redirectTo: callbackUrl || DEFAULT_REDIRECT_URL,
       });
     return { success: "Registration successful! logging you in..." };
   } catch (error) {

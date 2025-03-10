@@ -20,6 +20,8 @@ import { Loader2 } from "lucide-react";
 import { AuthWrapper } from "@/components/auth/AuthWrapper";
 import { completeRegistration } from "@/actions/compregister";
 import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export const EnterPassComReg = ({
   email,
@@ -28,12 +30,16 @@ export const EnterPassComReg = ({
 }: {
   email: string;
   phonenumber: string;
-  onComplete:() => void;
+  onComplete: () => void;
 }) => {
   const [error, setError] = useState<string | undefined>(undefined);
   const [success, setSuccess] = useState<string | undefined>(undefined);
   const [isPending, startTransition] = useTransition();
   const { update } = useSession();
+  const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
 
   const form = useForm<z.infer<typeof Step5Schema>>({
     resolver: zodResolver(Step5Schema),
@@ -47,16 +53,18 @@ export const EnterPassComReg = ({
     setError("");
     setSuccess("");
     startTransition(() => {
-      completeRegistration(values,  email, phonenumber)
-        .then((data) => {
+      completeRegistration(values, email, phonenumber, callbackUrl).then(
+        (data) => {
           if (data?.error) {
             setError(data.error);
           } else if (data?.success) {
             setSuccess(data.success);
-            onComplete();
             update();
+            router.refresh()
+            onComplete();
           }
-        })
+        }
+      );
     });
   };
 

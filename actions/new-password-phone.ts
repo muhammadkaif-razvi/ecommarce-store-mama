@@ -11,7 +11,8 @@ import { DEFAULT_REDIRECT_URL } from "@/routes";
 
 export async function newPasswordPhone(
   values: z.infer<typeof NewPasswordSchema>,
-  phonenumber: string
+  phonenumber: string,
+  callbackUrl?: string | null,
 ) {
   try {
     if (!phonenumber) {

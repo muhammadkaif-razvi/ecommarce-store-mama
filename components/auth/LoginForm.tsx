@@ -53,22 +53,21 @@ export const LoginForm = () => {
     setError("");
     setSuccess("");
     startTransition(() => {
-      login(values, callbackUrl)
-        .then((data) => {
-          if (data?.error) {
-            setError(data.error);
-          }
-          if (data?.success) {
-            form.reset();
-            setSuccess(data.success);
-          }
-          if (data?.twoFactor) {
-            update();
-            setSuccess("Code sent to your email");
-            setShowTwoFactor(true);
-          }
-        })
-      
+      login(values, callbackUrl).then((data) => {
+        if (data?.error) {
+          setError(data.error);
+        }
+        if (data?.success) {
+          update();
+          form.reset();
+          setSuccess(data.success);
+        }
+        if (data?.twoFactor) {
+          update();
+          setSuccess("Code sent to your email");
+          setShowTwoFactor(true);
+        }
+      });
     });
   };
 

@@ -2,7 +2,7 @@ import { z } from "zod";
 import { UserRole } from "@prisma/client";
 
 export const formSchema = z.object({
-  name : z.string().min(2, "Name must be min 2 characters").max(50, "Name cannot be longer than 50 characters"),
+  name : z.string().min(2, "Name must be min 2 characters").max(14, "Name cannot be longer than 14 characters"),
   });
   
 

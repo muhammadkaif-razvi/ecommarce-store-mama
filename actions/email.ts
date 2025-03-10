@@ -38,7 +38,7 @@ export const initiateEmailVerificationStep = async (
     }
 
     // If the user is fully verified, prevent further OTP generation
-    if (existingUser.emailVerified && existingUser.password) {
+    if (existingUser.emailVerified && existingUser.password && existingUser.phoneNumberVerified) {
       return { error: "Email already exists and is fully verified!" };
     }
 

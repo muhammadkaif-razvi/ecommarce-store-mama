@@ -9,6 +9,7 @@ import { ModeToggle } from "@/components/togglebtn";
 import Image from "next/image";
 import { MainNav } from "@/components/main-nav";
 import StoreSwitcher from "./store-switcher";
+import { StoreIcon } from "lucide-react";
 
 export const Navbar = () => {
   const navRef = useRef<HTMLElement>(null);
@@ -46,7 +47,7 @@ export const Navbar = () => {
           : "bg-gradient-to-b from-purple-50 to-white dark:from-slate-800 dark:to-slate-950"
       }`}
     >
-      <div className="container mx-auto flex items-center justify-between p-4">
+      <div className="container mx-auto flex items-center justify-between p-5 px-6 py-2 lg:py-4  sm:py-3 ">
         <Link href="/">
           <Image
             src="/letter-case-k-alphabet-photography-k.jpg"
@@ -55,12 +56,24 @@ export const Navbar = () => {
             height={35}
           />
         </Link>
-        <div className="flex items-center space-x-4">
-          {session?.user.stores.length > 0 && <MainNav />}
-          {session?.user.stores.length > 0 && (
-            <StoreSwitcher className="" items={session?.user.stores} />
-          )}
 
+        <div className="flex items-center space-x-4">
+          {!["/", "/profile", "/settings"].includes(pathname) &&
+            session?.user.stores.length > 0 && (
+              <>
+              <MainNav />
+              <StoreSwitcher className="" items={session?.user.stores} />
+              </>
+            )}
+               {["/", "/profile", "/settings"].includes(pathname) &&
+            session?.user.stores.length > 0 && (
+              <Link href="/stores-setup">
+            <Button  variant="outline" size="sm" className="flex items-center">
+              <StoreIcon />
+              <span className="ml-1 hidden md:block">Open Store</span>
+            </Button>
+            </Link>
+            )}
 
           <ModeToggle />
 

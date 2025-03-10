@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import { InfoIcon, RocketIcon, ShoppingCartIcon, SettingsIcon } from "lucide-react";
+import { InfoIcon, RocketIcon } from "lucide-react";
 
 export const Hero = () => {
   return (
@@ -22,8 +22,8 @@ export const Hero = () => {
 
             <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto lg:mx-0">
               A complete admin CMS for managing products, orders, customers, and
-              analytics. Built with Next.js, Prisma, and modern tools for seamless
-              e-commerce operations.
+              analytics. Built with Next.js, Prisma, and modern tools for
+              seamless e-commerce operations.
             </p>
 
             {/* Buttons */}

@@ -29,8 +29,8 @@ export const UserButton = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="relative flex items-center justify-center w-9 h-9 rounded-md bg-purple-100 hover:bg-purple-200 dark:bg-slate-800 dark:hover:bg-slate-700 transition-all border border-purple-200/20 dark:border-slate-700/30">
-          <Avatar className="w-9 h-9">
+        <button className="relative flex items-center justify-center h-8 w-8 lg:h-9 lg:w-9 rounded-md bg-purple-100 hover:bg-purple-200 dark:bg-slate-800 dark:hover:bg-slate-700 transition-all border border-purple-200/20 dark:border-slate-700/30">
+          <Avatar className="h-8 w-8 lg:h-9 lg:w-9">
             <AvatarImage src={user?.image || ""} className="rounded-md" />
             <AvatarFallback className="bg-purple-600 hover:bg-purple-700 text-white dark:bg-purple-800 dark:text-purple-100 rounded-md flex items-center justify-center w-full h-full text-sm font-medium transition-colors">
               {user?.name
@@ -42,7 +42,8 @@ export const UserButton = () => {
           </Avatar>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-2 w-48 border border-gray-200 dark:border-slate-700 transition-colors">
+      <DropdownMenuContent 
+align="end"      className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-2 w-36 border border-gray-200 dark:border-slate-700 transition-colors">
   {/* Navigation Links */}
   <DropdownMenuItem
     className={`p-2 text-gray-800 dark:text-slate-200 hover:bg-purple-50 dark:hover:bg-slate-700 rounded-md transition-colors ${

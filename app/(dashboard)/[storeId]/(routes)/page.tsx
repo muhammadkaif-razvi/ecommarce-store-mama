@@ -1,14 +1,12 @@
-import { currentUser } from "@/lib/auth";
+import { getStoreById } from "@/lib/auth";
 
 interface DashboardPageProps {
   params: { storeId: string };
 }
 
 const DashboardPage = async ({ params }: DashboardPageProps) => {
-  const user = await currentUser();
   const { storeId } = await params;
-
-  const store = user?.stores?.find((s: { id: string; name: string }) => s.id === storeId);
+  const store = await getStoreById(storeId);
 
   return (
     <div className="mt-20 font-semibold">

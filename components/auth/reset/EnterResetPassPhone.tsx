@@ -20,6 +20,7 @@ import { Loader2 } from "lucide-react";
 import { AuthWrapper } from "@/components/auth/AuthWrapper";
 import { newPasswordPhone } from "@/actions/new-password-phone";
 import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 
 export const EnterResetPassPhoneForm = ({
   phonenumber,
@@ -30,7 +31,8 @@ export const EnterResetPassPhoneForm = ({
   const [success, setSuccess] = useState<string | undefined>(undefined);
   const [isPending, startTransition] = useTransition();
   const { update } = useSession();
-
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
 
 
   const form = useForm<z.infer<typeof NewPasswordSchema>>({
@@ -45,7 +47,7 @@ export const EnterResetPassPhoneForm = ({
     setError("");
     setSuccess("");
     startTransition(() => {
-      newPasswordPhone(values, phonenumber)
+      newPasswordPhone(values, phonenumber,callbackUrl)
         .then((data) => {
           if (data?.error) {
             setError(data.error);

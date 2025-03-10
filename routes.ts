@@ -12,7 +12,13 @@ export const adminRoutes = ["/admin"];
  * There routes are accessible to authenticated users
  * /@type {string[]}
  */
-export const protectedRoutes = ["/profile", "/new-verification", "/settings"];
+export const protectedRoutes = [
+  "/profile",
+   "/new-verification",
+    "/settings",
+    "/*/settings",
+
+  ];
 
 /*
  *An array of routes that are auth routes
@@ -33,4 +39,4 @@ export const authRoutes = [
  */
 export const apiAuthPrefix = "/api/auth";
 
-export const DEFAULT_REDIRECT_URL = "/profile";
+export const DEFAULT_REDIRECT_URL = "/";
