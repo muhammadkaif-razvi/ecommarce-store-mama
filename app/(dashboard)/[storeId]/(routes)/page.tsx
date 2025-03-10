@@ -1,11 +1,11 @@
 import { getStoreById } from "@/lib/auth";
 
 interface DashboardPageProps {
-  params: Promise<{ storeId: string }>;
+  params:{ storeId: string };
 }
 
 const DashboardPage = async ({ params }: DashboardPageProps) => {
-  const { storeId } = await params;
+  const { storeId } =  params;
   const store = await getStoreById(storeId);
 
   return (
