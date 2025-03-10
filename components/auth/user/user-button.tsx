@@ -42,56 +42,60 @@ export const UserButton = () => {
           </Avatar>
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent 
-align="end"      className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-2 w-36 border border-gray-200 dark:border-slate-700 transition-colors">
-  {/* Navigation Links */}
-  <DropdownMenuItem
-    className={`p-2 text-gray-800 dark:text-slate-200 hover:bg-purple-50 dark:hover:bg-slate-700 rounded-md transition-colors ${
-      pathname === "/settings" ? "bg-purple-100 dark:bg-purple-900/30" : ""
-    }`}
-  >
-    <Link href="/settings" className="w-full flex items-center">
-      <Settings className="mr-2 h-4 w-4 text-purple-600 dark:text-purple-400" />
-      Settings
-    </Link>
-  </DropdownMenuItem>
+      <DropdownMenuContent
+        align="end"
+        className="bg-white dark:bg-slate-800 shadow-lg rounded-lg p-2 w-36 border border-gray-200 dark:border-slate-700 transition-colors"
+      >
+        {/* Navigation Links */}
+        <DropdownMenuItem
+          className={`p-2 text-gray-800 dark:text-slate-200 hover:bg-purple-50 dark:hover:bg-slate-700 rounded-md transition-colors ${
+            pathname === "/settings"
+              ? "bg-purple-100 dark:bg-purple-900/30"
+              : ""
+          }`}
+        >
+          <Link href="/settings" className="w-full flex items-center">
+            <Settings className="mr-2 h-4 w-4 text-purple-600 dark:text-purple-400" />
+            Settings
+          </Link>
+        </DropdownMenuItem>
 
-  <DropdownMenuItem
-    className={`p-2 text-gray-800 dark:text-slate-200 hover:bg-purple-50 dark:hover:bg-slate-700 rounded-md transition-colors ${
-      pathname === "/profile" ? "bg-purple-100 dark:bg-purple-900/30" : ""
-    }`}
-  >
-    <Link href="/profile" className="w-full flex items-center">
-      <User className="mr-2 h-4 w-4 text-purple-600 dark:text-purple-400" />
-      Profile
-    </Link>
-  </DropdownMenuItem>
+        <DropdownMenuItem
+          className={`p-2 text-gray-800 dark:text-slate-200 hover:bg-purple-50 dark:hover:bg-slate-700 rounded-md transition-colors ${
+            pathname === "/profile" ? "bg-purple-100 dark:bg-purple-900/30" : ""
+          }`}
+        >
+          <Link href="/profile" className="w-full flex items-center">
+            <User className="mr-2 h-4 w-4 text-purple-600 dark:text-purple-400" />
+            Profile
+          </Link>
+        </DropdownMenuItem>
 
-  {user?.role === "ADMIN" && (
-    <DropdownMenuItem
-      className={`p-2 text-gray-800 dark:text-slate-200 hover:bg-purple-50 dark:hover:bg-slate-700 rounded-md transition-colors ${
-        pathname === "/admin" ? "bg-purple-100 dark:bg-purple-900/30" : ""
-      }`}
-    >
-      <Link href="/admin" className="w-full flex items-center">
-        <ShieldHalf className="mr-2 h-4 w-4 text-purple-600 dark:text-purple-400" />
-        Admin
-      </Link>
-    </DropdownMenuItem>
-  )}
+        {user?.role === "ADMIN" && (
+          <DropdownMenuItem
+            className={`p-2 text-gray-800 dark:text-slate-200 hover:bg-purple-50 dark:hover:bg-slate-700 rounded-md transition-colors ${
+              pathname === "/admin" ? "bg-purple-100 dark:bg-purple-900/30" : ""
+            }`}
+          >
+            <Link href="/admin" className="w-full flex items-center">
+              <ShieldHalf className="mr-2 h-4 w-4 text-purple-600 dark:text-purple-400" />
+              Admin
+            </Link>
+          </DropdownMenuItem>
+        )}
 
-  {/* Divider */}
-  <div className="border-t my-2 dark:border-slate-700" />
+        {/* Divider */}
+        <div className="border-t my-2 dark:border-slate-700" />
 
-  {/* Logout Button */}
-  <DropdownMenuItem
-    className="cursor-pointer p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors flex items-center"
-    onClick={() => signOut()}
-  >
-    <ExitIcon className="mr-2 h-4 w-4" />
-    Logout
-  </DropdownMenuItem>
-</DropdownMenuContent>
+        {/* Logout Button */}
+        <DropdownMenuItem
+          className="cursor-pointer p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors flex items-center"
+          onClick={() => signOut()}
+        >
+          <ExitIcon className="mr-2 h-4 w-4" />
+          Logout
+        </DropdownMenuItem>
+      </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+};
