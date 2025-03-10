@@ -15,11 +15,3 @@ export const currentUser = async (): Promise<ExtendedUser | null> => {
     return null;
   }
 };
-
-export const getStoreById = async (storeId: string): Promise<Store | null> => {
-  const user = await currentUser();
-
-  if (!user || !user.stores) return null;
-
-  return user.stores.find((store: Store) => store.id === storeId) || null;
-};
