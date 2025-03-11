@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { storeId: string } }
+  { params }: { params: Promise<{ storeId: string }> }
 ) {
   try {
     const user = await currentUser();
@@ -20,7 +20,7 @@ export async function PATCH(
     if (!name) {
       return new NextResponse("Store name is required", { status: 400 });
     }
-    const {storeId} = await params
+    const { storeId } = await params;
     if (!storeId) {
       return new NextResponse("Store id is required", { status: 400 });
     }
@@ -42,7 +42,7 @@ export async function PATCH(
 
 export async function DELETE(
   _req: Request,
-  { params }: { params: { storeId: string } }
+  { params }: { params: Promise<{ storeId: string }> }
 ) {
   try {
     const user = await currentUser();
@@ -51,7 +51,7 @@ export async function DELETE(
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    const {storeId} = await params
+    const { storeId } = await params;
 
     if (!storeId) {
       return new NextResponse("Store id is required", { status: 400 });
