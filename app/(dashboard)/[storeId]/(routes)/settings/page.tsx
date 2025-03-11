@@ -2,18 +2,22 @@ import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 
-interface DashboardPageProps  {
-  params: { storeId: string };
+interface DashboardPageProps {
+  params: { storeId: string }; // Ensure params is an object, not a Promise
 }
 
-const DashboardPage = async ({ params }: DashboardPageProps) => {
-  const { storeId } = params; // ✅ No await needed
+const DashboardPage = async ({ params }: { params: { storeId: string } }) => {
+  const { storeId } = params; // ✅ No await needed here
 
   const user = await currentUser();
+  if (!user) {
+    redirect("/login"); // Redirect if user is not logged in
+  }
+
   const store = await db.store.findFirst({
     where: {
       id: storeId,
-      userId: user.id,
+      userId: user?.id, // Ensure user.id exists
     },
   });
 
@@ -23,7 +27,7 @@ const DashboardPage = async ({ params }: DashboardPageProps) => {
 
   return (
     <div className="mt-20 font-semibold">
-      {store ? `Active Store: ${store.name}` : "Store Not Found"}
+      Active Store: {store.name}
     </div>
   );
 };
