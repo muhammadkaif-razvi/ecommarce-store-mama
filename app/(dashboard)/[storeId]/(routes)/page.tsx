@@ -7,7 +7,7 @@ interface DashboardPageProps {
 }
 
 const DashboardPage = async ({ params }: DashboardPageProps) => {
-  const { storeId } = await params;
+  const { storeId } =  params;
 
   const user = await currentUser();
   const store = await db.store.findFirst({
