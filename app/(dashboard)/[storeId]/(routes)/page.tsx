@@ -3,9 +3,7 @@ import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 
 interface DashboardPageProps {
-  params: {
-    storeId: string;
-  };
+  params: Promise<{ storeId: string }>;
 }
 
 async function DashboardPage({ params }: DashboardPageProps) {
