@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Store } from "@prisma/client";
 import { formSchema } from "@/schemas";
-import { z } from "zod";
+import  * as z  from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useState } from "react";

@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "static.vecteezy.com",
-        pathname: "/**", // Allow all paths under this domain
+        pathname: "/**",
       },
     ],
   },
@@ -18,7 +18,7 @@ const nextConfig: NextConfig = {
     serverActions: {
       bodySizeLimit: "2mb", // Optional: Increase body size limit for Server Actions
     },
-    typedRoutes: true, // Optional: Enable type-safe routes
+ 
   },
 
   // ESLint configuration (optional)
