@@ -3,10 +3,11 @@ import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 
 interface DashboardPageProps {
-  params: { storeId: string}
+  params: Promise<{ storeId: string}>
 }
 
-async function DashboardPage({ params }: DashboardPageProps) {
+async function DashboardPage(props: DashboardPageProps) {
+  const params = await props.params;
   const user = await currentUser();
 
   if (!user) {
