@@ -3,12 +3,8 @@ import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 import { SettingsForm } from "./components/settings-form";
 
-interface SettingsPageProps {
-  params: {
-    storeId: string;
-  };
-}
-const SettingsPage: React.FC<SettingsPageProps> = async ({ params }) => {
+
+const SettingsPage = async () => {
   const user = await currentUser();
   const storeId = user.stores.id;
   const store = await db.store.findFirst({
