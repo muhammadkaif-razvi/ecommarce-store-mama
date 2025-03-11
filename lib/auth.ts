@@ -1,10 +1,7 @@
 import { auth } from "@/auth";
 import { ExtendedUser } from "@/type.d"; // Ensure this type is defined
 
-interface Store {
-  id: string;
-  name: string;
-}
+
 
 export const currentUser = async (): Promise<ExtendedUser | null> => {
   try {
