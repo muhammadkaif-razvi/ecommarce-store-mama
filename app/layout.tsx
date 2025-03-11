@@ -5,6 +5,7 @@ import { auth } from "@/auth";
 import { Navbar } from "@/components/Navbar";
 import { Providers } from "@/components/Providers";
 import { ModalProvider } from "@/providers/modal-provider";
+import { Toaster } from "react-hot-toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +39,7 @@ export default async function RootLayout({
           <main style={{ paddingTop: "var(--navbar-height, 2rem)" }}>
           <ModalProvider />
             {children}
+            <Toaster />
           </main>
         </Providers>
       </body>
