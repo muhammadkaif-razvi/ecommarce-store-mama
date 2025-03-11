@@ -6,7 +6,9 @@ interface DashboardPageProps {
   params: { storeId: string };
 }
 
-const DashboardPage = async ({ params }: DashboardPageProps) => {
+const DashboardPage: React.FC<DashboardPageProps> = async ({
+  params,
+}: DashboardPageProps) => {
   const { storeId } = await params;
 
   const user = await currentUser();
