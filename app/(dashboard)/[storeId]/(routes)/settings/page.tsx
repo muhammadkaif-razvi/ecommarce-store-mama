@@ -10,11 +10,10 @@ interface SettingsPageProps {
 }
 const SettingsPage: React.FC<SettingsPageProps> = async ({ params }) => {
   const user = await currentUser();
-
-  const {storeId} = await params
+  const storeId = user.stores.id;
   const store = await db.store.findFirst({
     where: {
-      id: storeId,
+      id:  storeId,
       userId: user.id,
     },
   });
