@@ -3,21 +3,17 @@ import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 
 interface DashboardPageProps {
-  params: { storeId: string }; // Ensure params is an object, not a Promise
+  params: { storeId: string };
 }
 
-const DashboardPage = async ({ params }: { params: { storeId: string } }) => {
-  const { storeId } = params; // ✅ No await needed here
+const DashboardPage = async ({ params }: Awaited<DashboardPageProps>) => {
+  const { storeId } = params; // ✅ No await needed
 
   const user = await currentUser();
-  if (!user) {
-    redirect("/login"); // Redirect if user is not logged in
-  }
-
   const store = await db.store.findFirst({
     where: {
       id: storeId,
-      userId: user?.id, // Ensure user.id exists
+      userId: user.id,
     },
   });
 
@@ -27,7 +23,7 @@ const DashboardPage = async ({ params }: { params: { storeId: string } }) => {
 
   return (
     <div className="mt-20 font-semibold">
-      Active Store: {store.name}
+      {store ? `Active Store: ${store.name}` : "Store Not Found"}
     </div>
   );
 };
