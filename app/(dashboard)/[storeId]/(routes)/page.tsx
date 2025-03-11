@@ -2,16 +2,18 @@ import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 
-// ✅ Correct Type (Expected)
+
 interface DashboardPageProps {
-  params: { storeId: string };
+  params: {
+    storeId: string;
+  };
 }
 
-const DashboardPage: React.FC<DashboardPageProps> = async ({
+async function  DashboardPage({
   params,
-}: DashboardPageProps) => {
-  const storeId  =  (await params).storeId;
+}:DashboardPageProps)  {
 
+const { storeId } = await params;
   const user = await currentUser();
   const store = await db.store.findFirst({
     where: {
