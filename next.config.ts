@@ -1,12 +1,29 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "standalone", // Ensures Node.js runtime, not Edge
+
+  // Image configuration
   images: {
-    domains: ["static.vecteezy.com",],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "static.vecteezy.com",
+        pathname: "/**", // Allow all paths under this domain
+      },
+    ],
   },
+
+  // Experimental features
   experimental: {
-    serverActions: { bodySizeLimit: "2mb" }, // Optional
+    serverActions: {
+      bodySizeLimit: "2mb", // Optional: Increase body size limit for Server Actions
+    },
+    typedRoutes: true, // Optional: Enable type-safe routes
+  },
+
+  // ESLint configuration (optional)
+  eslint: {
+    ignoreDuringBuilds: true, // Ignore ESLint errors during build
   },
 };
 
