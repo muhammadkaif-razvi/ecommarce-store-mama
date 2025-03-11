@@ -2,8 +2,9 @@ import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 
+// ✅ Correct Type (Expected)
 interface DashboardPageProps {
-  params: { storeId: string };
+  params: Promise<{ storeId: string }>;
 }
 
 const DashboardPage: React.FC<DashboardPageProps> = async ({
