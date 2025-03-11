@@ -1,15 +1,18 @@
 import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
-import { SettingsForm } from "./components/settings-form";
 
+interface DashboardPageProps  {
+  params: { storeId: string };
+}
 
-const SettingsPage = async () => {
+const DashboardPage = async ({ params }: DashboardPageProps) => {
+  const { storeId } = params; // ✅ No await needed
+
   const user = await currentUser();
-  const storeId = user.stores.id;
   const store = await db.store.findFirst({
     where: {
-      id:  storeId,
+      id: storeId,
       userId: user.id,
     },
   });
@@ -17,13 +20,12 @@ const SettingsPage = async () => {
   if (!store) {
     redirect("/stores-setup");
   }
+
   return (
-    <div className="flex-col">
-      <div className="flex-1 space-y-4 p-8 pt-6">
-        <SettingsForm initialData={store}/>
-      </div>
+    <div className="mt-20 font-semibold">
+      {store ? `Active Store: ${store.name}` : "Store Not Found"}
     </div>
   );
 };
 
-export default SettingsPage;
+export default DashboardPage;
