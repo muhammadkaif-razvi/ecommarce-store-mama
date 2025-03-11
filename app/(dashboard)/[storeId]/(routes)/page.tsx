@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 
 interface DashboardPageProps {
-  params: Promise<{ storeId: string }>;
+  params: { storeId: any }
 }
 
 async function DashboardPage({ params }: DashboardPageProps) {
@@ -15,7 +15,7 @@ async function DashboardPage({ params }: DashboardPageProps) {
 
   const store = await db.store.findFirst({
     where: {
-      id: (await params).storeId,
+      id: params.storeId,
       userId: user.id,
     },
   });
