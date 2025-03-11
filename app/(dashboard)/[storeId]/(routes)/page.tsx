@@ -4,13 +4,13 @@ import { redirect } from "next/navigation";
 
 // ✅ Correct Type (Expected)
 interface DashboardPageProps {
-  params: Promise<{ storeId: string }>;
+  params: { storeId: string };
 }
 
 const DashboardPage: React.FC<DashboardPageProps> = async ({
   params,
 }: DashboardPageProps) => {
-  const { storeId } = await params;
+  const storeId  =  (await params).storeId;
 
   const user = await currentUser();
   const store = await db.store.findFirst({
