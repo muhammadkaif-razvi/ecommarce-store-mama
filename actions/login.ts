@@ -1,7 +1,7 @@
 "use server";
 import * as z from "zod";
 import { LoginSchema } from "@/schemas";
-import { signIn } from "@/auth";
+import {  signIn } from "@/auth";
 import { AuthError } from "next-auth";
 import { generateTwoFactorToken } from "@/lib/tokens";
 import { sendTwoFactorTokenEmail } from "@/lib/mail";
@@ -81,7 +81,8 @@ export const login = async (
       password,
       redirectTo:  callbackUrl || DEFAULT_REDIRECT_URL,
     });
-    return { success: " Logging in shortly..." };
+
+    return { success: " Logging in shortly..."  };
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {

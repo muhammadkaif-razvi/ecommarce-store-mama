@@ -2,15 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
 
-  // Image configuration
   images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "static.vecteezy.com",
-        pathname: "/**",
-      },
-    ],
+    domains: ['res.cloudinary.com'],
   },
 
   // Experimental features
@@ -21,10 +14,7 @@ const nextConfig: NextConfig = {
  
   },
 
-  // ESLint configuration (optional)
-  eslint: {
-    ignoreDuringBuilds: true, // Ignore ESLint errors during build
-  },
+ 
 };
 
 export default nextConfig;

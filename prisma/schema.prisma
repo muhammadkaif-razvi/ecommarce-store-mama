@@ -13,7 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model Account {
   userId            String
   type              String
@@ -43,9 +42,9 @@ enum UserRole {
 model User {
   id                    String                 @id @default(cuid())
   name                  String?
-  email                 String?                 @unique
+  email                 String?                @unique
   emailVerified         DateTime?
-  phonenumber           String?                 @unique
+  phonenumber           String?                @unique
   phoneNumberVerified   DateTime?
   image                 String?
   password              String?
@@ -55,22 +54,29 @@ model User {
   isTwoFactorEnabled    Boolean                @default(false)
   twoFactorConfirmation TwoFactorConfirmation?
 
-  createdAt                           DateTime                             @default(now())
-  updatedAt                           DateTime                             @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Store {
-  id          String   @id @default(cuid())
-  name        String   
-  userId      String  
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade) 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  }
+  id         String      @id @default(cuid())
+  name       String
+  userId     String
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  billboards Billboard[] @relation("StoreToBillboard")
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
 
-
-
-
+model Billboard {
+  id        String   @id @default(uuid())
+  storeId   String
+  store     Store    @relation("StoreToBillboard", fields: [storeId], references: [id])
+  label     String
+  imageUrl  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
 
 model EmailVerificationToken {
   id      String   @id @default(cuid())
@@ -81,7 +87,6 @@ model EmailVerificationToken {
   @@unique([email, token])
 }
 
-
 model PhoneNumberVerificationToken {
   id          String   @id @default(uuid())
   phonenumber String   @unique
@@ -90,8 +95,6 @@ model PhoneNumberVerificationToken {
 
   @@unique([phonenumber, token])
 }
-
-
 
 model ResetPasswordEmailToken {
   id      String   @id @default(cuid())
@@ -103,15 +106,13 @@ model ResetPasswordEmailToken {
 }
 
 model ResetPasswordPhoneToken {
-  id      String   @id @default(cuid())
-  phonenumber   String
-  token   String   @unique
-  expires DateTime
+  id          String   @id @default(cuid())
+  phonenumber String
+  token       String   @unique
+  expires     DateTime
 
   @@unique([phonenumber, token])
 }
-
-
 
 model TwoFactorToken {
   id      String   @id @default(cuid())

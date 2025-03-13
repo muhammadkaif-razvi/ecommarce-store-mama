@@ -8,6 +8,12 @@ export const formSchema = z.object({
   });
   
 
+  export const BillboardformSchema = z.object({
+    label : z.string().min(1, "Name must be min 2 characters").max(14, "Name cannot be longer than 14 characters"),
+    imageUrl : z.string().min(1),
+    });
+    
+
 export const settingsSchema = z
   .object({
     name: z
@@ -28,7 +34,7 @@ export const settingsSchema = z
       z.string().min(6, "Password must be at least 6 characters")
     ),
     isTwoFactorEnabled: z.optional(z.boolean()),
-    role: z.enum([UserRole.ADMIN, UserRole.USER]).optional(),
+    role: z.enum([UserRole?.ADMIN, UserRole?.USER]).optional(),
   })
   .refine(
     (data) => {
