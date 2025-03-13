@@ -51,9 +51,9 @@ export async function POST(req: Request, params: Promise<{ storeId: string }>) {
   }
 }
 
-export async function GET(_req: Request, params: { storeId: string }) {
+export async function GET(_req: Request,  params: Promise<{ storeId: string }>) {
   try {
-    const { storeId } =  params;
+    const { storeId } = await params;
 
     if (!storeId) {
       return new NextResponse("Store Id is required", { status: 400 });
