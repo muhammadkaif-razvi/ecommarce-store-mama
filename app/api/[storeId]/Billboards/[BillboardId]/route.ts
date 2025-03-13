@@ -4,20 +4,20 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   _req: Request,
-  { params }: { params: Promise<{ BillboardId: string }> }
+  { params }: { params: Promise<{ billboardId: string }> }
 ) {
   try {
-    const { BillboardId } = await params;
-    if (!BillboardId) {
+    const { billboardId } = await params;
+    if (!billboardId) {
       return new NextResponse("Billboard id is required", { status: 400 });
     }
 
-    const Billboard = await db.billboard.findUnique({
+    const billboard = await db.billboard.findUnique({
       where: {
-        id: BillboardId,
+        id: billboardId,
       },
     });
-    return NextResponse.json(Billboard);
+    return NextResponse.json(billboard);
   } catch (error) {
     console.log("[GET_BILLBOARD]", error);
     return new NextResponse("Internal error", { status: 500 });
@@ -26,13 +26,13 @@ export async function GET(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: Promise<{ storeId: string; BillboardId: string }> }
+  { params }: { params: Promise<{ storeId: string; billboardId: string }> }
 ) {
   try {
     const user = await currentUser();
     const userId = user?.id;
     const { storeId } = await params;
-    const { BillboardId } = await params;
+    const { billboardId } = await params;
 
     const body = await req.json();
     const { label, imageUrl } = body;
@@ -51,7 +51,7 @@ export async function PATCH(
     if (!storeId) {
       return new NextResponse("Store id is required", { status: 400 });
     }
-    if (!BillboardId) {
+    if (!billboardId) {
       return new NextResponse("Billboard id is required", { status: 400 });
     }
 
@@ -64,16 +64,16 @@ export async function PATCH(
     if (!storeByUserId) {
       return new NextResponse("Unauthorized", { status: 403 });
     }
-    const Billboard = await db.billboard.updateMany({
+    const billboard = await db.billboard.updateMany({
       where: {
-        id: BillboardId,
+        id: billboardId,
       },
       data: {
         label,
         imageUrl,
       },
     });
-    return NextResponse.json(Billboard);
+    return NextResponse.json(billboard);
   } catch (error) {
     console.log("[BILLOARD_PATCH]", error);
     return new NextResponse("Internal error", { status: 500 });
@@ -82,19 +82,19 @@ export async function PATCH(
 
 export async function DELETE(
   _req: Request,
-  { params }: { params: Promise<{ storeId: string; BillboardId: string }> }
+  { params }: { params: Promise<{ storeId: string; billboardId: string }> }
 ) {
   try {
     const user = await currentUser();
     const userId = user?.id;
-    const { BillboardId } = await params;
+    const { billboardId } = await params;
     const { storeId } = await params;
 
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    if (!BillboardId) {
+    if (!billboardId) {
       return new NextResponse("Billboard id is required", { status: 400 });
     }
 
@@ -108,12 +108,12 @@ export async function DELETE(
       return new NextResponse("Unauthorized", { status: 403 });
     }
 
-    const Billboard = await db.billboard.deleteMany({
+    const billboard = await db.billboard.deleteMany({
       where: {
-        id: BillboardId,
+        id: billboardId,
       },
     });
-    return NextResponse.json(Billboard);
+    return NextResponse.json(billboard);
   } catch (error) {
     console.log("[BILLOARD_DELETE]", error);
     return new NextResponse("Internal error", { status: 500 });

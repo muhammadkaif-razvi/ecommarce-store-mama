@@ -2,13 +2,13 @@ import { db } from "@/lib/db";
 import { BillboardForm } from "./components/Billboard-form";
 
 interface BillboardProps {
-  params: Promise<{ BillboardId: string }>;
+  params: Promise<{ billboardId: string }>;
 }
 const BillboardPage = async (props: BillboardProps) => {
-  const { BillboardId } = await props.params;
+  const { billboardId } = await props.params;
   const Billboard = await db.billboard.findUnique({
     where: {
-      id: BillboardId,
+      id: billboardId,
     },
   });
   return (

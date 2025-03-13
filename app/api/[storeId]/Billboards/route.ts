@@ -2,11 +2,11 @@ import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 
-export async function POST(req: Request, params: Promise<{ storeId: string }>) {
+export async function POST(req: Request, params: { storeId: string }) {
   try {
     const user = await currentUser();
     const userId = user?.id;
-    const { storeId } = await params;
+    const { storeId } =  params;
     const body = await req.json();
     const { label, imageUrl } = body;
 
@@ -51,9 +51,9 @@ export async function POST(req: Request, params: Promise<{ storeId: string }>) {
   }
 }
 
-export async function GET(_req: Request, params: Promise<{ storeId: string }>) {
+export async function GET(_req: Request, params: { storeId: string }) {
   try {
-    const { storeId } = await params;
+    const { storeId } =  params;
 
     if (!storeId) {
       return new NextResponse("Store Id is required", { status: 400 });

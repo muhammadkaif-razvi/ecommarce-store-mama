@@ -57,10 +57,12 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
     try {
       setLoading(true)
       if(initialData){
-      await axios.patch(`/api/${params.storeId}/Billboards/${params.BillboardId}`, values);
+      // await axios.patch(`/api/${params.storeId}/billboards/${params.BillboardId}`, values);
       }else{
-        console.log("Store ID:", params.BillboardId); 
-      await axios.post(`/api/${params.storeId}`, values);
+       await axios.post(`/api/${params.storeId}/billboards`, values);
+      console.log("values:", values);
+      console.log("Store ID:", params.BillboardId); 
+
       }
       router.refresh();
       update();
@@ -74,7 +76,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(`/api/${params.storeId}/Billboards/${params.BillboardId}`);
+      await axios.delete(`/api/${params.storeId}/billboards/${params.BillboardId}`);
       router.refresh();
       update();
       router.push("/stores-setup");
