@@ -8,8 +8,9 @@ export async function GET(
 ) {
   try {
     const { billboardId } = await params;
+
     if (!billboardId) {
-      return new NextResponse("Billboard id is required", { status: 400 });
+      return new NextResponse("billboard id is required", { status: 400 });
     }
 
     const billboard = await db.billboard.findUnique({
@@ -19,7 +20,7 @@ export async function GET(
     });
     return NextResponse.json(billboard);
   } catch (error) {
-    console.log("[GET_BILLBOARD]", error);
+    console.log("[BILLBOARD_GET]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
@@ -33,7 +34,6 @@ export async function PATCH(
     const userId = user?.id;
     const { storeId } = await params;
     const { billboardId } = await params;
-
     const body = await req.json();
     const { label, imageUrl } = body;
 
@@ -45,12 +45,9 @@ export async function PATCH(
       return new NextResponse("Label is required", { status: 400 });
     }
     if (!imageUrl) {
-      return new NextResponse("Image URL is required", { status: 400 });
+      return new NextResponse("Label is required", { status: 400 });
     }
 
-    if (!storeId) {
-      return new NextResponse("Store id is required", { status: 400 });
-    }
     if (!billboardId) {
       return new NextResponse("Billboard id is required", { status: 400 });
     }
@@ -64,6 +61,7 @@ export async function PATCH(
     if (!storeByUserId) {
       return new NextResponse("Unauthorized", { status: 403 });
     }
+
     const billboard = await db.billboard.updateMany({
       where: {
         id: billboardId,
@@ -75,7 +73,7 @@ export async function PATCH(
     });
     return NextResponse.json(billboard);
   } catch (error) {
-    console.log("[BILLOARD_PATCH]", error);
+    console.log("[BILLBOARD_PATCH]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
@@ -87,15 +85,15 @@ export async function DELETE(
   try {
     const user = await currentUser();
     const userId = user?.id;
-    const { billboardId } = await params;
-    const { storeId } = await params;
 
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
+    const { storeId } = await params;
+    const { billboardId } = await params;
 
     if (!billboardId) {
-      return new NextResponse("Billboard id is required", { status: 400 });
+      return new NextResponse("billboard id is required", { status: 400 });
     }
 
     const storeByUserId = await db.store.findFirst({
@@ -115,7 +113,7 @@ export async function DELETE(
     });
     return NextResponse.json(billboard);
   } catch (error) {
-    console.log("[BILLOARD_DELETE]", error);
+    console.log("[BILLBOARD_DELETE]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
