@@ -20,7 +20,7 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({ data }) => {
     <>
       <div className=" mt-8 flex items-center justify-between">
         <Heading
-          title={`${data.length} Billboard(s)`}
+          title={` Billboard(${data.length})`}
           description="Manage billboards for your store"
         />
         <Button
@@ -36,7 +36,7 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({ data }) => {
 
       <Separator />
       <div className="mt-2"></div>
-      <DataTable columns={columns} data={data} />{" "}
+      <DataTable columns={columns} data={data} searchKey="label"/>{" "}
     </>
   );
 };
