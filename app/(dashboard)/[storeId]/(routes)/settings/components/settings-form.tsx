@@ -31,7 +31,7 @@ interface SettingsFormProps {
 }
 type SettingsFormValues = z.infer<typeof formSchema>;
 
-export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
+export const SettingsForm: React.FC<SettingsFormProps> =  ({ initialData }) => {
   const params = useParams();
   const router = useRouter();
   const origin = useOrigin();
@@ -43,7 +43,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
     resolver: zodResolver(formSchema),
     defaultValues: initialData,
   });
-  const { storeId } = params;
+  const storeId = params.storeId ;
   const onSubmit = async (values: SettingsFormValues) => {
     try {
       setLoading(true);
@@ -128,9 +128,9 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
       <Separator />
       <ApiAlert 
       title="NEXT_PUBLIC_API_URL" 
-      description={`${origin}/api/${params.storeId}`}
+      description={`${origin}/api/${storeId}`}
       variant="public" 
-      />
+      /> 
     </>
   );
 };

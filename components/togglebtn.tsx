@@ -36,7 +36,7 @@ export function ModeToggle() {
       size="icon"
       onClick={toggleTheme}
       aria-label="Toggle theme"
-      className="text-purple-600 h-8 w-8 lg:h-9 lg:w-9"
+      className="text-purple-600 h-8 w-8 lg:h-9 lg:w-9 hidden lg:flex  "
     >
       {currentTheme === "light" && <Sun className="h-5 w-5" />}
       {currentTheme === "dark" && <Moon className="h-5 w-5" />}

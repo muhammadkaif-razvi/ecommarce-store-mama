@@ -3,20 +3,23 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ImagePlus, Trash } from "lucide-react";
-import { CldUploadWidget, CloudinaryUploadWidgetResults } from "next-cloudinary";
+import { CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
 
 interface ImageUploadProps {
   disabled?: boolean;
-  onChange: (value: string) => void;
-  onRemove: (valuse: string) => void;
-  value: string[];
+  onChange: (value: { url: string }) => void;
+  onRemove: (url: string) => void;
+  value: { url: string }[];
+  maxFiles?: number;
 }
-const ImageUpload: React.FC<ImageUploadProps> = ({
+
+export const ImageUpload: React.FC<ImageUploadProps> = ({
   disabled,
   onChange,
   onRemove,
-  value,
+  value = [],
+  maxFiles = 6,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -24,9 +27,11 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
     setIsMounted(true);
   }, []);
 
-  const onUpload = (result: CloudinaryUploadWidgetResults) => {
-    if (result.info && typeof result.info !== "string" && "secure_url" in result.info) {
-      onChange(result.info.secure_url);
+  const onUpload = (result: any) => {
+    if (result?.info?.secure_url) {
+      onChange({ url: result.info.secure_url });
+      console.log(value)
+
     }
   };
 
@@ -36,52 +41,48 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
 
   return (
     <div>
-      <div className="mb-4 flex items-center gap-4">
-        {value.map((url) => (
+      <div className="mb-4 flex items-center gap-4 flex-wrap">
+        {value.map((image) => (
           <div
-            key={url}
-            className="relative w-[500px] h-[200px] rounded-md overflow-hidden"
+            key={image.url}
+            className="relative w-[200px] h-[200px] rounded-md overflow-hidden"
           >
-            {" "}
             <div className="z-10 absolute top-2 right-2">
               <Button
                 type="button"
-                onClick={() => onRemove(url)}
-                variant={"destructive"}
-                size={"icon"}
+                onClick={() => onRemove(image.url)}
+                variant="destructive"
+                size="icon"
               >
                 <Trash className="h-4 w-4" />
               </Button>
             </div>
             <Image
               fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               className="object-cover"
-              alt="image"
-              src={url}
+              alt="Uploaded image"
+              src={image.url}
             />
           </div>
         ))}
       </div>
-      <CldUploadWidget onSuccess={onUpload} uploadPreset="fn9vwjrl">
-        {({ open }) => {
-          const onClick = () => {
-            open();
-          };
-          return (
-            <Button
-              type="button"
-              disabled={disabled}
-              variant={"secondary"}
-              onClick={onClick}
-            >
-              <ImagePlus className="h-4 w-4 mr-2" />
-              Upload an Image
-            </Button>
-          );
-        }}
-      </CldUploadWidget>
+      {value.length < maxFiles && (
+        <CldUploadWidget onUpload={onUpload} uploadPreset="sjiyx6o3">
+          {({ open }) => {
+            return (
+              <Button
+                type="button"
+                disabled={disabled}
+                variant="secondary"
+                onClick={() => open()}
+              >
+                <ImagePlus className="h-4 w-4 mr-2" />
+                Upload Image
+              </Button>
+            );
+          }}
+        </CldUploadWidget>
+      )}
     </div>
   );
 };
-export default ImageUpload;

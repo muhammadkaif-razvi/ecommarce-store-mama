@@ -1,18 +1,59 @@
 import { z } from "zod";
 import { UserRole } from "@prisma/client";
-
-
+import { sign } from "crypto";
 
 export const formSchema = z.object({
-  name : z.string().min(2, "Name must be min 2 characters").max(14, "Name cannot be longer than 14 characters"),
-  });
-  
+  name: z
+    .string()
+    .min(2, "Name must be min 2 characters")
+    .max(14, "Name cannot be longer than 14 characters"),
+});
 
-  export const BillboardformSchema = z.object({
-    label : z.string().min(1, "Name must be min 2 characters").max(14, "Name cannot be longer than 14 characters"),
-    imageUrl : z.string().min(1),
-    });
-    
+export const BillboardformSchema = z.object({
+  label: z
+    .string()
+    .min(1, "Name must be min 2 characters")
+    .max(14, "Name cannot be longer than 14 characters"),
+  imageUrl: z.string().min(1),
+});
+
+export const CategoryformSchema = z.object({
+  name: z
+    .string()
+    .min(1, "Name must be min 2 characters")
+    .max(14, "Name cannot be longer than 14 characters"),
+  billboardId: z.string().min(1),
+});
+
+export const SizeformSchema = z.object({
+  name: z
+    .string()
+    .min(1, "Name must be min 2 characters")
+    .max(14, "Name cannot be longer than 14 characters"),
+  value: z.string().min(1, "Value must be min 2 characters"),
+});
+
+export const ColorformSchema = z.object({
+  name: z
+    .string()
+    .min(1, "Name must be min 2 characters")
+    .max(14, "Name cannot be longer than 14 characters"),
+  value: z.string().min(3),
+});
+
+export const ProductformSchema = z.object({
+  name: z
+    .string()
+    .min(1, "Name must be min 2 characters")
+    .max(14, "Name cannot be longer than 14 characters"),
+  images: z.object({ url: z.string() }).array(),
+  price :z.coerce.number().min(1, "Price must be greater than 0"),
+  categoryId: z.string().min(1, "Category is required"),
+  colorId: z.string().min(1, "Color is required"),
+  sizeId :z.string().min(1, "Size is required"),
+  isFeatured: z.boolean().default(false).optional(),
+  isArchived: z.boolean().default(false).optional(),
+});
 
 export const settingsSchema = z
   .object({
@@ -38,16 +79,21 @@ export const settingsSchema = z
   })
   .refine(
     (data) => {
-      if (data.newPassword && !data.password) {return false;}
+      if (data.newPassword && !data.password) {
+        return false;
+      }
       return true;
     },
     {
       message: "Current password is required",
       path: ["password"],
     }
-  )  .refine(
+  )
+  .refine(
     (data) => {
-      if (data.password && !data.newPassword)  {return false;}
+      if (data.password && !data.newPassword) {
+        return false;
+      }
       return true;
     },
     {

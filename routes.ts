@@ -1,30 +1,19 @@
-/*
- *An array of routes that are public
- * There routes are accessible to everyone
- * /@type {string[]}
- */
+export const publicRoutes = [
+  "/", // Home route
+  "/api/(.*)", // All API routes are public
+];
 
-export const publicRoutes = ["/"];
-export const adminRoutes = ["/admin"];
+export const adminRoutes = [
+  "/admin", // Admin routes
+];
 
-/*
- *An array of routes that are protected
- * There routes are accessible to authenticated users
- * /@type {string[]}
- */
 export const protectedRoutes = [
   "/profile",
-   "/new-verification",
-    "/settings",
-    "/*/settings",
+  "/new-verification",
+  "/settings",
+  "/*/settings", // Wildcard for nested settings
+];
 
-  ];
-
-/*
- *An array of routes that are auth routes
- * There routes are accessible to unauthenticated users
- * /@type {string[]}
- */
 export const authRoutes = [
   "/login",
   "/register",
@@ -33,10 +22,5 @@ export const authRoutes = [
   "/new-password",
 ];
 
-/*
- *The prefix for the api auth routes
- * /@type {string}
- */
-export const apiAuthPrefix = "/api/auth";
-
-export const DEFAULT_REDIRECT_URL = "/";
+export const apiAuthPrefix = "/api/auth"; // Auth API prefix
+export const DEFAULT_REDIRECT_URL = "/"; // Default redirect URL

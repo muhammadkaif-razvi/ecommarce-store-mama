@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -25,18 +19,11 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([provider, providerAccountId])
-}
-
-enum UserRole {
-  USER
-  ADMIN
 }
 
 model User {
@@ -48,35 +35,145 @@ model User {
   phoneNumberVerified   DateTime?
   image                 String?
   password              String?
-  accounts              Account[]
-  stores                Store[]
   role                  UserRole               @default(USER)
   isTwoFactorEnabled    Boolean                @default(false)
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  accounts              Account[]
+  stores                Store[]
   twoFactorConfirmation TwoFactorConfirmation?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model Store {
   id         String      @id @default(cuid())
   name       String
   userId     String
-  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  billboards Billboard[] @relation("StoreToBillboard")
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
+  billboards Billboard[] @relation("StoreToBillboard")
+  categories Category[]  @relation("StoreToCategory")
+  colors     Color[]     @relation("StoreToColor")
+  sizes      Size[]      @relation("StoreToSize")
+  products   Product[]   @relation("StoreToProduct")
+  orders     Order[]     @relation("StoreToOrder")
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Billboard {
-  id        String   @id @default(uuid())
-  storeId   String
-  store     Store    @relation("StoreToBillboard", fields: [storeId], references: [id])
-  label     String
-  imageUrl  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String     @id @default(uuid())
+  storeId    String
+  label      String
+  imageUrl   String
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  store      Store      @relation("StoreToBillboard", fields: [storeId], references: [id])
+  categories Category[]
 }
+
+model Category {
+  id          String    @id @default(uuid())
+  storeId     String
+  billboardId String
+  name        String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  billboard   Billboard @relation(fields: [billboardId], references: [id])
+  products    Product[] @relation("CategoryToProduct")
+  store       Store     @relation("StoreToCategory", fields: [storeId], references: [id])
+
+  @@index([storeId])
+  @@index([billboardId])
+}
+
+model Size {
+  id        String    @id @default(uuid())
+  storeId   String
+  name      String
+  value     String
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  store     Store     @relation("StoreToSize", fields: [storeId], references: [id])
+
+  @@index([storeId])
+}
+
+model Color {
+  id        String    @id @default(uuid())
+  storeId   String
+  name      String
+  value     String
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  store     Store     @relation("StoreToColor", fields: [storeId], references: [id])
+
+  @@index([storeId])
+}
+
+model Product {
+  id         String   @id @default(uuid())
+  storeId    String
+  store      Store    @relation("StoreToProduct", fields: [storeId], references: [id])
+  categoryId String
+  category   Category @relation("CategoryToProduct", fields: [categoryId], references: [id])
+  name       String
+  price      Decimal
+  isFeatured Boolean  @default(false)
+  isArchived Boolean  @default(false)
+  sizeId     String
+  size       Size     @relation(fields: [sizeId], references: [id])
+  colorId    String
+  color      Color    @relation(fields: [colorId], references: [id])
+  images     Image[]
+  orderItems OrderItem[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([storeId])
+  @@index([categoryId])
+  @@index([sizeId])
+  @@index([colorId])
+}
+
+model Image {
+  id        String   @id @default(uuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  url       String
+  cratedAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([productId])
+}
+
+model Order {
+  id         String      @id @default(uuid())
+  storeId    String
+  store      Store       @relation("StoreToOrder", fields: [storeId], references: [id])
+  orderItems OrderItem[]
+  isPaid     Boolean     @default(false)
+  phone      String      @default("")
+  email      String      @default("")
+  address    String      @default("")
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  @@index([storeId])
+}
+
+model OrderItem {
+  id        String   @id @default(uuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+
 
 model EmailVerificationToken {
   id      String   @id @default(cuid())
@@ -124,10 +221,12 @@ model TwoFactorToken {
 }
 
 model TwoFactorConfirmation {
-  id String @id @default(cuid())
-
-  userId String
+  id     String @id @default(cuid())
+  userId String @unique
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
 
-  @@unique([userId])
+enum UserRole {
+  USER
+  ADMIN
 }

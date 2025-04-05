@@ -10,6 +10,7 @@ import Image from "next/image";
 import { MainNav } from "@/components/main-nav";
 import StoreSwitcher from "./store-switcher";
 import { StoreIcon } from "lucide-react";
+import { MobileNav } from "./main-m-nav";
 
 export const Navbar = () => {
   const navRef = useRef<HTMLElement>(null);
@@ -61,8 +62,10 @@ export const Navbar = () => {
           {!["/", "/profile", "/settings"].includes(pathname) &&
             session?.user.stores.length > 0 && (
               <>
-              <MainNav />
+             
               <StoreSwitcher className="" items={session?.user.stores} />
+              <MainNav className="lg:flex hidden"/> 
+              <MobileNav />
               </>
             )}
                {["/", "/profile", "/settings"].includes(pathname) &&
@@ -78,7 +81,9 @@ export const Navbar = () => {
           <ModeToggle />
 
           {session?.user?.phoneNumberVerified ? (
-            <UserButton />
+            <div className="hidden md:flex ">
+            <UserButton  />
+            </div>
           ) : (
             <>
               <div className="hidden md:flex items-center space-x-2">
