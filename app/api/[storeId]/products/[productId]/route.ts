@@ -24,7 +24,30 @@ export async function GET(
         color: true,
       },
     });
-    return NextResponse.json(product);
+
+    if (!product) {
+      return new NextResponse("Product not found", { status: 404 });
+    }
+
+    // Convert Decimal to number for client compatibility
+    const serializedProduct = {
+      ...product,
+      price: product.price instanceof Decimal 
+        ? product.price.toNumber() 
+        : product.price,
+      // Ensure all Decimal fields are converted if they exist
+      ...(product.size?.price && { 
+        size: {
+          ...product.size,
+          price: product.size.price instanceof Decimal
+            ? product.size.price.toNumber()
+            : product.size.price
+        }
+      }),
+      // Similarly handle other Decimal fields if needed
+    };
+
+    return NextResponse.json(serializedProduct);
   } catch (error) {
     console.log("[PRODUCT_GET]", error);
     return new NextResponse("Internal error", { status: 500 });
