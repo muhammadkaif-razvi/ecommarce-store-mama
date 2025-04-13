@@ -24,7 +24,7 @@ import { Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { AlertModal } from "@/components/modals/alert-modal";
-import {ImageUpload} from "@/components/ui/image-upload";
+import { ImageUpload } from "@/components/ui/image-upload-product";
 import {
   Select,
   SelectContent,
@@ -44,6 +44,7 @@ interface ProductFormProps {
   colors: Color[];
   sizes: Size[];
 }
+
 type ProductFormValues = z.infer<typeof ProductformSchema>;
 
 export const ProductForm: React.FC<ProductFormProps> = ({
@@ -59,7 +60,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
   const [loading, setLoading] = useState(false);
 
   const title = initialData ? "Edit Product" : "Create Product";
-  const description = initialData ? "Edit  a Product" : "Add a new product";
+  const description = initialData ? "Edit a Product" : "Add a new product";
   const toastMessage = initialData ? "Product updated" : "Product created";
   const action = initialData ? "Save changes" : "Create";
 
@@ -74,6 +75,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           name: "",
           images: [],
           price: 0,
+          // discountPrice: 0,
           categoryId: "",
           colorId: "",
           sizeId: "",
@@ -81,7 +83,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           isArchived: false,
         },
   });
-
   const onSubmit = async (values: ProductFormValues) => {
     try {
       setLoading(true);
@@ -108,7 +109,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       setLoading(true);
       await axios.delete(`/api/${params.storeId}/products/${params.productId}`);
       router.refresh();
-      update();
+      await update();
       router.push(`/${params.storeId}/products`);
       toast.success("Product deleted.");
     } catch {
@@ -153,26 +154,31 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8 w-full "
         >
-    <FormField
-  control={form.control}
-  name="images"
-  render={({ field }) => (
-    <FormItem>
-      <FormLabel>Images</FormLabel>
-      <FormControl>
-        <ImageUpload
-          value={field.value}
-          disabled={loading}
-          onChange={(image) => field.onChange([...field.value, image])}
-          onRemove={(url) => 
-            field.onChange(field.value.filter((current) => current.url !== url))
-          }
-        />
-      </FormControl>
-      <FormMessage />
-    </FormItem>
-  )}
-/>
+          <FormField
+            control={form.control}
+            name="images"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Product Images</FormLabel>
+                <FormControl>
+                  <ImageUpload
+                    value={field.value || []}
+                    disabled={loading} // Use the form's loading state
+                    onChange={(image) => {
+                      field.onChange([...(field.value || []), image]);
+                    }}
+                    onRemove={(url) => {
+                      field.onChange(
+                        (field.value || []).filter((img) => img.url !== url)
+                      );
+                    }}
+                    maxFiles={6}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <div className="grid grid-cols-3 gap-8">
             <FormField
               control={form.control}
@@ -209,6 +215,24 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 </FormItem>
               )}
             />
+            {/* //   <FormField
+          //   control={form.control}
+          //   name="discountPrice"
+          //   render={({ field }) => (
+          //     <FormItem>
+          //       <FormLabel>Discount Price</FormLabel>
+          //       <FormControl>
+          //         <Input
+          //           type="number"
+          //           disabled={loading}
+          //           placeholder="9.99"
+          //           {...field}
+          //         />
+          //       </FormControl>
+          //       <FormMessage />
+          //     </FormItem>
+          //   )}
+          // /> */}
             <FormField
               control={form.control}
               name="sizeId"

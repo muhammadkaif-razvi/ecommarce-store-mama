@@ -33,7 +33,7 @@ export const EnterPhoneNoOauthForm = ({
   const [success, setSuccess] = useState<string | undefined>(undefined);
   const [isPending, startTransition] = useTransition();
   const user = useCurrentUser();
-  const {update} = useSession();
+  const { update } = useSession();
 
   const form = useForm<z.infer<typeof Step3Schema>>({
     resolver: zodResolver(Step3Schema),
@@ -105,7 +105,7 @@ export const EnterPhoneNoOauthForm = ({
                     onChange={(e) => {
                       let value = e.target.value;
                       if (!value.startsWith("+91")) {
-                        value = "+91" + value.replace(/^(\+91)?/, ""); 
+                        value = "+91" + value.replace(/^(\+91)?/, "");
                       }
                       field.onChange(value);
                     }}

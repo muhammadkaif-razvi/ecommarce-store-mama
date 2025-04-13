@@ -21,11 +21,11 @@ import FormSuccess from "@/components/auth/form-success";
 import { Loader2 } from "lucide-react";
 import { AuthWrapper } from "@/components/auth/AuthWrapper";
 
-export const EnterEmailForm = ({onSuccess}:
-  {onSuccess:(
-    email: string, 
-    ) => void
-  }) => {
+export const EnterEmailForm = ({
+  onSuccess,
+}: {
+  onSuccess: (email: string) => void;
+}) => {
   const [error, setError] = useState<string | undefined>(undefined);
   const [success, setSuccess] = useState<string | undefined>(undefined);
   const [isPending, startTransition] = useTransition();
@@ -38,17 +38,16 @@ export const EnterEmailForm = ({onSuccess}:
     },
   });
 
-  const onSubmit =  (values: z.infer<typeof Step1Schema>) => {
-
+  const onSubmit = (values: z.infer<typeof Step1Schema>) => {
     setError("");
     setSuccess("");
-    startTransition( () => {
-       initiateEmailVerificationStep(values).then((data) => {
+    startTransition(() => {
+      initiateEmailVerificationStep(values).then((data) => {
         if (data.error) {
           setError(data.error);
         } else {
           setSuccess(data.success);
-          onSuccess(values.email); 
+          onSuccess(values.email);
         }
       });
     });
@@ -112,7 +111,6 @@ export const EnterEmailForm = ({onSuccess}:
           <Button type="submit" className="w-full" disabled={isPending}>
             {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : "Enter"}
           </Button>
-       
         </form>
       </Form>
     </AuthWrapper>

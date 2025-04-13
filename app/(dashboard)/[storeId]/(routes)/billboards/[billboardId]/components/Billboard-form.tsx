@@ -23,7 +23,7 @@ import { Trash } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { AlertModal } from "@/components/modals/alert-modal";
-  import {ImageUpload} from "@/components/ui/image-upload";
+import { ImageUpload } from "@/components/ui/image-upload";
 
 interface BillboardFormProps {
   initialData: Billboard | null;
@@ -133,10 +133,11 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
                 <FormLabel>Background image</FormLabel>
                 <FormControl>
                   <ImageUpload
-                    value={field.value ? [{ url: field.value }] : []}
+                    value={field.value ? [field.value] : []}
                     disabled={loading}
                     onChange={(url) => field.onChange(url)}
                     onRemove={() => field.onChange("")}
+                    single={true}
                   />
                 </FormControl>
                 <FormMessage />

@@ -2,7 +2,7 @@
 
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { signOut } from "next-auth/react";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+
 import { ExitIcon } from "@radix-ui/react-icons";
 import {
   DropdownMenu,
@@ -19,6 +19,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export const UserButton = () => {
   const user = useCurrentUser();
@@ -32,11 +33,11 @@ export const UserButton = () => {
   if (!mounted) return null;
 
   return (
-    <DropdownMenu >
+    <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="relative flex items-center justify-center h-8 w-8 lg:h-9 lg:w-9 rounded-md bg-purple-100 hover:bg-purple-200 dark:bg-slate-800 dark:hover:bg-slate-700 transition-all border border-purple-200/20 dark:border-slate-700/30">
+        <button className="relative flex items-center justify-center h-8 w-8 lg:h-9 lg:w-9 rounded-full bg-purple-100 hover:bg-purple-200 dark:bg-slate-800 dark:hover:bg-slate-700 transition-all border border-purple-200/20 dark:border-slate-700/30">
           <Avatar className="h-8 w-8 lg:h-9 lg:w-9">
-            <AvatarImage src={user?.image || ""} className="rounded-md" />
+            <AvatarImage src={user?.image || ""} />
             <AvatarFallback className="bg-purple-600 hover:bg-purple-700 text-white dark:bg-purple-800 dark:text-purple-100 rounded-md flex items-center justify-center w-full h-full text-sm font-medium transition-colors">
               {user?.name
                 ?.split(" ")[0] // Take the first word only
@@ -53,15 +54,15 @@ export const UserButton = () => {
       >
         <DropdownMenuLabel className="p-0 font-normal">
           <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-            <Avatar className="h-8 w-8 rounded-lg">
-              <AvatarImage src={user.avatar} alt={user.name} />
-              <AvatarFallback className="bg-purple-600 hover:bg-purple-700 text-white dark:bg-purple-800 dark:text-purple-100 rounded-md flex items-center justify-center w-full h-full text-sm font-medium transition-colors">
+            <Avatar className="h-8 w-8 lg:h-9 lg:w-9">
+              <AvatarImage src={user?.image || ""} />
+              <AvatarFallback className="bg-purple-600 hover:bg-purple-700 text-white dark:bg-purple-800 dark:text-purple-100 rounded-full flex items-center justify-center w-full h-full text-sm font-medium transition-colors">
                 {user?.name
                   ?.split(" ")[0] // Take the first word only
                   .charAt(0) // Take the first letter
                   .toUpperCase()}{" "}
                 {/* Capitalize the first letter */}
-              </AvatarFallback>{" "}
+              </AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
               <span className="truncate font-semibold">{user.name}</span>

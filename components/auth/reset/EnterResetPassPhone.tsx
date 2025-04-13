@@ -2,7 +2,7 @@
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {  useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { NewPasswordSchema } from "@/schemas";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -34,7 +34,6 @@ export const EnterResetPassPhoneForm = ({
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
 
-
   const form = useForm<z.infer<typeof NewPasswordSchema>>({
     resolver: zodResolver(NewPasswordSchema),
     defaultValues: {
@@ -47,7 +46,7 @@ export const EnterResetPassPhoneForm = ({
     setError("");
     setSuccess("");
     startTransition(() => {
-      newPasswordPhone(values, phonenumber,callbackUrl)
+      newPasswordPhone(values, phonenumber, callbackUrl)
         .then((data) => {
           if (data?.error) {
             setError(data.error);

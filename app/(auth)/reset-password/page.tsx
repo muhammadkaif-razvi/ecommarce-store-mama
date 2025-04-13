@@ -32,7 +32,7 @@ const ResetPasswordPage = () => {
         {/* Step 2A: If phone number, enter OTP */}
         {step === 2 && isPhoneNumber && (
           <EnterOtpResetForm
-            phonenumber={contactValue }
+            phonenumber={contactValue}
             otp={otp ?? ""}
             onSuccess={() => setStep(3)}
           />
@@ -43,7 +43,7 @@ const ResetPasswordPage = () => {
 
         {/* Step 3: If phone number verified, reset password */}
         {step === 3 && isPhoneNumber && (
-          <EnterResetPassPhoneForm phonenumber={contactValue}  />
+          <EnterResetPassPhoneForm phonenumber={contactValue} />
         )}
       </div>
     </div>

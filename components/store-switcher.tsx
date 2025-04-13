@@ -7,7 +7,13 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Check, ChevronsUpDown, PlusCircle, StoreIcon, Search } from "lucide-react";
+import {
+  Check,
+  ChevronsUpDown,
+  PlusCircle,
+  StoreIcon,
+  Search,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 
 import {
@@ -17,7 +23,6 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-
 
 interface StoreSwitcherProps {
   className?: string;
@@ -62,7 +67,11 @@ export default function StoreSwitcher({
           role="combobox"
           aria-expanded={open}
           aria-label="Select a store"
-          className={cn("-[200px] lg:w-[210px] justify-between ", !currentStore && "text-muted-foreground justify-between", className)}
+          className={cn(
+            "-[200px] lg:w-[210px] justify-between ",
+            !currentStore && "text-muted-foreground justify-between",
+            className
+          )}
         >
           <StoreIcon className="mr-2 h-4 w-4" />
           {currentStore?.label || "Select a store"}

@@ -42,7 +42,6 @@ export const VerPhoneOtpForm = ({
     setSuccess(`Your OTP: ${otp}`);
   }, [otp]);
 
-
   const form = useForm<z.infer<typeof Step4Schema>>({
     resolver: zodResolver(Step4Schema),
     defaultValues: {

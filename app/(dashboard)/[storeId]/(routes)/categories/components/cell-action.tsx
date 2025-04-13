@@ -36,9 +36,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(
-        `/api/${params.storeId}/categories/${data.id}`
-      );
+      await axios.delete(`/api/${params.storeId}/categories/${data.id}`);
       router.refresh();
       update();
       toast.success("Category deleted.");

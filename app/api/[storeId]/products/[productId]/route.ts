@@ -1,22 +1,21 @@
 import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
+// import { Decimal } from "@prisma/client/runtime/library";
 
 export async function GET(
-  _req: Request,
-  { params }: { params: Promise<{ productId: string }> }
+  req: Request,
+  { params }: { params: { productId: string } } // Fixed: Remove Promise wrapper
 ) {
   try {
-    const { productId } = await params;
+    const { productId } = params; // Direct destructuring
 
     if (!productId) {
-      return new NextResponse("product id is required", { status: 400 });
+      return new NextResponse("Product ID is required", { status: 400 });
     }
 
     const product = await db.product.findUnique({
-      where: {
-        id: productId,
-      },
+      where: { id: productId },
       include: {
         images: true,
         category: true,
@@ -29,28 +28,11 @@ export async function GET(
       return new NextResponse("Product not found", { status: 404 });
     }
 
-    // Convert Decimal to number for client compatibility
-    const serializedProduct = {
-      ...product,
-      price: product.price instanceof Decimal 
-        ? product.price.toNumber() 
-        : product.price,
-      // Ensure all Decimal fields are converted if they exist
-      ...(product.size?.price && { 
-        size: {
-          ...product.size,
-          price: product.size.price instanceof Decimal
-            ? product.size.price.toNumber()
-            : product.size.price
-        }
-      }),
-      // Similarly handle other Decimal fields if needed
-    };
 
-    return NextResponse.json(serializedProduct);
+    return NextResponse.json(product);
   } catch (error) {
-    console.log("[PRODUCT_GET]", error);
-    return new NextResponse("Internal error", { status: 500 });
+    console.error("[PRODUCT_GET]", error);
+    return new NextResponse("Internal server error", { status: 500 });
   }
 }
 
@@ -67,6 +49,7 @@ export async function PATCH(
     const {
       name,
       price,
+      discountPrice,
       categoryId,
       colorId,
       sizeId,
@@ -84,7 +67,10 @@ export async function PATCH(
     }
     if (!price) {
       return new NextResponse("price  is required", { status: 400 });
-    }
+    }  
+    //   if (!discountPrice) {
+    //   return new NextResponse("price  is required", { status: 400 });
+    // }
 
     if (!categoryId) {
       return new NextResponse("category Id  is required", { status: 400 });
@@ -120,6 +106,7 @@ export async function PATCH(
       data: {
       name,
       price,
+      // discountPrice,
       categoryId,
 
       colorId,

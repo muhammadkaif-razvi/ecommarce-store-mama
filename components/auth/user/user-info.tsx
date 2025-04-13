@@ -29,7 +29,8 @@ export const UserInfo = ({ user }: UserInfoProps) => {
       {/* Card Header */}
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
-          <InfoIcon className="h-5 w-5 text-purple-600 dark:text-purple-400" /> {/* Optional icon */}
+          <InfoIcon className="h-5 w-5 text-purple-600 dark:text-purple-400" />{" "}
+          {/* Optional icon */}
           User Information
         </CardTitle>
       </CardHeader>
@@ -74,8 +75,12 @@ const InfoItem: React.FC<{ title: string; value: string }> = ({
 }) => {
   return (
     <div className="flex flex-row items-start sm:items-center justify-between rounded-lg border p-3 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors border-gray-200 dark:border-gray-700">
-      <p className="text-sm font-medium text-gray-700 dark:text-gray-300">{title}</p>
-      <p className="text-sm font-mono text-gray-900 dark:text-gray-100 break-all">{value}</p>
+      <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+        {title}
+      </p>
+      <p className="text-sm font-mono text-gray-900 dark:text-gray-100 break-all">
+        {value}
+      </p>
     </div>
   );
 };

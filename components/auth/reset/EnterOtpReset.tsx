@@ -42,7 +42,6 @@ export const EnterOtpResetForm = ({
     setSuccess(`Your OTP: ${otp}`);
   }, [otp]);
 
-
   const form = useForm<z.infer<typeof PhoneResetPassSchema>>({
     resolver: zodResolver(PhoneResetPassSchema),
     defaultValues: {

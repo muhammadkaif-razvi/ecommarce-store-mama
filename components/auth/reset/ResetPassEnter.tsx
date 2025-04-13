@@ -49,7 +49,7 @@ export const ResetPasswordEnter = ({
           if (data?.success) {
             form.reset();
             setSuccess(data.success);
-            onSuccess(values.emailOrPhone , data.otp ?? "");
+            onSuccess(values.emailOrPhone, data.otp ?? "");
           }
         })
         .catch(() => {

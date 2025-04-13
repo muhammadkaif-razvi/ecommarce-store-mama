@@ -45,18 +45,25 @@ model User {
 }
 
 model Store {
-  id         String      @id @default(cuid())
-  name       String
-  userId     String
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-  billboards Billboard[] @relation("StoreToBillboard")
-  categories Category[]  @relation("StoreToCategory")
-  colors     Color[]     @relation("StoreToColor")
-  sizes      Size[]      @relation("StoreToSize")
-  products   Product[]   @relation("StoreToProduct")
-  orders     Order[]     @relation("StoreToOrder")
-  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String        @id @default(cuid())
+  name         String
+  userId       String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  billboards   Billboard[]   @relation("StoreToBillboard")
+  categories   Category[]    @relation("StoreToCategory")
+  sizes        Size[]        @relation("StoreToSize")
+  vehicleType  VehicleType[] @relation("StoreToVehicleType")
+  fuelType     FuelType[]    @relation("StoreToFuelType")
+  transmission Transmission[] @relation("StoreToTransmission")
+  features     Features[]     @relation("StoreToFeatures")
+  mileage      Mileage[]      @relation("StoreToMileage")
+  seats        Seats[]       @relation("StoreToSeats")
+  engine       Engine[]      @relation("StoreToEngine")
+  airbag       Airbag[]      @relation("StoreToAirbag")
+  products     Product[]     @relation("StoreToProduct")
+  orders       Order[]       @relation("StoreToOrder")
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Billboard {
@@ -98,15 +105,100 @@ model Size {
   @@index([storeId])
 }
 
-model Color {
+model VehicleType {
   id        String    @id @default(uuid())
   storeId   String
   name      String
-  value     String
   products  Product[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  store     Store     @relation("StoreToColor", fields: [storeId], references: [id])
+  store     Store     @relation("StoreToVehicleType", fields: [storeId], references: [id])
+
+  @@index([storeId])
+}
+
+model FuelType {
+  id        String    @id @default(uuid())
+  storeId   String
+  name      String
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  store     Store     @relation("StoreToFuelType", fields: [storeId], references: [id])
+
+  @@index([storeId])
+}
+
+model Transmission {
+  id        String    @id @default(uuid())
+  storeId   String     
+
+  name      String
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  store     Store     @relation("StoreToTransmission", fields: [storeId], references: [id])
+ 
+@@unique([storeId, name])
+@@index([storeId])
+}
+
+model Features {
+  id        String    @id @default(uuid())
+  storeId   String    
+  name      String
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  store     Store     @relation("StoreToFeatures", fields: [storeId], references: [id])
+
+  @@index([storeId])
+}
+
+model Mileage {
+  id        String    @id @default(uuid())
+  storeId   String    
+  name      String
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  store     Store     @relation("StoreToMileage", fields: [storeId], references: [id])
+
+  @@index([storeId])
+}
+
+model Seats {
+  id        String    @id @default(uuid())
+  storeId   String    
+  name      String
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  store     Store     @relation("StoreToSeats", fields: [storeId], references: [id])
+
+  @@index([storeId])
+}
+
+model Engine {
+  id        String    @id @default(uuid())
+  storeId   String    
+  name      String
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  store     Store     @relation("StoreToEngine", fields: [storeId], references: [id])
+
+  @@index([storeId])
+}
+
+model Airbag {
+  id        String    @id @default(uuid())
+  storeId   String    
+  name      String
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  store     Store     @relation("StoreToAirbag", fields: [storeId], references: [id])
 
   @@index([storeId])
 }
@@ -123,17 +215,43 @@ model Product {
   isArchived Boolean  @default(false)
   sizeId     String
   size       Size     @relation(fields: [sizeId], references: [id])
-  colorId    String
-  color      Color    @relation(fields: [colorId], references: [id])
+
+  vehicleTypeId String
+  vehicleType   VehicleType @relation(fields: [vehicleTypeId], references: [id])
+
+  fueltypeId String
+  fuelType   FuelType @relation(fields: [fueltypeId], references: [id])
+
+  transmissionId String
+  transmission   Transmission @relation(fields: [transmissionId], references: [id])
+
+  featuresId String
+  features   Features @relation(fields: [featuresId], references: [id])
+
+  mileageId String
+  mileage   Mileage @relation(fields: [mileageId], references: [id])
+
+  seatsId String
+  seats   Seats  @relation(fields: [seatsId], references: [id])
+
+  engineId String
+  engine   Engine @relation(fields: [engineId], references: [id])
+
+  airbagId String
+  airbag   Airbag @relation(fields: [airbagId], references: [id])
+
   images     Image[]
   orderItems OrderItem[]
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
 
   @@index([storeId])
   @@index([categoryId])
   @@index([sizeId])
-  @@index([colorId])
+  @@index([vehicleTypeId])
+  @@index([fueltypeId])
+  @@index([transmissionId])
+  @@index([featuresId])
 }
 
 model Image {
@@ -163,17 +281,15 @@ model Order {
 }
 
 model OrderItem {
-  id        String   @id @default(uuid())
+  id        String  @id @default(uuid())
   orderId   String
-  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
   productId String
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@index([orderId])
   @@index([productId])
 }
-
-
 
 model EmailVerificationToken {
   id      String   @id @default(cuid())

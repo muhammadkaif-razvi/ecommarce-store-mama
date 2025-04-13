@@ -16,15 +16,19 @@ import {
 import { FormError } from "@/components/auth/form-error";
 import FormSuccess from "@/components/auth/form-success";
 import { AuthWrapper } from "@/components/auth/AuthWrapper";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
 import { verifyEmailOTPStep } from "@/actions/verifyemail";
 
-export const VerEmailOtpForm = ({ 
-  email, 
+export const VerEmailOtpForm = ({
+  email,
   onSuccess,
   onReset, // Add onReset prop
-}: { 
-  email: string; 
+}: {
+  email: string;
   onSuccess: () => void;
   onReset: () => void; // Reset function
 }) => {

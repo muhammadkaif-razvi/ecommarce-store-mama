@@ -15,7 +15,6 @@ export default function RegisterPage() {
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
   const [otp, setOtp] = useState<string | null>(null);
 
-
   // Load state from sessionStorage on mount
   useEffect(() => {
     const savedState = sessionStorage.getItem("registrationState");
@@ -31,13 +30,16 @@ export default function RegisterPage() {
 
   // Save state to sessionStorage on changes
   useEffect(() => {
-    sessionStorage.setItem("registrationState", JSON.stringify({
-      name,
-      email,
-      phonenumber,
-      isEmailVerified,
-      isPhoneVerified,
-    }));
+    sessionStorage.setItem(
+      "registrationState",
+      JSON.stringify({
+        name,
+        email,
+        phonenumber,
+        isEmailVerified,
+        isPhoneVerified,
+      })
+    );
   }, [name, email, phonenumber, isEmailVerified, isPhoneVerified]);
 
   // Clear state when the component unmounts (user leaves the page)
@@ -64,7 +66,6 @@ export default function RegisterPage() {
           <EnterEmailForm
             onSuccess={(submittedEmail) => {
               setEmail(submittedEmail);
-              
             }}
           />
         ) : !isEmailVerified ? (
@@ -77,9 +78,8 @@ export default function RegisterPage() {
           <EnterPhoneNoForm
             email={email}
             onSuccess={(submittedPhone, otp) => {
-              setPhonenumber(submittedPhone)
+              setPhonenumber(submittedPhone);
               setOtp(otp);
-
             }}
             onReset={resetState} // Allow resetting the state
           />
@@ -87,9 +87,8 @@ export default function RegisterPage() {
           <VerPhoneOtpForm
             phonenumber={phonenumber}
             onSuccess={() => setIsPhoneVerified(true)}
-            onReset={resetState} 
+            onReset={resetState}
             otp={otp ?? ""}
-
           />
         ) : (
           <EnterPassComReg

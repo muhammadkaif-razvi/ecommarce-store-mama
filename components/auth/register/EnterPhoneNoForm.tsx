@@ -26,9 +26,8 @@ export const EnterPhoneNoForm = ({
   onReset,
 }: {
   email: string;
-  onSuccess: (phonenumber: string,otp: string) => void;
+  onSuccess: (phonenumber: string, otp: string) => void;
   onReset: () => void;
-
 }) => {
   const [error, setError] = useState<string | undefined>(undefined);
   const [success, setSuccess] = useState<string | undefined>(undefined);
@@ -37,7 +36,7 @@ export const EnterPhoneNoForm = ({
   const form = useForm<z.infer<typeof Step3Schema>>({
     resolver: zodResolver(Step3Schema),
     defaultValues: {
-      email, 
+      email,
       phonenumber: "",
     },
   });

@@ -84,8 +84,8 @@ export default function AdminDashboard() {
               </CardHeader>
               <CardContent>
                 <p className="text-slate-600 dark:text-slate-400">
-                  Manage customer profiles, view order history, and send targeted
-                  promotions.
+                  Manage customer profiles, view order history, and send
+                  targeted promotions.
                 </p>
               </CardContent>
             </Card>
@@ -138,7 +138,8 @@ export default function AdminDashboard() {
               </CardHeader>
               <CardContent>
                 <p className="text-slate-600 dark:text-slate-400">
-                  Create and manage discounts, coupons, and promotional campaigns.
+                  Create and manage discounts, coupons, and promotional
+                  campaigns.
                 </p>
               </CardContent>
             </Card>

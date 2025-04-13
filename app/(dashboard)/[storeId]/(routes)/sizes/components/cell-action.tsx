@@ -1,7 +1,7 @@
 "use client";
 
 import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
-import { SizeColumn} from "./columns";
+import { SizeColumn } from "./columns";
 import {
   DropdownMenuContent,
   DropdownMenuLabel,
@@ -36,16 +36,12 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const onDelete = async () => {
     try {
       setLoading(true);
-      await axios.delete(
-        `/api/${params.storeId}/sizes/${data.id}`
-      );
+      await axios.delete(`/api/${params.storeId}/sizes/${data.id}`);
       router.refresh();
       update();
       toast.success("Size deleted.");
     } catch {
-      toast.error(
-        "Make sure you removed all products using this size first."
-      );
+      toast.error("Make sure you removed all products using this size first.");
     } finally {
       setLoading(false);
       setOpen(false);
@@ -83,9 +79,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
             Copy Id
           </DropdownMenuLabel>
           <DropdownMenuLabel
-            onClick={() =>
-              router.push(`/${params.storeId}/sizes/${data.id}`)
-            }
+            onClick={() => router.push(`/${params.storeId}/sizes/${data.id}`)}
             className="flex flex-row items-center"
           >
             <Edit className=" mr-2 h-4 w-4" />

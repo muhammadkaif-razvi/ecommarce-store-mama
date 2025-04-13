@@ -60,7 +60,7 @@ export const EnterPassComReg = ({
           } else if (data?.success) {
             setSuccess(data.success);
             update();
-            router.refresh()
+            router.refresh();
             onComplete();
           }
         }

@@ -62,27 +62,30 @@ export const Navbar = () => {
           {!["/", "/profile", "/settings"].includes(pathname) &&
             session?.user.stores.length > 0 && (
               <>
-             
-              <StoreSwitcher className="" items={session?.user.stores} />
-              <MainNav className="lg:flex hidden"/> 
-              <MobileNav />
+                <StoreSwitcher className="" items={session?.user.stores} />
+                <MainNav className="lg:flex hidden" />
+                <MobileNav />
               </>
             )}
-               {["/", "/profile", "/settings"].includes(pathname) &&
+          {["/", "/profile", "/settings"].includes(pathname) &&
             session?.user.stores.length > 0 && (
               <Link href="/stores-setup">
-            <Button  variant="outline" size="sm" className="flex items-center">
-              <StoreIcon />
-              <span className="ml-1 hidden md:block">Open Store</span>
-            </Button>
-            </Link>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex items-center"
+                >
+                  <StoreIcon />
+                  <span className="ml-1 hidden md:block">Open Store</span>
+                </Button>
+              </Link>
             )}
 
           <ModeToggle />
 
           {session?.user?.phoneNumberVerified ? (
             <div className="hidden md:flex ">
-            <UserButton  />
+              <UserButton />
             </div>
           ) : (
             <>

@@ -1,5 +1,5 @@
-import { EmailResetPassForm } from '@/components/auth/reset/EmailResetPass';
-import React from 'react'
+import { EmailResetPassForm } from "@/components/auth/reset/EmailResetPass";
+import React from "react";
 
 const NewPasswordPage = () => {
   return (
@@ -8,7 +8,7 @@ const NewPasswordPage = () => {
         <EmailResetPassForm />
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default NewPasswordPage;

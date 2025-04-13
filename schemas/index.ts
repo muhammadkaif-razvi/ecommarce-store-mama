@@ -6,14 +6,11 @@ export const formSchema = z.object({
   name: z
     .string()
     .min(2, "Name must be min 2 characters")
-    .max(14, "Name cannot be longer than 14 characters"),
+    .max(20, "Name cannot be longer than 20 characters"),
 });
 
 export const BillboardformSchema = z.object({
-  label: z
-    .string()
-    .min(1, "Name must be min 2 characters")
-    .max(14, "Name cannot be longer than 14 characters"),
+  label: z.string().min(1, "Name must be min 2 characters").max(45, "Name cannot be longer than 30 characters"),
   imageUrl: z.string().min(1),
 });
 
@@ -29,8 +26,15 @@ export const SizeformSchema = z.object({
   name: z
     .string()
     .min(1, "Name must be min 2 characters")
-    .max(14, "Name cannot be longer than 14 characters"),
+    .max(25, "Name cannot be longer than 14 characters"),
   value: z.string().min(1, "Value must be min 2 characters"),
+});
+export const VehicleTypeformSchema = z.object({
+  name: z
+    .string()
+    .min(1, "Name must be min 2 characters")
+    .max(25, "Name cannot be longer than 14 characters"),
+ 
 });
 
 export const ColorformSchema = z.object({
@@ -40,17 +44,28 @@ export const ColorformSchema = z.object({
     .max(14, "Name cannot be longer than 14 characters"),
   value: z.string().min(3),
 });
+export const fuelTypeformSchema = z.object({
+  name: z
+    .string()
+    .min(1, "Name must be min 2 characters")
+    .max(14, "Name cannot be longer than 14 characters"),
+
+});
 
 export const ProductformSchema = z.object({
   name: z
     .string()
     .min(1, "Name must be min 2 characters")
-    .max(14, "Name cannot be longer than 14 characters"),
-  images: z.object({ url: z.string() }).array(),
-  price :z.coerce.number().min(1, "Price must be greater than 0"),
-  categoryId: z.string().min(1, "Category is required"),
+    .max(20, "Name cannot be longer than 20 characters"),
+  images: z
+    .array(z.object({ url: z.string() }))
+    .min(1, "At least one image is required")
+    .max(6, "Maximum 6 images allowed"),
+    price: z.coerce.number().min(1, "Price must be greater than 0"),
+    // discountPrice: z.coerce.number().min(1, "Price must be greater than 0"),
+    categoryId: z.string().min(1, "Category is required"),
   colorId: z.string().min(1, "Color is required"),
-  sizeId :z.string().min(1, "Size is required"),
+  sizeId: z.string().min(1, "Size is required"),
   isFeatured: z.boolean().default(false).optional(),
   isArchived: z.boolean().default(false).optional(),
 });

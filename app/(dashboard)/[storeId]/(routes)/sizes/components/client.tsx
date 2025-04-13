@@ -21,8 +21,8 @@ export const SizesClient: React.FC<SizesClientProps> = ({ data }) => {
     <>
       <div className=" mt-8 flex items-center justify-between">
         <Heading
-          title={` Sizes(${data.length})`}
-          description="Manage Sizes for your store"
+          title={` Budget(${data.length})`}
+          description="Manage budget and prices for your store"
         />
         <Button
           onClick={() => {

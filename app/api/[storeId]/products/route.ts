@@ -20,6 +20,7 @@ export async function POST(
       images,
       isFeatured,
       isArchived,
+      discountPrice,
     } = body;
 
     if (!userId) {
@@ -32,6 +33,9 @@ export async function POST(
     if (!price) {
       return new NextResponse("price  is required", { status: 400 });
     }
+    // if (!discountPrice) {
+    //   return new NextResponse("price  is required", { status: 400 });
+    // }
 
     if (!categoryId) {
       return new NextResponse("category Id  is required", { status: 400 });
@@ -65,6 +69,7 @@ export async function POST(
       data: {
       name,
       price,
+      // discountPrice,
       categoryId,
       colorId,
       sizeId,

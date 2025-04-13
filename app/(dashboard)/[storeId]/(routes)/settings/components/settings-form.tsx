@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
 import { Store } from "@prisma/client";
 import { formSchema } from "@/schemas";
-import  * as z  from "zod";
+import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
@@ -31,7 +31,7 @@ interface SettingsFormProps {
 }
 type SettingsFormValues = z.infer<typeof formSchema>;
 
-export const SettingsForm: React.FC<SettingsFormProps> =  ({ initialData }) => {
+export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   const params = useParams();
   const router = useRouter();
   const origin = useOrigin();
@@ -43,7 +43,7 @@ export const SettingsForm: React.FC<SettingsFormProps> =  ({ initialData }) => {
     resolver: zodResolver(formSchema),
     defaultValues: initialData,
   });
-  const storeId = params.storeId ;
+  const storeId = params.storeId;
   const onSubmit = async (values: SettingsFormValues) => {
     try {
       setLoading(true);
@@ -65,13 +65,13 @@ export const SettingsForm: React.FC<SettingsFormProps> =  ({ initialData }) => {
       update();
       router.push("/stores-setup");
       toast.success("Store deleted.");
-    } catch  {
+    } catch {
       toast.error("Make sure you removed all products and categories first.");
     } finally {
       setLoading(false);
       setOpen(false);
     }
-  }
+  };
 
   return (
     <>
@@ -80,7 +80,9 @@ export const SettingsForm: React.FC<SettingsFormProps> =  ({ initialData }) => {
         onClose={() => {
           setOpen(false);
         }}
-        onConfirm={() => {onDelete();}}
+        onConfirm={() => {
+          onDelete();
+        }}
         loading={loading}
       />
       <div className="flex items-center justify-between mt-3 sm:mt-5 lg:mt-6">
@@ -126,11 +128,11 @@ export const SettingsForm: React.FC<SettingsFormProps> =  ({ initialData }) => {
         </form>
       </Form>
       <Separator />
-      <ApiAlert 
-      title="NEXT_PUBLIC_API_URL" 
-      description={`${origin}/api/${storeId}`}
-      variant="public" 
-      /> 
+      <ApiAlert
+        title="NEXT_PUBLIC_API_URL"
+        description={`${origin}/api/${storeId}`}
+        variant="public"
+      />
     </>
   );
 };

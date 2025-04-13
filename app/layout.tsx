@@ -37,7 +37,7 @@ export default async function RootLayout({
         <Providers session={session}>
           <Navbar />
           <main style={{ paddingTop: "var(--navbar-height, 2rem)" }}>
-          <ModalProvider />
+            <ModalProvider />
             {children}
             <Toaster />
           </main>

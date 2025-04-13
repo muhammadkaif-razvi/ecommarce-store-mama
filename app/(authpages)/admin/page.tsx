@@ -5,14 +5,23 @@ import { signOut } from "next-auth/react";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Loader2 } from "lucide-react";
 
 export default function AdminPage() {
   const user = useCurrentUser();
   const router = useRouter();
   const [loading, setLoading] = useState(true);
-  const [users, setUsers] = useState<{ id: string; email: string; role: string; createdAt: string }[]>([]);
+  const [users, setUsers] = useState<
+    { id: string; email: string; role: string; createdAt: string }[]
+  >([]);
 
   useEffect(() => {
     if (!user) return;

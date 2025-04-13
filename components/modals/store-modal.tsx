@@ -16,14 +16,14 @@ import { formSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import {  z } from "zod";
+import { z } from "zod";
 import axios from "axios";
-
+import { useRouter } from "next/navigation";
 
 export const StoreModal = () => {
   const storeModal = useStoreModal();
   const [loading, setLoading] = useState(false);
-
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -36,7 +36,7 @@ export const StoreModal = () => {
     try {
       setLoading(true);
       const response = await axios.post("/api/stores", values);
-       window.location.assign(`/${response.data.id}`);
+      window.location.assign(`/${response.data.id}`);
     } catch (error) {
       console.log(error);
     } finally {
@@ -44,17 +44,21 @@ export const StoreModal = () => {
     }
   };
 
+  const handleCancel = () => {
+    storeModal.onClose();
+    router.push("/");
+  };
+
   return (
     <Modal
       title="Create Store"
       description="Add a new store to manage products and categories"
       isOpen={storeModal.isOpen}
-      onClose={storeModal.onClose}
+      onClose={handleCancel} // Use handleCancel for modal close
     >
-      <div>
+      <div className="space-y-4">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-
+          <form onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
               name="name"
@@ -73,16 +77,18 @@ export const StoreModal = () => {
                 </FormItem>
               )}
             />
-            {/* Buttons Container */}
-            <div className="flex justify-end space-x-4">
+
+            {/* Buttons Container - aligned to the right */}
+            <div className="flex justify-end space-x-2 pt-6">
               <Button
                 variant="outline"
-                onClick={storeModal.onClose}
+                onClick={handleCancel}
                 disabled={loading}
+                type="button"
               >
                 Cancel
               </Button>
-              <Button type="submit" disabled={loading}>
+              <Button type="submit" disabled={loading} className="ml-2">
                 {loading ? "Creating..." : "Create"}
               </Button>
             </div>

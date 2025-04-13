@@ -182,9 +182,9 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                         <div className="text-center p-2 text-sm text-gray-500">
                           No billboards.{" "}
                           <button
-                           onClick={() => {
-                            router.push(`/${params.storeId}/billboards/new`);
-                          }}
+                            onClick={() => {
+                              router.push(`/${params.storeId}/billboards/new`);
+                            }}
                             className="text-blue-500 hover:underline"
                           >
                             Create one!
