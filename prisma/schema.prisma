@@ -278,6 +278,7 @@ model Image {
   variantId String?
 
   @@index([productId])
+  @@index([variantId])
 }
 
 model Order {

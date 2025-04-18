@@ -114,6 +114,10 @@ export function MobileNav() {
       href: `/${params.storeId}/products`,
       label: "products",
       active: pathname === `/${params.storeId}/products`,
+    }  ,  {
+      href: `/${params.storeId}/variants`,
+      label: "Variants",
+      active: pathname === `/${params.storeId}/variants`,
     },
     {
       href: `/${params.storeId}/orders`,

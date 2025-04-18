@@ -1,4 +1,4 @@
-import { db } from "@/lib/db"; // Ensure "@/lib/db" is the correct path to the database module
+import { db } from "@/lib/db";
 import { ProductForm } from "./components/Product-form";
 
 interface ProductProps {

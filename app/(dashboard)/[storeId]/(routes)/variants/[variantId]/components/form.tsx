@@ -17,7 +17,6 @@ import {
   FormLabel,
   FormControl,
   FormMessage,
-  FormDescription,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Trash } from "lucide-react";
@@ -32,7 +31,6 @@ import {
   SelectValue,
   SelectItem,
 } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
 import { ImageUpload } from "@/components/ui/image-upload-product";
 
 interface variantFormProps {
@@ -66,18 +64,16 @@ export const VariantForm: React.FC<variantFormProps> = ({
     defaultValues: initialData
       ? {
           ...initialData,
-          price: initialData.price ? String(initialData.price) : undefined,
-          inventory: initialData.inventory
-            ? Number(initialData.inventory)
-            : null,
+          price: parseFloat(String(initialData.price)),
+          inventory: parseFloat(String(initialData.inventory)),
         }
       : {
           name: "",
           images: [],
           variantsepQuant: "",
-          price: "",
-          inventory: null,
-          productId: "",
+          price: 0,
+          inventory: 0,
+          productId:'0a8d6fdf-6d23-45dd-a512-a6ac8ef331b9',
         },
   });
   const onSubmit = async (values: variantFormValues) => {
@@ -217,7 +213,7 @@ export const VariantForm: React.FC<variantFormProps> = ({
               name="variantsepQuant"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Base Quantity of variant</FormLabel>
+                  <FormLabel>Quantity of variant</FormLabel>
                   <FormControl>
                     <Input
                       type="text"
@@ -238,6 +234,7 @@ export const VariantForm: React.FC<variantFormProps> = ({
                   <FormLabel>Stock variant or product</FormLabel>
                   <FormControl>
                     <Input
+                    type="number"
                       disabled={loading}
                       placeholder="variant Description"
                       value={field.value ?? ""}

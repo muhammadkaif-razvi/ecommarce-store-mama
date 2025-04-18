@@ -116,13 +116,12 @@ export const variantformSchema = z.object({
     .min(1, "At least one image is required")
     .max(6, "Maximum 6 images allowed"),
   variantsepQuant: z.string().min(1, "Quantity is required"),
-  price: z.string().min(1, "Price is required"),
-  inventory: z.number().int().optional().nullable(),
+  price: z.coerce.number().min(1, "Price is required"),
+  inventory: z.coerce.number(),
   productId: z
   .string()
   .min(1, "Product Type is required")
-  .optional()
-  .or(z.literal("")),});
+  .optional()});
 
 export const settingsSchema = z
   .object({

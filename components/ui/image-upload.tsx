@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { ImagePlus, Trash } from "lucide-react";
 import { CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
-import { toast } from "react-hot-toast";
 
 interface ImageUploadProps {
   disabled?: boolean;
@@ -12,7 +11,6 @@ interface ImageUploadProps {
   onRemove: (value: string) => void;
   value: string[];
   maxFiles?: number;
-  single?: boolean;
 }
 
 export const ImageUpload: React.FC<ImageUploadProps> = ({
@@ -21,7 +19,6 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
   onRemove,
   value = [],
   maxFiles = 6,
-  single = false,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -67,7 +64,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
         ))}
       </div>
       {value.length < maxFiles && (
-        <CldUploadWidget onSuccess={onUpload} uploadPreset="sjiyx6o3">
+        <CldUploadWidget onUpload={onUpload} uploadPreset="sjiyx6o3">
           {({ open }) => {
             return (
               <Button

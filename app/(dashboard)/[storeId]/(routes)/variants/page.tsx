@@ -16,7 +16,7 @@ const variantsPage = async ({
     },
     include: {
       images: true,
-      product: true, // Include the product relation
+      product: true, 
     },
     orderBy: {
       createdAt: "desc",

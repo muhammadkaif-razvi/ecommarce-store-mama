@@ -22,14 +22,13 @@ export async function POST(
     }
     if (!price) {
       return new NextResponse("price is required", { status: 400 });
-    }   if (!variantsepQuant) {
-      return new NextResponse("quantity is required", { status: 400 });
-    }   if (!inventory) {
-      return new NextResponse("inventory is required", { status: 400 });
     }
-    
+    if (!variantsepQuant) {
+      return new NextResponse("quantity is required", { status: 400 });
+    }
+
     if (!productId) {
-      return new NextResponse("product is required", { status: 400 });
+      return new NextResponse("Product ID is required", { status: 400 });
     }
 
     if (!images || !images.length) {
@@ -58,10 +57,12 @@ export async function POST(
         inventory,
         productId,
         images: {
-          createMany: {
-            data: images.map((image: { url: string }) => image),
-          },
+          create: images.map((image: { url: string }) => ({
+            url: image.url,
+            productId: productId, // Add productId here for the Image records
+          })),
         },
+
         storeId,
       },
     });
@@ -96,7 +97,6 @@ export async function GET(
       },
       orderBy: {
         createdAt: "desc",
-
       },
     });
 
