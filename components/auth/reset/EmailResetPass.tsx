@@ -46,8 +46,9 @@ export const EmailResetPassForm = () => {
         if (data?.error) {
           setError(data.error);
         } else if (data?.success) {
-          setSuccess(data.success);
           update();
+          setSuccess(data.success);
+       
         }
       });
     });

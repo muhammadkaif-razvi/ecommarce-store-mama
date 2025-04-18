@@ -1,6 +1,6 @@
 import { db } from "@/lib/db";
 import { format } from "date-fns";
-import {  ProductClient } from "./components/client";
+import { ProductClient } from "./components/client";
 import { ProductColumn } from "./components/columns";
 import { formatter } from "@/lib/utils";
 const ProductsPage = async ({
@@ -16,8 +16,8 @@ const ProductsPage = async ({
     },
     include: {
       category: true,
-      size: true,
-      color: true,
+      images: true,
+      variants: true, // Include variants in the query
     },
     orderBy: {
       createdAt: "desc",
@@ -26,13 +26,28 @@ const ProductsPage = async ({
 
   const formattedProducts: ProductColumn[] = products.map((item) => ({
     id: item.id,
+    images: item.images.map((image) => image.url),
     name: item.name,
+    description: item.description,
+    quantity: item?.basesepQuant || "N/A",
+    price: formatter.format(item.basePrice?.toNumber() || 0),
+    variantName: item?.variants
+      .map((variant: { name: any }) => variant.name)
+      .join(", "),
+    variantPrice: item?.variants
+      .map((variant: { price: any }) =>
+        formatter.format(variant.price.toNumber() || 0)
+      )
+      .join(", "),
+    variantQuantity: item?.variants
+      .map((variant: { variantsepQuant: any }) => variant.variantsepQuant)
+      .join(", "),
+    hasVariants: item.variants.length > 0,
     isFeatured: item.isFeatured,
     isArchived: item.isArchived,
-    price: formatter.format(item.price.toNumber()),
+    isNewLaunch: item.isNewlaunch,
+    isBestseller: item.isBestseller,
     category: item.category.name,
-    size: item.size.name,
-    color: item.color.value,
     createdAt: format(item.createdAt, "MMMM do, yyyy"),
   }));
 

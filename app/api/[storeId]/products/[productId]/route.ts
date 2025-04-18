@@ -19,15 +19,20 @@ export async function GET(
       include: {
         images: true,
         category: true,
-        size: true,
-        color: true,
+        face: true,
+        hair: true,
+        makeup: true,
+        body: true,
+        combos: true,
+        ingredient: true,
+        fragrance: true,
+        price: true,
       },
     });
 
     if (!product) {
       return new NextResponse("Product not found", { status: 404 });
     }
-
 
     return NextResponse.json(product);
   } catch (error) {
@@ -48,39 +53,40 @@ export async function PATCH(
     const body = await req.json();
     const {
       name,
-      price,
-      discountPrice,
-      categoryId,
-      colorId,
-      sizeId,
+      basePrice,
+      description,
+      basesepQuant,
       images,
+      categoryId,
+      faceId,
+      hairId,
+      makeupId,
+      bodyId,
+      comboId,
+      ingredientId,
+      fragranceId,
+      priceId,
+      isNewlaunch,
+      isBestseller,
       isFeatured,
       isArchived,
     } = body;
 
     if (!userId) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return new NextResponse("Unauthanticated", { status: 401 });
     }
 
     if (!name) {
       return new NextResponse("name is required", { status: 400 });
     }
-    if (!price) {
-      return new NextResponse("price  is required", { status: 400 });
-    }  
-    //   if (!discountPrice) {
-    //   return new NextResponse("price  is required", { status: 400 });
-    // }
 
+    if (description) {
+      return new NextResponse("description is required", { status: 400 });
+    }
     if (!categoryId) {
       return new NextResponse("category Id  is required", { status: 400 });
     }
-    if (!colorId) {
-      return new NextResponse("color Id  is required", { status: 400 });
-    }
-    if (!sizeId) {
-      return new NextResponse("size Id  is required", { status: 400 });
-    }
+
     if (!images || !images.length) {
       return new NextResponse("images  is required", { status: 400 });
     }
@@ -99,38 +105,46 @@ export async function PATCH(
       return new NextResponse("Unauthorized", { status: 403 });
     }
 
-   await db.product.update({
+    await db.product.update({
       where: {
         id: productId,
       },
       data: {
-      name,
-      price,
-      // discountPrice,
-      categoryId,
-
-      colorId,
-      sizeId,
-      images: {
-        deleteMany: {},
-      },
-      isFeatured,
-      isArchived,
+        name,
+        description,
+        ...(basePrice ? {basePrice} : {}),
+        ...(basesepQuant ? { basesepQuant } : {}),
+        categoryId,
+        ...(faceId ? { faceId } : {}),
+        ...(hairId ? { hairId } : {}),
+        ...(makeupId ? { makeupId } : {}),
+        ...(bodyId ? { bodyId } : {}),
+        ...(comboId ? { comboId } : {}),
+        ...(ingredientId ? { ingredientId } : {}),
+        ...(fragranceId ? { fragranceId } : {}),
+        ...(priceId ? { priceId } : {}),
+        isNewlaunch,
+        isBestseller,
+        images: {
+          deleteMany: {},
+        },
+        isFeatured,
+        isArchived,
       },
     });
-const product = await db.product.update ({
+    const product = await db.product.update({
       where: {
         id: productId,
       },
       data: {
+        
         images: {
           createMany: {
-            data: [...images.map((image: { url: string }) => image)]
+            data: [...images.map((image: { url: string }) => image)],
           },
         },
-     
       },
-})
+    });
     return NextResponse.json(product);
   } catch (error) {
     console.log("[PRODUCTS_PATCH]", error);

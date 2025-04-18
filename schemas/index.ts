@@ -1,6 +1,8 @@
 import { z } from "zod";
 import { UserRole } from "@prisma/client";
 import { sign } from "crypto";
+import { vendored } from "next/dist/server/route-modules/pages/module.compiled";
+import { Cylinder } from "lucide-react";
 
 export const formSchema = z.object({
   name: z
@@ -10,8 +12,19 @@ export const formSchema = z.object({
 });
 
 export const BillboardformSchema = z.object({
-  label: z.string().min(1, "Name must be min 2 characters").max(45, "Name cannot be longer than 30 characters"),
+  label: z
+    .string()
+    .min(1, "Name must be min 2 characters")
+    .max(45, "Name cannot be longer than 30 characters"),
   imageUrl: z.string().min(1),
+});
+export const ingredientFormSchema = z.object({
+  name: z
+    .string()
+    .min(1, "Name must be min 2 characters")
+    .max(45, "Name cannot be longer than 30 characters"),
+  image: z.string().min(1),
+  description: z.string().min(10, "Description must be min 10 characters"),
 });
 
 export const CategoryformSchema = z.object({
@@ -34,7 +47,6 @@ export const VehicleTypeformSchema = z.object({
     .string()
     .min(1, "Name must be min 2 characters")
     .max(25, "Name cannot be longer than 14 characters"),
- 
 });
 
 export const ColorformSchema = z.object({
@@ -49,23 +61,35 @@ export const fuelTypeformSchema = z.object({
     .string()
     .min(1, "Name must be min 2 characters")
     .max(14, "Name cannot be longer than 14 characters"),
-
 });
 
 export const ProductformSchema = z.object({
   name: z
     .string()
     .min(1, "Name must be min 2 characters")
-    .max(20, "Name cannot be longer than 20 characters"),
+    .max(80, "Name cannot be longer than 40 characters"),
   images: z
     .array(z.object({ url: z.string() }))
     .min(1, "At least one image is required")
     .max(6, "Maximum 6 images allowed"),
-    price: z.coerce.number().min(1, "Price must be greater than 0"),
-    // discountPrice: z.coerce.number().min(1, "Price must be greater than 0"),
-    categoryId: z.string().min(1, "Category is required"),
-  colorId: z.string().min(1, "Color is required"),
-  sizeId: z.string().min(1, "Size is required"),
+  description: z.string().min(10, "Description must be min 10 characters"),
+  categoryId:z.string().min(1, "Category is required"),
+  basePrice: z.string().min(1, "Price must be ex 3-5 lakh").optional(),
+  basesepQuant: z
+    .string()
+    .min(1, "Quantity must be min 2 characters")
+    .optional(),
+    faceId: z.string().min(1, "Face is required").optional().or(z.literal("")),
+    hairId: z.string().min(1, "Hair Type is required").optional().or(z.literal("")),
+    makeupId: z.string().min(1, "Makeup Type is required").optional().or(z.literal("")),
+    bodyId: z.string().min(1, "Body Type is required").optional().or(z.literal("")),
+    comboId:z.string().min(1, "Combos is required").optional().or(z.literal("")),
+    ingredientId: z.string().min(1, "Ingredient is required").optional().or(z.literal("")),
+    fragranceId: z.string().min(1, "Fragrance is required").optional().or(z.literal("")),
+    priceId: z.string().min(1, "Price is required").optional().or(z.literal("")),
+    
+  isNewLaunch: z.boolean().default(false).optional(),
+  isBestseller: z.boolean().default(false).optional(),
   isFeatured: z.boolean().default(false).optional(),
   isArchived: z.boolean().default(false).optional(),
 });

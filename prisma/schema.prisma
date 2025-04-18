@@ -45,25 +45,25 @@ model User {
 }
 
 model Store {
-  id           String        @id @default(cuid())
-  name         String
-  userId       String
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  billboards   Billboard[]   @relation("StoreToBillboard")
-  categories   Category[]    @relation("StoreToCategory")
-  sizes        Size[]        @relation("StoreToSize")
-  vehicleType  VehicleType[] @relation("StoreToVehicleType")
-  fuelType     FuelType[]    @relation("StoreToFuelType")
-  transmission Transmission[] @relation("StoreToTransmission")
-  features     Features[]     @relation("StoreToFeatures")
-  mileage      Mileage[]      @relation("StoreToMileage")
-  seats        Seats[]       @relation("StoreToSeats")
-  engine       Engine[]      @relation("StoreToEngine")
-  airbag       Airbag[]      @relation("StoreToAirbag")
-  products     Product[]     @relation("StoreToProduct")
-  orders       Order[]       @relation("StoreToOrder")
-  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id         String      @id @default(cuid())
+  name       String
+  userId     String
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  billboards Billboard[] @relation("StoreToBillboard")
+  categories Category[]  @relation("StoreToCategory")
+  products   Product[]   @relation("StoreToProduct")
+  orders     Order[]     @relation("StoreToOrder")
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  face       Face[]       @relation("StoreToFace")
+  hair       Hair[]       @relation("StoreToHair")
+  makeup     Makeup[]     @relation("StoreToMakeup")
+  body       Body[]       @relation("StoreToBody")
+  combos     Combos[]     @relation("StoreToCombos")
+  ingredient Ingredient[] @relation("StoreToIngredient")
+  fragrance  Fragrance[]  @relation("StoreToFragrance")
+  price   Price[]          @relation("StoreToPrice")
 }
 
 model Billboard {
@@ -92,166 +92,178 @@ model Category {
   @@index([billboardId])
 }
 
-model Size {
+model Face {
   id        String    @id @default(uuid())
   storeId   String
   name      String
-  value     String
-  products  Product[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  store     Store     @relation("StoreToSize", fields: [storeId], references: [id])
+  store     Store     @relation("StoreToFace", fields: [storeId], references: [id])
+  Product   Product[]
 
   @@index([storeId])
 }
 
-model VehicleType {
+model Hair {
   id        String    @id @default(uuid())
   storeId   String
   name      String
-  products  Product[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  store     Store     @relation("StoreToVehicleType", fields: [storeId], references: [id])
+  store     Store     @relation("StoreToHair", fields: [storeId], references: [id])
+  Product   Product[]
 
   @@index([storeId])
 }
 
-model FuelType {
+model Makeup {
   id        String    @id @default(uuid())
   storeId   String
   name      String
-  products  Product[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  store     Store     @relation("StoreToFuelType", fields: [storeId], references: [id])
+  store     Store     @relation("StoreToMakeup", fields: [storeId], references: [id])
+  Product   Product[]
 
   @@index([storeId])
 }
 
-model Transmission {
+model Body {
   id        String    @id @default(uuid())
-  storeId   String     
-
+  storeId   String
   name      String
-  products  Product[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  store     Store     @relation("StoreToTransmission", fields: [storeId], references: [id])
- 
-@@unique([storeId, name])
-@@index([storeId])
-}
-
-model Features {
-  id        String    @id @default(uuid())
-  storeId   String    
-  name      String
-  products  Product[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  store     Store     @relation("StoreToFeatures", fields: [storeId], references: [id])
+  store     Store     @relation("StoreToBody", fields: [storeId], references: [id])
+  Product   Product[]
 
   @@index([storeId])
 }
 
-model Mileage {
+model Combos {
   id        String    @id @default(uuid())
-  storeId   String    
+  storeId   String
   name      String
-  products  Product[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  store     Store     @relation("StoreToMileage", fields: [storeId], references: [id])
+  store     Store     @relation("StoreToCombos", fields: [storeId], references: [id])
+  Product   Product[]
 
   @@index([storeId])
 }
 
-model Seats {
-  id        String    @id @default(uuid())
-  storeId   String    
-  name      String
-  products  Product[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  store     Store     @relation("StoreToSeats", fields: [storeId], references: [id])
+model Ingredient {
+  id          String    @id @default(uuid())
+  storeId     String
+  image       String
+  name        String
+  description String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  store       Store     @relation("StoreToIngredient", fields: [storeId], references: [id])
+  Product     Product[]
 
   @@index([storeId])
 }
 
-model Engine {
+model Fragrance {
   id        String    @id @default(uuid())
-  storeId   String    
+  storeId   String
   name      String
-  products  Product[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  store     Store     @relation("StoreToEngine", fields: [storeId], references: [id])
+  store     Store     @relation("StoreToFragrance", fields: [storeId], references: [id])
+  Product   Product[]
 
   @@index([storeId])
 }
-
-model Airbag {
+model Price {
   id        String    @id @default(uuid())
-  storeId   String    
+  storeId   String
   name      String
-  products  Product[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  store     Store     @relation("StoreToAirbag", fields: [storeId], references: [id])
+  store     Store     @relation("StoreToPrice", fields: [storeId], references: [id])
+  Product   Product[]
 
   @@index([storeId])
 }
 
 model Product {
-  id         String   @id @default(uuid())
+  id           String   @id @default(uuid())
+  name         String
+  description  String
+  basesepQuant String?
+  basePrice    Decimal?
+
+  isNewlaunch  Boolean @default(false)
+  isBestseller Boolean @default(false)
+  isFeatured   Boolean @default(false)
+  isArchived   Boolean @default(false)
+
   storeId    String
   store      Store    @relation("StoreToProduct", fields: [storeId], references: [id])
   categoryId String
   category   Category @relation("CategoryToProduct", fields: [categoryId], references: [id])
-  name       String
-  price      Decimal
-  isFeatured Boolean  @default(false)
-  isArchived Boolean  @default(false)
-  sizeId     String
-  size       Size     @relation(fields: [sizeId], references: [id])
 
-  vehicleTypeId String
-  vehicleType   VehicleType @relation(fields: [vehicleTypeId], references: [id])
+  variants    Variant[]
 
-  fueltypeId String
-  fuelType   FuelType @relation(fields: [fueltypeId], references: [id])
+  images Image[]
 
-  transmissionId String
-  transmission   Transmission @relation(fields: [transmissionId], references: [id])
+  faceId       String?
+  hairId       String?
+  makeupId     String?
+  bodyId       String?
+  comboId      String?
+  ingredientId String?
+  fragranceId  String?
+  priceId      String?
+  face         Face?       @relation(fields: [faceId], references: [id])
+  hair         Hair?       @relation(fields: [hairId], references: [id])
+  makeup       Makeup?     @relation(fields: [makeupId], references: [id])
+  body         Body?       @relation(fields: [bodyId], references: [id])
+  combos       Combos?     @relation(fields: [comboId], references: [id])
+  ingredient   Ingredient? @relation(fields: [ingredientId], references: [id])
+  fragrance    Fragrance?  @relation(fields: [fragranceId], references: [id])
+  price        Price?      @relation(fields: [priceId],references: [id])
 
-  featuresId String
-  features   Features @relation(fields: [featuresId], references: [id])
+  // Timestamps
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  OrderItem OrderItem[]
 
-  mileageId String
-  mileage   Mileage @relation(fields: [mileageId], references: [id])
-
-  seatsId String
-  seats   Seats  @relation(fields: [seatsId], references: [id])
-
-  engineId String
-  engine   Engine @relation(fields: [engineId], references: [id])
-
-  airbagId String
-  airbag   Airbag @relation(fields: [airbagId], references: [id])
-
-  images     Image[]
-  orderItems OrderItem[]
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime    @updatedAt
-
+  // Indexes
   @@index([storeId])
   @@index([categoryId])
-  @@index([sizeId])
-  @@index([vehicleTypeId])
-  @@index([fueltypeId])
-  @@index([transmissionId])
-  @@index([featuresId])
+  @@index([faceId])
+  @@index([hairId])
+  @@index([makeupId])
+  @@index([bodyId])
+  @@index([comboId])
+  @@index([ingredientId])
+  @@index([fragranceId])
+  @@index([priceId])
+}
+
+model Variant {
+  id        String  @id @default(uuid())
+  name      String // e.g., "50ml", "100ml", "Rose Gold"
+  variantsepQuant   String
+  price     Decimal // Variant-specific price
+  sku       String? // Stock keeping unit
+  inventory Int? // Quantity in stock
+
+  images Image[] // Variant-specific images
+
+  // Relationships
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([productId])
 }
 
 model Image {
@@ -261,6 +273,8 @@ model Image {
   url       String
   cratedAt  DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Variant   Variant? @relation(fields: [variantId], references: [id])
+  variantId String?
 
   @@index([productId])
 }

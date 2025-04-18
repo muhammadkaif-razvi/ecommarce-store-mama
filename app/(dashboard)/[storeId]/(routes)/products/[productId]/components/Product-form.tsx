@@ -1,7 +1,19 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Heading } from "@/components/ui/heading";
-import { Category, Color, Image, Product, Size } from "@prisma/client";
+import {
+  Body,
+  Category,
+  Combos,
+  Face,
+  Fragrance,
+  Hair,
+  Image,
+  Ingredient,
+  Makeup,
+  Price,
+  Product,
+} from "@prisma/client";
 import { ProductformSchema } from "@/schemas";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -41,8 +53,14 @@ interface ProductFormProps {
       })
     | null;
   categories: Category[];
-  colors: Color[];
-  sizes: Size[];
+  faces: Face[];
+  hairs: Hair[];
+  makeups: Makeup[];
+  bodys: Body[];
+  combos: Combos[];
+  ingredients: Ingredient[];
+  fragrances: Fragrance[];
+  prices: Price[];
 }
 
 type ProductFormValues = z.infer<typeof ProductformSchema>;
@@ -50,8 +68,14 @@ type ProductFormValues = z.infer<typeof ProductformSchema>;
 export const ProductForm: React.FC<ProductFormProps> = ({
   initialData,
   categories,
-  colors,
-  sizes,
+  faces,
+  hairs,
+  makeups,
+  bodys,
+  combos,
+  ingredients,
+  fragrances,
+  prices,
 }) => {
   const params = useParams();
   const router = useRouter();
@@ -69,16 +93,36 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     defaultValues: initialData
       ? {
           ...initialData,
-          price: parseFloat(String(initialData?.price)),
+          basePrice: initialData.basePrice
+            ? String(initialData.basePrice)
+            : undefined,
+          basesepQuant: initialData.basesepQuant ?? undefined,
+          faceId: initialData.faceId ?? undefined,
+          hairId: initialData.hairId ?? undefined,
+          makeupId: initialData.makeupId ?? undefined,
+          bodyId: initialData.bodyId ?? undefined,
+          comboId: initialData.comboId ?? undefined,
+          ingredientId: initialData.ingredientId ?? undefined,
+          fragranceId: initialData.fragranceId ?? undefined,
+          priceId: initialData.priceId ?? undefined,
         }
       : {
           name: "",
           images: [],
-          price: 0,
-          // discountPrice: 0,
+          basePrice: "",
+          basesepQuant: "",
+          description: "",
           categoryId: "",
-          colorId: "",
-          sizeId: "",
+          faceId: "",
+          hairId: "",
+          makeupId: "",
+          bodyId: "",
+          comboId: "",
+          ingredientId: "",
+          fragranceId: "",
+          priceId: "",
+          isNewLaunch: false,
+          isBestseller: false,
           isFeatured: false,
           isArchived: false,
         },
@@ -161,7 +205,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               <FormItem>
                 <FormLabel>Product Images</FormLabel>
                 <FormControl>
-                  <ImageUpload
+                <ImageUpload
                     value={field.value || []}
                     disabled={loading} // Use the form's loading state
                     onChange={(image) => {
@@ -179,7 +223,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               </FormItem>
             )}
           />
-          <div className="grid grid-cols-3 gap-8">
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
             <FormField
               control={form.control}
               name="name"
@@ -199,82 +243,53 @@ export const ProductForm: React.FC<ProductFormProps> = ({
             />
             <FormField
               control={form.control}
-              name="price"
+              name="basePrice"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Price</FormLabel>
+                  <FormLabel>Base Price</FormLabel>
                   <FormControl>
                     <Input
                       type="number"
                       disabled={loading}
-                      placeholder="9.99"
+                      placeholder="345"
                       {...field}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
-            />
-            {/* //   <FormField
-          //   control={form.control}
-          //   name="discountPrice"
-          //   render={({ field }) => (
-          //     <FormItem>
-          //       <FormLabel>Discount Price</FormLabel>
-          //       <FormControl>
-          //         <Input
-          //           type="number"
-          //           disabled={loading}
-          //           placeholder="9.99"
-          //           {...field}
-          //         />
-          //       </FormControl>
-          //       <FormMessage />
-          //     </FormItem>
-          //   )}
-          // /> */}
+            />{" "}
             <FormField
               control={form.control}
-              name="sizeId"
+              name="basesepQuant"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Size</FormLabel>
-                  <Select
-                    disabled={loading}
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          defaultValue={field.value}
-                          placeholder="Select a size"
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {sizes.length > 0 ? (
-                        sizes.map((size) => (
-                          <SelectItem key={size.id} value={size.id}>
-                            {size.name}
-                          </SelectItem>
-                        ))
-                      ) : (
-                        <div className="text-center p-2 text-sm text-gray-500">
-                          No sizes found.{" "}
-                          <button
-                            onClick={() => {
-                              router.push(`/${params.storeId}/sizes/new`);
-                            }}
-                            className="text-blue-500 hover:underline"
-                          >
-                            Create one!
-                          </button>
-                        </div>
-                      )}
-                    </SelectContent>
-                  </Select>
+                  <FormLabel>Base Quantity of Product</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      disabled={loading}
+                      placeholder="100ml"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />{" "}
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Description of Product</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={loading}
+                      placeholder="Product Description"
+                      {...field}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -324,53 +339,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                   <FormMessage />
                 </FormItem>
               )}
-            />
-            <FormField
-              control={form.control}
-              name="colorId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Colors</FormLabel>
-                  <Select
-                    disabled={loading}
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          defaultValue={field.value}
-                          placeholder="Select a Color"
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {colors.length > 0 ? (
-                        colors.map((color) => (
-                          <SelectItem key={color.id} value={color.id}>
-                            {color.name}
-                          </SelectItem>
-                        ))
-                      ) : (
-                        <div className="text-center p-2 text-sm text-gray-500">
-                          No Colors.{" "}
-                          <button
-                            onClick={() => {
-                              router.push(`/${params.storeId}/colors/new`);
-                            }}
-                            className="text-blue-500 hover:underline"
-                          >
-                            Create one!
-                          </button>
-                        </div>
-                      )}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            />{" "}
             <FormField
               control={form.control}
               name="isFeatured"
@@ -411,6 +380,418 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                       This product will not appear anywhere in the store.
                     </FormDescription>
                   </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />{" "}
+            <FormField
+              control={form.control}
+              name="isBestseller"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                      disabled={loading}
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none ">
+                    <FormLabel>Best Seller</FormLabel>
+                    <FormDescription>
+                      This product will show bestseller in the store.
+                    </FormDescription>
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />{" "}
+            <FormField
+              control={form.control}
+              name="isNewLaunch"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                      disabled={loading}
+                    />
+                  </FormControl>
+                  <div className="space-y-1 leading-none ">
+                    <FormLabel>New Launch</FormLabel>
+                    <FormDescription>
+                      This product will show new launch in the store.
+                    </FormDescription>
+                  </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="faceId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Face Filter</FormLabel>
+                  <Select
+                    disabled={loading}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue={field.value}
+                          placeholder="Select a filter"
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {faces.length > 0 ? (
+                        faces.map((face) => (
+                          <SelectItem key={face.id} value={face.id}>
+                            {face.name}
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <div className="text-center p-2 text-sm text-gray-500">
+                          No Colors.{" "}
+                          <button
+                            onClick={() => {
+                              router.push(`/${params.storeId}/faces/new`);
+                            }}
+                            className="text-blue-500 hover:underline"
+                          >
+                            Create one!
+                          </button>
+                        </div>
+                      )}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="hairId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Hair Filter</FormLabel>
+                  <Select
+                    disabled={loading}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue={field.value}
+                          placeholder="Select a filter"
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {hairs.length > 0 ? (
+                        hairs.map((hair) => (
+                          <SelectItem key={hair.id} value={hair.id}>
+                            {hair.name}
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <div className="text-center p-2 text-sm text-gray-500">
+                          No filters.{" "}
+                          <button
+                            onClick={() => {
+                              router.push(`/${params.storeId}/hairs/new`);
+                            }}
+                            className="text-blue-500 hover:underline"
+                          >
+                            Create one!
+                          </button>
+                        </div>
+                      )}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />{" "}
+            <FormField
+              control={form.control}
+              name="makeupId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Makeup Filter</FormLabel>
+                  <Select
+                    disabled={loading}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue={field.value}
+                          placeholder="Select a filter"
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {makeups.length > 0 ? (
+                        makeups.map((makeup) => (
+                          <SelectItem key={makeup.id} value={makeup.id}>
+                            {makeup.name}
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <div className="text-center p-2 text-sm text-gray-500">
+                          No filters.{" "}
+                          <button
+                            onClick={() => {
+                              router.push(`/${params.storeId}/makeups/new`);
+                            }}
+                            className="text-blue-500 hover:underline"
+                          >
+                            Create one!
+                          </button>
+                        </div>
+                      )}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="bodyId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Body Filter</FormLabel>
+                  <Select
+                    disabled={loading}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue={field.value}
+                          placeholder="Select a filter"
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {bodys.length > 0 ? (
+                        bodys.map((body) => (
+                          <SelectItem key={body.id} value={body.id}>
+                            {body.name}
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <div className="text-center p-2 text-sm text-gray-500">
+                          No filters.{" "}
+                          <button
+                            onClick={() => {
+                              router.push(`/${params.storeId}/bodys/new`);
+                            }}
+                            className="text-blue-500 hover:underline"
+                          >
+                            Create one!
+                          </button>
+                        </div>
+                      )}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="hairId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Combo Filter</FormLabel>
+                  <Select
+                    disabled={loading}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue={field.value}
+                          placeholder="Select a filter"
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {combos.length > 0 ? (
+                        combos.map((combo) => (
+                          <SelectItem key={combo.id} value={combo.id}>
+                            {combo.name}
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <div className="text-center p-2 text-sm text-gray-500">
+                          No filters.{" "}
+                          <button
+                            onClick={() => {
+                              router.push(`/${params.storeId}/combos/new`);
+                            }}
+                            className="text-blue-500 hover:underline"
+                          >
+                            Create one!
+                          </button>
+                        </div>
+                      )}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="ingredientId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Ingredient Filter</FormLabel>
+                  <Select
+                    disabled={loading}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue={field.value}
+                          placeholder="Select a filter"
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {ingredients.length > 0 ? (
+                        ingredients.map((ingredient) => (
+                          <SelectItem key={ingredient.id} value={ingredient.id}>
+                            {ingredient.name}
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <div className="text-center p-2 text-sm text-gray-500">
+                          No filters.{" "}
+                          <button
+                            onClick={() => {
+                              router.push(`/${params.storeId}/ingredients/new`);
+                            }}
+                            className="text-blue-500 hover:underline"
+                          >
+                            Create one!
+                          </button>
+                        </div>
+                      )}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="fragranceId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Fragrance Filter</FormLabel>
+                  <Select
+                    disabled={loading}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue={field.value}
+                          placeholder="Select a filter"
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {fragrances.length > 0 ? (
+                        fragrances.map((fragrance) => (
+                          <SelectItem key={fragrance.id} value={fragrance.id}>
+                            {fragrance.name}
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <div className="text-center p-2 text-sm text-gray-500">
+                          No filters.{" "}
+                          <button
+                            onClick={() => {
+                              router.push(`/${params.storeId}/fragrances/new`);
+                            }}
+                            className="text-blue-500 hover:underline"
+                          >
+                            Create one!
+                          </button>
+                        </div>
+                      )}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="priceId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Price Filter</FormLabel>
+                  <Select
+                    disabled={loading}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue
+                          defaultValue={field.value}
+                          placeholder="Select a filter"
+                        />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {prices.length > 0 ? (
+                        prices.map((price) => (
+                          <SelectItem key={price.id} value={price.id}>
+                            {price.name}
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <div className="text-center p-2 text-sm text-gray-500">
+                          No filters.{" "}
+                          <button
+                            onClick={() => {
+                              router.push(`/${params.storeId}/prices/new`);
+                            }}
+                            className="text-blue-500 hover:underline"
+                          >
+                            Create one!
+                          </button>
+                        </div>
+                      )}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

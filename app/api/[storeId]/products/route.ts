@@ -13,14 +13,23 @@ export async function POST(
     const body = await req.json();
     const {
       name,
-      price,
-      categoryId,
-      colorId,
-      sizeId,
+      basePrice,
+      description,
+      basesepQuant,
       images,
+      categoryId,
+      faceId,
+      hairId,
+      makeupId,
+      bodyId,
+      comboId,
+      ingredientId,
+      fragranceId,
+      priceId,
+      isNewlaunch,
+      isBestseller,
       isFeatured,
       isArchived,
-      discountPrice,
     } = body;
 
     if (!userId) {
@@ -30,26 +39,16 @@ export async function POST(
     if (!name) {
       return new NextResponse("name is required", { status: 400 });
     }
-    if (!price) {
-      return new NextResponse("price  is required", { status: 400 });
+    if (!description) {
+      return new NextResponse("name is required", { status: 400 });
     }
-    // if (!discountPrice) {
-    //   return new NextResponse("price  is required", { status: 400 });
-    // }
-
     if (!categoryId) {
-      return new NextResponse("category Id  is required", { status: 400 });
+      return new NextResponse("name is required", { status: 400 });
     }
-    if (!colorId) {
-      return new NextResponse("color Id  is required", { status: 400 });
-    }
-    if (!sizeId) {
-      return new NextResponse("size Id  is required", { status: 400 });
-    }
+
     if (!images || !images.length) {
       return new NextResponse("images  is required", { status: 400 });
     }
-
 
     if (!storeId) {
       return new NextResponse("Store Idis required", { status: 400 });
@@ -67,20 +66,29 @@ export async function POST(
 
     const product = await db.product.create({
       data: {
-      name,
-      price,
-      // discountPrice,
-      categoryId,
-      colorId,
-      sizeId,
-      images: {
-        createMany: {
-          data: images.map((image: { url: string }) => image),
+        name,
+        description,
+        ...(basePrice ? {basePrice} : {}),
+        ...(basesepQuant ? { basesepQuant } : {}),
+        categoryId,
+        images: {
+          createMany: {
+            data: images.map((image: { url: string }) => image),
+          },
         },
-      },
-      isFeatured,
-      isArchived,
-      storeId,
+        ...(faceId ? { faceId } : {}),
+        ...(hairId ? { hairId } : {}),
+        ...(makeupId ? { makeupId } : {}),
+        ...(bodyId ? { bodyId } : {}),
+        ...(comboId ? { comboId } : {}),
+        ...(ingredientId ? { ingredientId } : {}),
+        ...(fragranceId ? { fragranceId } : {}),
+        ...(priceId ? { priceId } : {}),
+        isNewlaunch,
+        isBestseller,
+        isFeatured,
+        isArchived,
+        storeId,
       },
     });
     return NextResponse.json(product);
@@ -97,12 +105,20 @@ export async function GET(
 ) {
   try {
     const { storeId } = await params;
-    const {searchParams} = new URL(req.url);
+    const { searchParams } = new URL(req.url);
     const categoryId = searchParams.get("categoryId") || undefined;
-    const colorId = searchParams.get("colorId") || undefined;
-    const sizeId = searchParams.get("sizeId") || undefined;
-    const isFeatured = searchParams.get("isFeatured") 
-    const isArchived = searchParams.get("isArchived") 
+    const faceId = searchParams.get("faceId") || undefined;
+    const hairId = searchParams.get("hairId") || undefined;
+    const makeupId = searchParams.get("makeupId") || undefined;
+    const bodyId = searchParams.get("bodyId") || undefined;
+    const comboId = searchParams.get("comboId") || undefined;
+    const ingredientId = searchParams.get("ingredientId") || undefined;
+    const fragranceId = searchParams.get("fragranceId") || undefined;
+    const priceId = searchParams.get("priceId") || undefined;
+    const isBestseller = searchParams.get("isBestseller");
+    const isNewLaunch = searchParams.get("isNewLaunch");
+    const isFeatured = searchParams.get("isFeatured");
+    const isArchived = searchParams.get("isArchived");
 
     if (!storeId) {
       return new NextResponse("Store Id is required", { status: 400 });
@@ -112,16 +128,30 @@ export async function GET(
       where: {
         storeId,
         categoryId,
-        colorId,
-        sizeId,
-        isArchived : isArchived? true : undefined,
-        isFeatured : isFeatured? true : undefined
+        faceId,
+        hairId,
+        makeupId,
+        bodyId,
+        comboId,
+        ingredientId,
+        fragranceId,
+        priceId,
+        isNewlaunch: isNewLaunch ? true : undefined,
+        isBestseller: isBestseller ? true : undefined,
+        isArchived: isArchived ? true : undefined,
+        isFeatured: isFeatured ? true : undefined,
       },
       include: {
         images: true,
         category: true,
-        size: true,
-        color: true,
+        face: true,
+        hair: true,
+        makeup: true,
+        body: true,
+        combos: true,
+        ingredient: true,
+        fragrance: true,
+        price: true,
       },
       orderBy: {
         createdAt: "desc",

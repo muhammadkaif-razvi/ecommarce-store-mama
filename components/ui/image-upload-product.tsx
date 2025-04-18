@@ -30,9 +30,17 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
 
   const onUpload = (result: any) => {
     if (result?.info?.secure_url) {
-      onChange({ url: result.info.secure_url });
+      // Call onChange with full array for multiple images
+      if (!single) {
+        onChange({ url: result.info.secure_url }); // Will be handled in parent
+      } else {
+        // Replace if single
+        onRemove(value[0]?.url);
+        onChange({ url: result.info.secure_url });
+      }
     }
   };
+  
 
   if (!isMounted) return null;
 
@@ -67,7 +75,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
         ))}
       </div>
       {canUploadMore && (
-        <CldUploadWidget onSuccess={onUpload} uploadPreset="sjiyx6o3">
+        <CldUploadWidget onUpload={onUpload} uploadPreset="sjiyx6o3">
           {({ open }) => {
             const handleClick = () => {
               if (single && value.length > 0) {
