@@ -93,10 +93,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     defaultValues: initialData
       ? {
           ...initialData,
-          basePrice: initialData.basePrice
-            ? String(initialData.basePrice)
-            : undefined,
-          basesepQuant: initialData.basesepQuant ?? undefined,
+          // basePrice: initialData.basePrice
+          //   ? String(initialData.basePrice)
+          //   : undefined,
           faceId: initialData.faceId ?? undefined,
           hairId: initialData.hairId ?? undefined,
           makeupId: initialData.makeupId ?? undefined,
@@ -109,8 +108,6 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       : {
           name: "",
           images: [],
-          basePrice: "",
-          basesepQuant: "",
           description: "",
           categoryId: "",
           faceId: "",
@@ -241,42 +238,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="basePrice"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Base Price</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="number"
-                      disabled={loading}
-                      placeholder="345"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />{" "}
-            <FormField
-              control={form.control}
-              name="basesepQuant"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Base Quantity of Product</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="text"
-                      disabled={loading}
-                      placeholder="100ml"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />{" "}
+       
+        
             <FormField
               control={form.control}
               name="description"

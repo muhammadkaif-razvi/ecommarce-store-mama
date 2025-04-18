@@ -1,7 +1,6 @@
 import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
-// import { Decimal } from "@prisma/client/runtime/library";
 
 export async function GET(
   req: Request,
@@ -53,9 +52,9 @@ export async function PATCH(
     const body = await req.json();
     const {
       name,
-      basePrice,
+
       description,
-      basesepQuant,
+
       images,
       categoryId,
       faceId,
@@ -80,7 +79,7 @@ export async function PATCH(
       return new NextResponse("name is required", { status: 400 });
     }
 
-    if (description) {
+    if (!description) {
       return new NextResponse("description is required", { status: 400 });
     }
     if (!categoryId) {
@@ -112,8 +111,7 @@ export async function PATCH(
       data: {
         name,
         description,
-        ...(basePrice ? {basePrice} : {}),
-        ...(basesepQuant ? { basesepQuant } : {}),
+
         categoryId,
         ...(faceId ? { faceId } : {}),
         ...(hairId ? { hairId } : {}),
@@ -137,7 +135,6 @@ export async function PATCH(
         id: productId,
       },
       data: {
-        
         images: {
           createMany: {
             data: [...images.map((image: { url: string }) => image)],

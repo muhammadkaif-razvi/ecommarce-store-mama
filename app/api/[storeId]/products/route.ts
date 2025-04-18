@@ -13,9 +13,9 @@ export async function POST(
     const body = await req.json();
     const {
       name,
-      basePrice,
+   
       description,
-      basesepQuant,
+  
       images,
       categoryId,
       faceId,
@@ -68,8 +68,6 @@ export async function POST(
       data: {
         name,
         description,
-        ...(basePrice ? {basePrice} : {}),
-        ...(basesepQuant ? { basesepQuant } : {}),
         categoryId,
         images: {
           createMany: {

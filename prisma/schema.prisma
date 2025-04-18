@@ -64,6 +64,8 @@ model Store {
   ingredient Ingredient[] @relation("StoreToIngredient")
   fragrance  Fragrance[]  @relation("StoreToFragrance")
   price   Price[]          @relation("StoreToPrice")
+
+  Variant Variant[] @relation("StoreToVariant")
 }
 
 model Billboard {
@@ -193,8 +195,6 @@ model Product {
   id           String   @id @default(uuid())
   name         String
   description  String
-  basesepQuant String?
-  basePrice    Decimal?
 
   isNewlaunch  Boolean @default(false)
   isBestseller Boolean @default(false)
@@ -247,13 +247,14 @@ model Product {
 
 model Variant {
   id        String  @id @default(uuid())
-  name      String // e.g., "50ml", "100ml", "Rose Gold"
+  name      String 
   variantsepQuant   String
-  price     Decimal // Variant-specific price
-  sku       String? // Stock keeping unit
-  inventory Int? // Quantity in stock
+  price     Decimal 
+  inventory Int? 
+  storeId   String
+  store  Store   @relation("StoreToVariant", fields: [storeId], references: [id])
 
-  images Image[] // Variant-specific images
+  images Image[] 
 
   // Relationships
   productId String

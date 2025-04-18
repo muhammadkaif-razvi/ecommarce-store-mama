@@ -29,8 +29,7 @@ const ProductsPage = async ({
     images: item.images.map((image) => image.url),
     name: item.name,
     description: item.description,
-    quantity: item?.basesepQuant || "N/A",
-    price: formatter.format(item.basePrice?.toNumber() || 0),
+
     variantName: item?.variants
       .map((variant: { name: any }) => variant.name)
       .join(", "),

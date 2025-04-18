@@ -3,24 +3,18 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { CellAction } from "./cell-action";
 
-export type ProductColumn = {
+export type variantColumn = {
   id: string;
   images: string[];
-  name: string;
-  description: string;
-  category: string;
-  hasVariants: boolean;
-  isFeatured: boolean;
-  isArchived: boolean;
-  isNewLaunch: boolean;
-  isBestseller: boolean;
-  variantName: string;
-  variantPrice: string;
-  variantQuantity: string;
+  name:string;
+  price:string;
+  quantity:string;
+  stock:string;
+  productname:string;
   createdAt: string;
 };
 
-export const columns: ColumnDef<ProductColumn>[] = [
+export const columns: ColumnDef<variantColumn>[] = [
   {
     accessorKey: "image",
     header: "Image",
@@ -40,44 +34,20 @@ export const columns: ColumnDef<ProductColumn>[] = [
     header: "Name",
   },
   {
-    accessorKey: "description",
-    header: "Description",
+    accessorKey: "price",
+    header: "Price",
   },
   {
-    accessorKey: "category",
-    header: "Category",
+    accessorKey: "quantity",
+    header: "Quantity",
   },
   {
-    accessorKey: "hasVariants",
-    header: "Has Variants",
+    accessorKey: "stock",
+    header: "Stock",
   },
   {
-    accessorKey: "isFeatured",
-    header: "Featured",
-  },
-  {
-    accessorKey: "isArchived",
-    header: "Archived",
-  },
-  {
-    accessorKey: "isNewLaunch",
-    header: "New Launch",
-  },
-  {
-    accessorKey: "isBestseller",
-    header: "Best Seller",
-  },
-  {
-    accessorKey: "variantName",
-    header: "Variant Name",
-  },
-  {
-    accessorKey: "variantPrice",
-    header: "Variant Price",
-  },
-  {
-    accessorKey: "variantQuantity",
-    header: "Variant Quantity",
+    accessorKey: "productname",
+    header: "Product",
   },
 
   // {
