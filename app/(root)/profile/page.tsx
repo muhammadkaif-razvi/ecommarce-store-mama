@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 "use client";
 import { UserInfo } from "@/components/auth/user/user-info";
 import { useCurrentUser } from "@/hooks/use-current-user";
