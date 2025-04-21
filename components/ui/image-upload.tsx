@@ -4,7 +4,10 @@ import { useEffect, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { ImagePlus, Trash } from "lucide-react";
 import Image from "next/image";
-import { CldUploadWidget } from "next-cloudinary";
+import {
+  CldUploadWidget,
+  CloudinaryUploadWidgetResults,
+} from "next-cloudinary";
 
 interface ImageUploadProps {
   disabled?: boolean;
@@ -13,6 +16,7 @@ interface ImageUploadProps {
   value: string[];
   maxFiles?: number;
 }
+// Removed the custom UploadResult interface as it is not needed
 
 export const ImageUpload: React.FC<ImageUploadProps> = ({
   disabled,
@@ -22,31 +26,39 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
   maxFiles = 6,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
+  if (!isMounted) {
+    return null; // Ensure the component returns a valid ReactNode
+  }
   const [isWidgetOpen, setIsWidgetOpen] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
     // Apply overflow: hidden when the widget is open
     if (isWidgetOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = ''; // Revert to default
+      document.body.style.overflow = ""; // Revert to default
     }
     // Cleanup function to ensure overflow is reset on unmount
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [isWidgetOpen]);
 
-  const onUploadDebug = useCallback((result: any) => {
-    console.log("Uploaded URL:", result.info.secure_url);
-    onChange(result.info.secure_url);
-    setIsWidgetOpen(false); // Widget closed after successful upload
-  }, [onChange, setIsWidgetOpen]);
-
-  const handleRemove = useCallback((url: string) => {
-    onRemove(url);
-  }, [onRemove]);
+  const onUploadDebug = useCallback(
+    (result: CloudinaryUploadWidgetResults) => {
+      const secureUrl =
+        typeof result.info === "object" ? result.info.secure_url : undefined;
+      if (secureUrl) {
+        console.log("Uploaded URL:", secureUrl);
+        onChange(secureUrl);
+      } else {
+        console.error("Upload failed: secure_url is undefined");
+      }
+      setIsWidgetOpen(false); // Widget closed after successful upload
+    },
+    [onChange, setIsWidgetOpen]
+  );
 
   const handleOpenWidget = useCallback(() => {
     setIsWidgetOpen(true);
@@ -54,14 +66,15 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
 
   if (!isMounted) return null;
 
+  function handleRemove(url: string): void {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <div>
       <div className="mb-4 flex items-center gap-4 flex-wrap">
         {value.map((url) => (
-          <div
-            key={url}
-            className="relative w-[100px] h-[100px] rounded-md "
-          >
+          <div key={url} className="relative w-[100px] h-[100px] rounded-md ">
             <div className="z-10 absolute top-2 right-2">
               <Button
                 type="button"
@@ -87,7 +100,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
       </div>
       {value.length < maxFiles && (
         <CldUploadWidget
-          onSuccess={onUploadDebug}
+          onUpload={onUploadDebug}
           uploadPreset="sjiyx6o3"
           onOpen={handleOpenWidget} // Track when widget opens
           onClose={() => setIsWidgetOpen(false)} // Track when widget closes (if available)

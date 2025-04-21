@@ -6,13 +6,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
+
 import { Separator } from "@/components/ui/separator";
 import StatusList from "./status";
 import { useEffect, useState } from "react";
 
 interface SetupCheckBoxProps {
-  currentStep: "businessProfile" | "customerData" | "aiRules" | "campaign";
+  currentStep: StatusItem["step"];
 }
 
 interface StatusItem {
@@ -21,28 +21,31 @@ interface StatusItem {
   step: "businessProfile" | "customerData" | "aiRules" | "campaign";
 }
 
-const SetupCheckBox: React.FC<SetupCheckBoxProps> = ({ currentStep }) => {
-  const [statusItems, setStatusItems] = useState<StatusItem[]>([
-    { title: "Set Up Business Profile", status: "not_started", step: "businessProfile" },
-    { title: "Sync Your Customer Data", status: "not_started", step: "customerData" },
-    { title: "Set Up AI Agent Rules", status: "not_started", step: "aiRules" },
-    { title: "Set Up First Campaign", status: "not_started", step: "campaign" },
-  ]);
+const initialStatusItems: StatusItem[] = [
+  { title: "Set Up Business Profile", status: "not_started", step: "businessProfile" },
+  { title: "Sync Your Customer Data", status: "not_started", step: "customerData" },
+  { title: "Set Up AI Agent Rules", status: "not_started", step: "aiRules" },
+  { title: "Set Up First Campaign", status: "not_started", step: "campaign" },
+];
+
+const SetupCheckBox: React.FC<SetupCheckBoxProps> = ({ currentStep }) => { const [statusItems, setStatusItems] = useState<StatusItem[]>(initialStatusItems);
+
 
   useEffect(() => {
-    const updatedStatusItems = statusItems.map((item) => {
+    const updatedStatusItems: StatusItem[] = statusItems.map((item) => {
       if (item.step === currentStep) {
-        return { ...item, status: "in_progress" as "in_progress" };
+        return { ...item, status: "in_progress" as const };
       } else if (
         (currentStep === "customerData" && item.step === "businessProfile") ||
         (currentStep === "aiRules" && (item.step === "businessProfile" || item.step === "customerData")) ||
         (currentStep === "campaign" && item.step !== "campaign")
       ) {
-        return { ...item, status: "completed" as "completed" };
+        return { ...item, status: "completed" as const };
       } else {
-        return item;
+        return { ...item, status: "not_started" as const };
       }
     });
+
     setStatusItems(updatedStatusItems);
   }, [currentStep]);
 

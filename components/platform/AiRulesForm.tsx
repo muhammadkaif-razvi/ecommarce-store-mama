@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { boolean, z } from "zod";
+import {  z } from "zod";
 import {  AiRulesSchema } from "@/schemas";
 
 import { Button } from "../ui/button";

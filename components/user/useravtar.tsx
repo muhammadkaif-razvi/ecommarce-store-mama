@@ -4,12 +4,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 interface UserAvtarProps {
   name: string;
   image: string;
-  email: string;
 }
 const UserAvtar: React.FC<UserAvtarProps> = ({
   name,
   image,
-  email
+  
 }) => {
   return (
 <>

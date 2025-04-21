@@ -34,7 +34,6 @@ export function NavUser() {
               <UserAvtar
                 name={user?.name}
                 image={user?.image}
-                email={user?.email}
               />{" "}
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{user.name}</span>
@@ -54,7 +53,6 @@ export function NavUser() {
                 <UserAvtar
                   name={user?.name}
                   image={user?.image}
-                  email={user?.email}
                 />{" "}
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-semibold">{user.name}</span>

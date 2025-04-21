@@ -40,7 +40,6 @@ const HeadderUser = () => {
               <UserAvtar
                 name={user?.name}
                 image={user?.image}
-                email={user?.email}
               />{" "}
               <div className="lg:block hidden">
                 <div className=" flex-1 grid text-left text-sm min-w-0 text-muted-foreground dark:text-slate-400">
@@ -63,7 +62,6 @@ const HeadderUser = () => {
               <UserAvtar
                 name={user?.name}
                 image={user?.image}
-                email={user?.email}
               />
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold dark:text-slate-100">

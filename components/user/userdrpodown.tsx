@@ -11,8 +11,12 @@ import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
 
+interface User { 
+  role: string;
+}
+
 interface UserDropLinksProps {
-  user: any;
+  user: User 
 }
 
 const UserDropLinks: React.FC<UserDropLinksProps> = ({ user }) => {
