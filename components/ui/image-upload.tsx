@@ -16,7 +16,6 @@ interface ImageUploadProps {
   value: string[];
   maxFiles?: number;
 }
-// Removed the custom UploadResult interface as it is not needed
 
 export const ImageUpload: React.FC<ImageUploadProps> = ({
   disabled,
@@ -26,9 +25,6 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
   maxFiles = 6,
 }) => {
   const [isMounted, setIsMounted] = useState(false);
-  if (!isMounted) {
-    return null; // Ensure the component returns a valid ReactNode
-  }
   const [isWidgetOpen, setIsWidgetOpen] = useState(false);
 
   useEffect(() => {
@@ -64,11 +60,11 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
     setIsWidgetOpen(true);
   }, [setIsWidgetOpen]);
 
-  if (!isMounted) return null;
+  const handleRemove = (url: string): void => {
+    onRemove(url); // Call onRemove callback when removing the image
+  };
 
-  function handleRemove(url: string): void {
-    throw new Error("Function not implemented.");
-  }
+  if (!isMounted) return null;
 
   return (
     <div>
@@ -92,7 +88,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
                 width={200}
                 className="object-cover"
                 alt="Uploaded image"
-                src={url} // Changed back to dynamic src
+                src={url} // Use dynamic src here
               />
             ) : null}
           </div>
