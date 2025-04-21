@@ -1,4 +1,6 @@
 "use client";
+export const dynamic = "force-dynamic";
+
 import CustomerDataUpload from "@/components/platform/customer-data-upload";
 import SetUpAiRulesForm from "@/components/platform/setupaiagentrules";
 import SetUpBussinessProfile from "@/components/platform/setupbusprofile";
