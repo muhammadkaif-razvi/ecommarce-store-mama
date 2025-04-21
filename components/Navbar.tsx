@@ -1,136 +1,98 @@
 "use client";
-import { signOut, useSession } from "next-auth/react";
-import { UserButton } from "./auth/user/user-button";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, } from "next/navigation";
 import { useRef, useEffect, useState } from "react";
-import { ModeToggle } from "@/components/togglebtn";
+
 import Image from "next/image";
-import { MainNav } from "@/components/main-nav";
-import StoreSwitcher from "./store-switcher";
-import { StoreIcon } from "lucide-react";
-import { MobileNav } from "./main-m-nav";
+import { MoveRight, } from "lucide-react";
+import { Inter } from "next/font/google";
+
+import { useCurrentUser } from "@/hooks/use-current-user";
+
+import HeadderUser from "./user/headder-user";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export const Navbar = () => {
   const navRef = useRef<HTMLElement>(null);
-  const { data: session } = useSession();
+  const user = useCurrentUser();
   const pathname = usePathname();
-  const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [mounted, setMounted] = useState(false);
+ const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
-    setMounted(true);
+    if (navRef.current) {
+      const height = navRef.current.offsetHeight;
+      document.documentElement.style.setProperty("--nav-height", `${height}px`);
+    }
   }, []);
 
-  const handleNavigation = async (href: string) => {
-    if (session) {
-      await signOut({ redirect: false });
-    }
-    router.push(href);
-  };
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   if (!mounted) return null;
 
   return (
-    <nav
-      ref={navRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 shadow-sm ${
-        isScrolled
-          ? "backdrop-blur-sm border"
-          : "bg-gradient-to-b from-purple-50 to-white dark:from-slate-800 dark:to-slate-950"
-      }`}
-    >
-      <div className="container mx-auto flex items-center justify-between p-5 px-6 py-2 lg:py-4  sm:py-3 ">
-        <Link href="/">
-          <Image
-            src="/letter-case-k-alphabet-photography-k.jpg"
-            alt="logo"
-            width={35}
-            height={35}
-          />
-        </Link>
-
-        <div className="flex items-center space-x-4">
-          {!["/", "/profile", "/settings"].includes(pathname) &&
-            session?.user.stores.length > 0 && (
-              <>
-                <StoreSwitcher className="" items={session?.user.stores} />
-                <MainNav className="lg:flex hidden" />
-                <MobileNav />
-              </>
+    <>
+      {["/","/login","/new-password","/register","/reset-password","/verify-phone"].includes(pathname) && (
+        <nav
+          ref={navRef}
+          className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300  ${
+            isScrolled ? "shadow-md bg-blue-50" : "shadow-none bg-blue-100"
+          }`}
+        >
+          <div className="container mx-auto flex items-center justify-between p-5 px-6 py-2 lg:py-4  sm:py-3 ">
+            <Link href="/">
+              <Image
+                src="/letter-case-k-alphabet-photography-k.jpg"
+                alt="logo"
+                width={35}
+                height={35}
+              />
+            </Link>
+            {["/",].includes(pathname) && (
+              <div
+                className={`space-x-3 lg:space-x-12  flex-row hidden lg:block md:block sm:block${inter.className}`}
+              >
+                <Link href={"#features"}>Features</Link>
+                <Link href={"#about"}>About Us</Link>
+                <Link href="#howitwork">How it works</Link>
+                <Link href="#about">Pricing</Link>
+              </div>
             )}
-          {["/", "/profile", "/settings"].includes(pathname) &&
-            session?.user.stores.length > 0 && (
-              <Link href="/stores-setup">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex items-center"
+
+            <div className="flex items-center space-x-4">
+              {/* <ModeToggle /> */}
+                <Link
+                  href="/platform-setup"
+                  className="w-full sm:w-auto flex justify-center"
                 >
-                  <StoreIcon />
-                  <span className="ml-1 hidden md:block">Open Store</span>
-                </Button>
-              </Link>
-            )}
-
-          <ModeToggle />
-
-          {session?.user?.phoneNumberVerified ? (
-            <div className="hidden md:flex ">
-              <UserButton />
+                  <Button className="w-full sm:w-[140px] lg:w-[157px] lg:h-[37.34px] h-[30px] sm:h-[35px]  px-2 sm:px-6 lg:px-8 text-sm sm:text-base lg:text-base gap-2 bg-blue-600 hover:bg-blue-700 text-white">
+                    Get STARTED
+                    <MoveRight className="h-4 w-4 sm:h-5 sm:w-5" />
+                  </Button>
+                </Link>
+            
+              {user && (
+                <div>
+            <HeadderUser />
+                </div>
+              )}
             </div>
-          ) : (
-            <>
-              <div className="hidden md:flex items-center space-x-2">
-                <Button
-                  variant={pathname === "/login" ? "default" : "outline"}
-                  size="sm"
-                  className={
-                    pathname === "/login"
-                      ? "bg-purple-600 hover:bg-purple-700 text-white backdrop-blur"
-                      : "text-purple-600 dark:hover:bg-slate-800 backdrop-blur"
-                  }
-                  onClick={() => handleNavigation("/login")}
-                >
-                  Login
-                </Button>
-
-                <Button
-                  variant={pathname === "/register" ? "default" : "outline"}
-                  size="sm"
-                  className={
-                    pathname === "/register"
-                      ? "bg-purple-600 hover:bg-purple-700 text-white backdrop-blur"
-                      : "text-purple-600 dark:hover:bg-slate-800 backdrop-blur"
-                  }
-                  onClick={() => handleNavigation("/register")}
-                >
-                  Register
-                </Button>
-              </div>
-
-              <div className="md:hidden">
-                <Button
-                  variant="default"
-                  size="sm"
-                  className="bg-purple-600 hover:bg-purple-700 text-white backdrop-blur"
-                  onClick={() => handleNavigation("/login")}
-                >
-                  Login
-                </Button>
-              </div>
-            </>
-          )}
-        </div>
-      </div>
-    </nav>
+          </div>
+        </nav>
+      )}
+    </>
   );
 };

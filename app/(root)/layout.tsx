@@ -1,5 +1,8 @@
+import { AppSidebar } from "@/components/app-sidebar";
+import DashHeader from "@/components/dasheader";
+
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { currentUser } from "@/lib/auth";
-import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 
 export default async function SetupLayout({
@@ -13,14 +16,19 @@ export default async function SetupLayout({
     redirect("/login");
   }
 
-  const store = await db.store.findFirst({
-    where: {
-      userId: user.id,
-    },
-  });
-  if (store) {
-    redirect(`/${store.id}`);
-  }
-
-  return <>{children}</>;
+  return (
+    <>
+      <SidebarProvider>
+        {" "}
+        <AppSidebar />
+        <SidebarInset>
+          {" "}
+          <DashHeader />
+          <div className="flex flex-1 flex-col gap-4 px-2 py-3 md:px-4 md:py-4">
+            {children}{" "}
+          </div>
+        </SidebarInset>
+      </SidebarProvider>
+    </>
+  );
 }

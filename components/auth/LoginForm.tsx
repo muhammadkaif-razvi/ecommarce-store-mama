@@ -77,7 +77,7 @@ export const LoginForm = () => {
       headerLabel="Enter details to login"
       BesiderHrefLabel="Already have an account?"
       BackHref="/register"
-      BackHrefLabel="register"
+      BackHrefLabel=" Register now"
       src="/authimage.jpg"
       alt="Jungle Image"
       showContinueSeparator
@@ -94,7 +94,7 @@ export const LoginForm = () => {
                 <FormItem>
                   <FormLabel>Two Factor Authentication</FormLabel>
                   <FormControl>
-                    <InputOTP maxLength={6} disabled={isPending} {...field}>
+                    <InputOTP maxLength={6} disabled={isPending} {...field} >
                       <InputOTPGroup>
                         <InputOTPSlot index={0} />
                         <InputOTPSlot index={1} />
@@ -150,7 +150,7 @@ export const LoginForm = () => {
                 )}
               />
               <Button variant="link" size="sm" className="py-0  font-normal">
-                <Link href="/reset-password" className=" ">
+                <Link href="/reset-password" className="text-blue-400 font-semibold">
                   Forgot Password?
                 </Link>
               </Button>
@@ -159,7 +159,7 @@ export const LoginForm = () => {
 
           <FormError message={error || urlError} />
           <FormSuccess message={success} />
-          <Button type="submit" className="w-full " disabled={isPending}>
+          <Button type="submit" className="w-full bg-gradient-to-r from-blue-600 to-blue-100 " disabled={isPending}>
             {isPending ? (
               <Loader2 className="w-4 h-4 animate-spin" />
             ) : showTwoFactor ? (

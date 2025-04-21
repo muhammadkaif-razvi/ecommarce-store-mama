@@ -1,127 +1,48 @@
 import { z } from "zod";
 import { UserRole } from "@prisma/client";
 
+export const setupbusinessSchema = z.object({
+  imageUrl: z.string().min(1, "this field is required"),
+
+  bDiscription: z.string().min(18, "discription must be min 8 characters"),
+
+  bName: z
+    .string()
+    .min(1, "Name must be min 2 characters")
+    .max(20, "Name cannot be longer than 20 characters"),
+  bEmail: z.string().email("Invalid email format"),
+  bPhone: z.string().regex(/^\+91\d{10}$/, {
+    message: "Please enter a valid phone number",
+  }),
+  industry: z.string().min(1, "this field is required"),
+  services: z
+    .string()
+    .min(1, "this field is required")
+    .max(20, "this field is required"),
+  products: z
+    .string()
+    .min(1, "this field is required")
+    .max(20, "this field is required"),
+  companysize: z.string().optional(),
+  city: z.string().min(1, "this field is required"),
+  state: z.string().min(1, "this field is required"),
+  pincode: z.string().min(1, "this field is required"),
+});
+export const AiRulesSchema = z.object({
+  tone: z.string().min(1, "this field is required"),
+
+  style: z.string().min(1, "this field is required"),
+
+  auto: z.optional(z.boolean()),
+  userinit: z.optional(z.boolean()),
+});
+
 export const formSchema = z.object({
   name: z
     .string()
     .min(2, "Name must be min 2 characters")
     .max(20, "Name cannot be longer than 20 characters"),
 });
-
-export const BillboardformSchema = z.object({
-  label: z
-    .string()
-    .min(1, "Name must be min 2 characters")
-    .max(45, "Name cannot be longer than 30 characters"),
-  imageUrl: z.string().min(1),
-});
-export const ingredientFormSchema = z.object({
-  name: z
-    .string()
-    .min(1, "Name must be min 2 characters")
-    .max(45, "Name cannot be longer than 30 characters"),
-  image: z.string().min(1),
-  description: z.string().min(10, "Description must be min 10 characters"),
-});
-
-export const CategoryformSchema = z.object({
-  name: z
-    .string()
-    .min(1, "Name must be min 2 characters")
-    .max(14, "Name cannot be longer than 14 characters"),
-  billboardId: z.string().min(1),
-});
-
-export const SizeformSchema = z.object({
-  name: z
-    .string()
-    .min(1, "Name must be min 2 characters")
-    .max(25, "Name cannot be longer than 14 characters"),
-  value: z.string().min(1, "Value must be min 2 characters"),
-});
-export const VehicleTypeformSchema = z.object({
-  name: z
-    .string()
-    .min(1, "Name must be min 2 characters")
-    .max(25, "Name cannot be longer than 14 characters"),
-});
-
-export const ColorformSchema = z.object({
-  name: z
-    .string()
-    .min(1, "Name must be min 2 characters")
-    .max(14, "Name cannot be longer than 14 characters"),
-  value: z.string().min(3),
-});
-export const fuelTypeformSchema = z.object({
-  name: z
-    .string()
-    .min(1, "Name must be min 2 characters")
-    .max(14, "Name cannot be longer than 14 characters"),
-});
-
-export const ProductformSchema = z.object({
-  name: z
-    .string()
-    .min(1, "Name must be min 2 characters")
-    .max(80, "Name cannot be longer than 40 characters"),
-  images: z
-    .array(z.object({ url: z.string() }))
-    .min(1, "At least one image is required")
-    .max(6, "Maximum 6 images allowed"),
-  description: z.string().min(10, "Description must be min 10 characters"),
-  categoryId: z.string().min(1, "Category is required"),
-
-  faceId: z.string().min(1, "Face is required").optional().or(z.literal("")),
-  hairId: z
-    .string()
-    .min(1, "Hair Type is required")
-    .optional()
-    .or(z.literal("")),
-  makeupId: z
-    .string()
-    .min(1, "Makeup Type is required")
-    .optional()
-    .or(z.literal("")),
-  bodyId: z
-    .string()
-    .min(1, "Body Type is required")
-    .optional()
-    .or(z.literal("")),
-  comboId: z.string().min(1, "Combos is required").optional().or(z.literal("")),
-  ingredientId: z
-    .string()
-    .min(1, "Ingredient is required")
-    .optional()
-    .or(z.literal("")),
-  fragranceId: z
-    .string()
-    .min(1, "Fragrance is required")
-    .optional()
-    .or(z.literal("")),
-  priceId: z.string().min(1, "Price is required").optional().or(z.literal("")),
-
-  isNewLaunch: z.boolean().default(false).optional(),
-  isBestseller: z.boolean().default(false).optional(),
-  isFeatured: z.boolean().default(false).optional(),
-  isArchived: z.boolean().default(false).optional(),
-});
-export const variantformSchema = z.object({
-  name: z
-    .string()
-    .min(1, "Name must be min 2 characters")
-    .max(80, "Name cannot be longer than 40 characters"),
-  images: z
-    .array(z.object({ url: z.string() }))
-    .min(1, "At least one image is required")
-    .max(6, "Maximum 6 images allowed"),
-  variantsepQuant: z.string().min(1, "Quantity is required"),
-  price: z.coerce.number().min(1, "Price is required"),
-  inventory: z.coerce.number(),
-  productId: z
-  .string()
-  .min(1, "Product Type is required")
-  .optional()});
 
 export const settingsSchema = z
   .object({

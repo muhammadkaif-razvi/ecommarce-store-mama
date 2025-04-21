@@ -51,11 +51,13 @@ export function AuthWrapper({
   };
 
   return (
-    <div
+    <div 
+    
       suppressHydrationWarning
       className={cn("flex flex-col gap-6", className)}
       {...props}
     >
+ 
       <Card className="overflow-hidden">
         <CardContent className="grid p-0 md:grid-cols-2">
           <div className="p-6 md:p-8">
@@ -77,12 +79,12 @@ export function AuthWrapper({
               )}
               {showSocial && <SocialSignIn />}
 
-              <div className="text-center text-sm inline">
+              <div className="text-center text-sm inline font-sans">
                 {BesiderHrefLabel}
                 <Link
                   href={BackHref}
                   onClick={handleSignOut}
-                  className="underline underline-offset-4"
+                  className="underline underline-offset-4 text-blue-600"
                 >
                   {BackHrefLabel}
                 </Link>

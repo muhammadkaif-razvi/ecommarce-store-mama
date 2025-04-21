@@ -195,13 +195,11 @@ export function MobileNav() {
               <div className="py-3  border-t flex sticky bottom-0 bg-background w-full">
                 <div className="flex flex-row space-x-2">
                   <UserButton />
-                  <div>
                     <div className="grid flex-1 text-left text-sm min-w-0 text-muted-foreground">
                       <span className="truncate font-semibold">
                         {user.name}
                       </span>
                       <span className="truncate text-xs">{user.email}</span>
-                    </div>
                   </div>
                   <div>
                     <ChevronsUpDown className="text-muted-foreground" />

@@ -107,8 +107,7 @@ export const VerPhoneOtpForm = ({
           <Button
             type="button"
             variant="outline"
-            className="w-full"
-            onClick={onReset} // Reset the state
+            className="w-full bg-gradient-to-r from-blue-600 to-blue-100 "            onClick={onReset} // Reset the state
           >
             Start Over
           </Button>

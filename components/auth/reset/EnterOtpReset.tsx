@@ -103,7 +103,7 @@ export const EnterOtpResetForm = ({
 
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button type="submit" className="w-full" disabled={isPending}>
+          <Button type="submit" className="w-full bg-gradient-to-r from-blue-600 to-blue-100 " disabled={isPending}>
             {isPending ? "Verifying...." : "Verify"}
           </Button>
         </form>

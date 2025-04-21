@@ -103,7 +103,7 @@ export const EnterPhoneNoForm = ({
           <FormSuccess message={success} />
           <Button
             type="submit"
-            className="w-full"
+            className="w-full bg-gradient-to-r from-blue-600 to-blue-100 "
             disabled={isPending || !form.formState.isValid}
           >
             {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : "Enter"}
@@ -111,7 +111,7 @@ export const EnterPhoneNoForm = ({
           <Button
             type="button"
             variant="outline"
-            className="w-full"
+            className="w-full bg-gradient-to-r from-blue-600 to-blue-100 "
             onClick={onReset} // Reset the state
           >
             Start Over

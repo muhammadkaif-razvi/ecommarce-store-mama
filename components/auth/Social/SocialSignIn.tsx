@@ -13,23 +13,22 @@ export const SocialSignIn = () => {
   };
 
   return (
-    <div className="grid grid-cols-2 gap-4">
-      <Button
-        variant="outline"
-        className="w-full"
-        onClick={() => handleSignIn("github")}
-      >
-        <FaGithub />
-        <span className="sr-only">Continue with GitHub</span>
-      </Button>
-      <Button
-        variant="outline"
-        className="w-full"
-        onClick={() => handleSignIn("google")}
-      >
-        <FcGoogle />
-        <span className="sr-only">Continue with Google</span>
-      </Button>
-    </div>
+    <div className="flex justify-center items-center gap-4">
+    <button
+      className="w-10 h-10 rounded-full flex items-center justify-center bg-white border border-gray-200 hover:bg-gray-50 transition-colors"
+      onClick={() => handleSignIn("github")}
+      aria-label="Sign in with GitHub"
+    >
+      <FaGithub className="text-gray-800 text-xl" />
+    </button>
+    
+    <button
+      className="w-10 h-10 rounded-full flex items-center justify-center bg-white border border-gray-200 hover:bg-gray-50 transition-colors"
+      onClick={() => handleSignIn("google")}
+      aria-label="Sign in with Google"
+    >
+      <FcGoogle className="text-xl" />
+    </button>
+  </div>
   );
 };
