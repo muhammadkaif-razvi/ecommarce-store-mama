@@ -28,11 +28,10 @@ import { indianAddressData } from "@/info-data";
 import businessIndustries from "@/info-data";
 import { Button } from "../ui/button";
 
-
 interface SetupBusinessProfileFormProps {
   nextStep1: () => void; // Add the nextStep1 prop type
 }
-const SetupBusinessProfileForm:React.FC<SetupBusinessProfileFormProps> = ({
+const SetupBusinessProfileForm: React.FC<SetupBusinessProfileFormProps> = ({
   nextStep1, // Destructure the nextStep1 prop
 }) => {
   const form = useForm<z.infer<typeof setupbusinessSchema>>({
@@ -63,7 +62,7 @@ const SetupBusinessProfileForm:React.FC<SetupBusinessProfileFormProps> = ({
   const watchPincode = watch("pincode");
 
   const [availableStates, setAvailableStates] = useState<string[]>([]);
-  const [availablePinCodes, setAvailablePinCodes] = useState<string[]>([]);
+  const [, setAvailablePinCodes] = useState<string[]>([]);
 
   // Update available states when the city changes
   useEffect(() => {
@@ -400,7 +399,7 @@ const SetupBusinessProfileForm:React.FC<SetupBusinessProfileFormProps> = ({
           />
         </div>
         <Button
-        onClick={() => form.handleSubmit(onSubmit)()}
+          onClick={() => form.handleSubmit(onSubmit)()}
           type="submit"
           className="bg-gradient-to-r from-blue-500 to-blue-200 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         >

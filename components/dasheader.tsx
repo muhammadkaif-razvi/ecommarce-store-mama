@@ -1,9 +1,10 @@
 import React from 'react'
 import { SidebarTrigger } from './ui/sidebar'
 import { Separator } from './ui/separator'
-import { Breadcrumb, BreadcrumbLink, BreadcrumbList,BreadcrumbSeparator,BreadcrumbItem,BreadcrumbPage } from './ui/breadcrumb'
+
 
 import HeadderUser from './user/headder-user'
+import Image from 'next/image'
 
 const DashHeader = () => {
   return (
@@ -11,23 +12,17 @@ const DashHeader = () => {
     <div className="flex items-center gap-2 px-4">
       <SidebarTrigger className="-ml-1" />
       <Separator orientation="vertical" className="mr-2 h-4" />
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem className="hidden md:block">
-            <BreadcrumbLink href="#">
-              Building Your Application
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator className="hidden md:block" />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Data Fetching</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
     
     </div>
-    <div className='px-4'>
+    <div className='px-4 flex flex-row items-center justify-between space-x-3 '>
+    <Image 
+        src={"/nut.png"}
+        alt="nutfier"
+        width={30}
+        height={30}
+      />
       <HeadderUser />
+    
     </div>
   </header>
   ) 

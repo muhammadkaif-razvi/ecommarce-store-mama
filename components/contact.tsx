@@ -11,7 +11,7 @@ export const Contact = () => {
             Get in Touch
           </h2>
           <p className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-            We'd love to hear from you. Contact us with any questions or feedback.
+            We love to hear from you. Contact us with any questions or feedback.
           </p>
         </div>
 

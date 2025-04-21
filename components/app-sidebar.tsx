@@ -10,7 +10,7 @@ import {
   GalleryVerticalEnd,
   Map,
   PieChart,
-  Settings,
+ 
   Settings2,
   SquareTerminal,
 } from "lucide-react";

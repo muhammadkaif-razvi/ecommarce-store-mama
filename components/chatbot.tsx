@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { SendHorizonal, Bot, User } from 'lucide-react';
+import {  Bot, User } from 'lucide-react';
 import { useCurrentUser } from '@/hooks/use-current-user';
 import Image from 'next/image';
 
