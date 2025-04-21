@@ -48,7 +48,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
         session.user.isOAuth = token.isOAuth as boolean;
         session.user.image = token.image as string;
-        session.user.stores = token.stores as { id: string; name: string }[];
       }
 
       return session;
@@ -61,10 +60,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (!existingUser) return token;
 
       const existingAccount = await getAccountByUserId(existingUser.id);
-      const userStores = await db.store.findMany({
-        where: { userId: existingUser.id },
-        select: { id: true, name: true },
-      });
+  
 
       token.isOAuth = !!existingAccount;
       token.name = existingUser.name;
@@ -76,7 +72,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       token.role = existingUser.role;
       token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled;
       token.image = existingUser.image;
-      token.stores = userStores;
 
       return token;
     },
