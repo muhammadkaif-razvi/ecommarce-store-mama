@@ -28,7 +28,6 @@ export default async function RootLayout({
       <body>
         <Providers session={session}>
           <Navbar />
-
           <main>
             {children}
 

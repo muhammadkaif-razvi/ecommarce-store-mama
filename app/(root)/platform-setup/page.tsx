@@ -1,5 +1,4 @@
 "use client";
-
 import CustomerDataUpload from "@/components/platform/customer-data-upload";
 import SetUpAiRulesForm from "@/components/platform/setupaiagentrules";
 import SetUpBussinessProfile from "@/components/platform/setupbusprofile";

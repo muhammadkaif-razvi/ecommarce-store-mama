@@ -1,4 +1,5 @@
 import { AppSidebar } from "@/components/app-sidebar";
+import { ChatBot } from "@/components/chatbot";
 import DashHeader from "@/components/dasheader";
 
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
@@ -25,6 +26,7 @@ export default async function SetupLayout({
           {" "}
           <DashHeader />
           <div className="flex flex-1 flex-col gap-4 px-2 py-3 md:px-4 md:py-4">
+            <ChatBot />
             {children}{" "}
           </div>
         </SidebarInset>
