@@ -1,4 +1,5 @@
-import { Check } from 'lucide-react'; // If using lucide-react with Shadcn UI
+"use client";
+import { Check } from 'lucide-react'; 
 
 interface StatusItemProps {
   title: string;

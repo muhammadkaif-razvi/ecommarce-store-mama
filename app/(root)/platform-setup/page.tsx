@@ -1,5 +1,3 @@
-export const dynamic = "force-dynamic";
-// This page will always be rendered on the server, even if it is a client component
 "use client";
 
 import CustomerDataUpload from "@/components/platform/customer-data-upload";
