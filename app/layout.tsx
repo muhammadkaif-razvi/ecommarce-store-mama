@@ -4,16 +4,15 @@ import "@/app/globals.css";
 
 import { auth } from "@/auth";
 
-import { Navbar } from "@/components/Navbar";
 
 import { Providers } from "@/components/Providers";
 
 import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
-  title: "AI Refferal Hub",
+  title: "Mamaearth Natural Skin & Hair Care Products",
 
-  description: "Manage your referral links and earn money with AI Refferal Hub",
+  description: " Mamaearth Natural Skin & Hair Care Products",
 };
 
 export default async function RootLayout({
@@ -27,7 +26,6 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body>
         <Providers session={session}>
-          <Navbar />
           <main>
             {children}
 

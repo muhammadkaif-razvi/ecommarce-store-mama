@@ -1,6 +1,7 @@
 export const publicRoutes = [
   "/", // Home route
-  "/api/(.*)", // All API routes are public
+  "/api/(.*)", 
+  "/category/(.*)", // Category routes
 ];
 
 export const adminRoutes = [
@@ -11,7 +12,8 @@ export const protectedRoutes = [
   "/profile",
   "/new-verification",
   "/settings",
-  "/*/settings", // Wildcard for nested settings
+  "/platform-setup",
+  
 ];
 
 export const authRoutes = [

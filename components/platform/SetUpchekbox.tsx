@@ -64,7 +64,6 @@ const SetupCheckBox: React.FC<SetupCheckBoxProps> = ({ currentStep }) => { const
       <CardContent>
         <StatusList items={statusItems} />
       </CardContent>
-      <CardContent></CardContent>
     </Card>
   );
 };
