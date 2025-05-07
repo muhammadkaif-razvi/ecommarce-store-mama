@@ -8,7 +8,7 @@ import getCombos from "@/actions/getdatafromAdmin/get-combos";
 import getFaces from "@/actions/getdatafromAdmin/get-faces";
 import getFragrances from "@/actions/getdatafromAdmin/get-fragrance";
 import getHairs from "@/actions/getdatafromAdmin/get-hairs";
-import getIngredients from "@/actions/getdatafromAdmin/get-Ingredient";
+import {getIngredients} from "@/actions/getdatafromAdmin/get-Ingredient";
 import getMakeups from "@/actions/getdatafromAdmin/get-makeups";
 import getPrices from "@/actions/getdatafromAdmin/get-prices";
 import {
@@ -55,11 +55,11 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
     categoryId: categoryId,
     faceId: faceId,
     hairId: hairId,
-    makeupId:makeupId,
+    makeupId: makeupId,
     bodyId: bodyId,
-    combosId:combosId,
-    ingredientId:ingredientId,
-    fragranceId:fragranceId,
+    combosId: combosId,
+    ingredientId: ingredientId,
+    fragranceId: fragranceId,
     priceId: priceId,
   });
 
@@ -83,10 +83,13 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
           {products.length === 0 ? (
             <NoResults />
           ) : (
-            <div>
+            <div className="container mx-auto my-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4">
               {products.map((item) => (
-                  <ProductCard key={item.id} data={item} />
+                <ProductCard key={item.id} data={item} />
+              ))}   {products.map((item) => (
+                <ProductCard key={item.id} data={item} />
               ))}
+
               {/* <Currency value={varient.price} /> */}
             </div>
           )}

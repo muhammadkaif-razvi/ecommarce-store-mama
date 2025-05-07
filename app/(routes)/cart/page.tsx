@@ -17,13 +17,13 @@ const CartPage = () => {
 
   if (items.length === 0) {
     return (
-      <div className="container mx-auto py-10">
+      <div className="container mx-auto py-20 lg:py-40">
         <div className="flex flex-col items-center justify-center">
           <ShoppingCart className="h-16 w-16 text-muted-foreground mb-6" />
           <h2 className="text-2xl font-semibold text-muted-foreground mb-2">Your cart is empty</h2>
           <p className="text-muted-foreground mb-4">Looks like you haven't added anything yet.</p>
           <Button asChild>
-            <Link href="/products">Continue Shopping</Link>
+            <Link href="/">Continue Shopping</Link>
           </Button>
         </div>
       </div>
@@ -31,7 +31,7 @@ const CartPage = () => {
   }
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto py-10 lg:py-32">
       <h1 className="text-3xl font-semibold mb-6">Your Cart ({items.length} items)</h1>
       <ScrollArea className="mb-6">
         <div className="space-y-6">
@@ -43,7 +43,7 @@ const CartPage = () => {
               <div className="flex-1">
                 <div className="flex justify-between items-start">
                   <div>
-                    <Link href={`/products/${item.productId}`} className="font-medium hover:underline">
+                    <Link href={`/product/${item.id}`} className="font-medium hover:underline">
                       {item.name}
                     </Link>
                     <p className="text-sm text-muted-foreground">{item.variantName} - {item.variantQuantity}</p>
@@ -88,7 +88,11 @@ const CartPage = () => {
         <Button variant="outline" onClick={clearCart}>
           Clear Cart
         </Button>
-        <Button className="w-full sm:w-auto">Checkout</Button>
+        
+        <Link href="/checkout" className="w-full sm:w-auto">
+          <Button>Checkout</Button>
+        </Link>
+        
       </div>
     </div>
   );

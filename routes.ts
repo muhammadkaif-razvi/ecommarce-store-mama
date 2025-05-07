@@ -1,7 +1,9 @@
 export const publicRoutes = [
   "/", // Home route
   "/api/(.*)", 
-  "/category/(.*)", // Category routes
+  "/category/(.*)",
+  "/cart" ,
+  "/product/(.*)",
 ];
 
 export const adminRoutes = [

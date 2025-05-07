@@ -7,7 +7,7 @@ import getFaces from "@/actions/getdatafromAdmin/get-faces";
 import getHairs from "@/actions/getdatafromAdmin/get-hairs";
 import getBodys from "@/actions/getdatafromAdmin/get-bodys";
 import getFragrances from "@/actions/getdatafromAdmin/get-fragrance";
-import getIngredients from "@/actions/getdatafromAdmin/get-Ingredient";
+import {getIngredients} from "@/actions/getdatafromAdmin/get-Ingredient";
 import getCombos from "@/actions/getdatafromAdmin/get-combos";
 import getMakeups from "@/actions/getdatafromAdmin/get-makeups";
 import { ReusableMenubar } from "./resuable-menubar";
@@ -34,7 +34,7 @@ export default async function DashHeader() {
             className="flex flex-row items-center gap-2 justify-center "
           >
             <Image
-              className="md:h-[34px] md:w-[150px]"
+              className="w-auto h-auto"
               src="/mamaearth-logo.avif"
               alt="logo"
               height={24}

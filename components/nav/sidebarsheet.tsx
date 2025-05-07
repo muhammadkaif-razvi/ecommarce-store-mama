@@ -14,8 +14,8 @@ import getHairs from "@/actions/getdatafromAdmin/get-hairs";
 import getBodys from "@/actions/getdatafromAdmin/get-bodys";
 import getMakeups from "@/actions/getdatafromAdmin/get-makeups";
 import getCombos from "@/actions/getdatafromAdmin/get-combos";
-import getIngredients from "@/actions/getdatafromAdmin/get-Ingredient";
 import getFragrances from "@/actions/getdatafromAdmin/get-fragrance";
+import { getIngredients } from "@/actions/getdatafromAdmin/get-Ingredient";
 
 export const SidebarSheet = async () => {
   const categories = await getCategories();
@@ -24,7 +24,7 @@ export const SidebarSheet = async () => {
   const bodys = await getBodys();
   const makeups = await getMakeups();
   const combos = await getCombos();
-  const ingredients = await getIngredients();
+  const ingredients = await  getIngredients();
   const fragrance = await getFragrances();
   const firstTenIngredients = ingredients.slice(0, 12);
   return (

@@ -5,10 +5,12 @@ import React from "react";
 import { CiUser } from "react-icons/ci";
 import HeadderUser from "../user/headder-user";
 import { useCurrentUser } from "@/hooks/use-current-user";
+import { useCartStore } from "@/lib/store/cart";
 
 export const NavAction = () => {
   const user = useCurrentUser();
   const router = useRouter();
+    const { items } = useCartStore();
   return (
     <div className=" lg:px-36 flex flex-row items-center justify-between lg:space-x-7 md:space-x-5 space-x-3 md:px-8 px-3 ">
       <div className="relative" onClick={() => router.push("/cart")}>
@@ -17,7 +19,7 @@ export const NavAction = () => {
           className="absolute top-0 right-0 text-sm font-semibold text-white bg-blue-500 rounded-full w-6 h-6 flex items-center justify-center"
           style={{ transform: "translate(50%, -40%) scale(0.7)" }}
         >
-          {/* {cart.items.length} */}8
+          {items.length}
         </span>
       </div>
       {user ? (

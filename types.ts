@@ -1,3 +1,5 @@
+import { JSX } from "react";
+
 export interface Billboard {
   id: string;
   label: string;
@@ -12,6 +14,7 @@ export interface Category {
 }
 
 export interface Product {
+
   id: string;
   name: string;
   description: string;
@@ -26,6 +29,7 @@ export interface Product {
     id: string;
     name: string;
   };
+  categoryId?: string;
 
   face?: Face;
   hair?: Hair;
@@ -44,6 +48,7 @@ export interface Variant {
   price: number;
   inventory?: number;
   images: Image[];
+  ingredients: Ingredient[];
   productId: string;
   product: Product;
 }
@@ -80,9 +85,10 @@ export interface Combos {
   name: string;
 }
 export interface Ingredient {
+
   id: string;
   name: string;
-  image: string;
+  images: Image[];
   description: string;
 }
 export interface Fragrance {

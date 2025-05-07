@@ -4,7 +4,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "../ui/dropdown-menu";
-import { Settings, ShieldHalf, User } from "lucide-react";
+import { Map, Settings, ShieldHalf, User } from "lucide-react";
 import { ExitIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
@@ -28,11 +28,11 @@ const UserDropLinks: React.FC<UserDropLinksProps> = ({ user }) => {
       <DropdownMenuGroup>
         <DropdownMenuItem
           className={`p-2 text-gray-800 dark:text-slate-200 hover:bg-blue-100 dark:hover:bg-blue-900 rounded-md transition-colors ${
-            pathname === "/settings" ? "bg-blue-100 dark:bg-blue-900/30" : ""
+            pathname === "/account/settings" ? "bg-blue-100 dark:bg-blue-900/30" : ""
           }`}
           asChild
         >
-          <Link href="/settings" className="w-full flex items-center">
+          <Link href="/account/settings" className="w-full flex items-center">
             <Settings className="mr-2 h-4 w-4 text-blue-600 dark:text-blue-400" />
             Settings
           </Link>
@@ -40,29 +40,28 @@ const UserDropLinks: React.FC<UserDropLinksProps> = ({ user }) => {
 
         <DropdownMenuItem
           className={`p-2 text-gray-800 dark:text-slate-200 hover:bg-blue-100 dark:hover:bg-blue-900 rounded-md transition-colors ${
-            pathname === "/profile" ? "bg-blue-100 dark:bg-blue-900/30" : ""
+            pathname === "/account/profile" ? "bg-blue-100 dark:bg-blue-900/30" : ""
           }`}
           asChild
         >
-          <Link href="/profile" className="w-full flex items-center">
+          <Link href="/account/profile" className="w-full flex items-center">
             <User className="mr-2 h-4 w-4 text-blue-600 dark:text-blue-400" />
             Profile
           </Link>
         </DropdownMenuItem>
+        <DropdownMenuItem
+          className={`p-2 text-gray-800 dark:text-slate-200 hover:bg-blue-100 dark:hover:bg-blue-900 rounded-md transition-colors ${
+            pathname === "/account/order" ? "bg-blue-100 dark:bg-blue-900/30" : ""
+          }`}
+          asChild
+        >
+          <Link href="/account/order" className="w-full flex items-center">
+            <Map className="mr-2 h-4 w-4 text-blue-600 dark:text-blue-400" />
+            Track Order
+          </Link>
+        </DropdownMenuItem>
 
-        {user?.role === "ADMIN" && (
-          <DropdownMenuItem
-            className={`p-2 text-gray-800 dark:text-slate-200 hover:bg-blue-100 dark:hover:bg-blue-900 rounded-md transition-colors ${
-              pathname === "/admin" ? "bg-blue-100 dark:bg-blue-900/30" : ""
-            }`}
-            asChild
-          >
-            <Link href="/admin" className="w-full flex items-center">
-              <ShieldHalf className="mr-2 h-4 w-4 text-blue-600 dark:text-blue-400" />
-              Admin
-            </Link>
-          </DropdownMenuItem>
-        )}
+   
       </DropdownMenuGroup>
       <DropdownMenuSeparator className="bg-blue-200 dark:bg-blue-700" />
 

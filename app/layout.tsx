@@ -6,8 +6,8 @@ import { auth } from "@/auth";
 
 
 import { Providers } from "@/components/Providers";
+import { Toaster } from "@/components/ui/sonner";
 
-import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: "Mamaearth Natural Skin & Hair Care Products",
@@ -29,7 +29,8 @@ export default async function RootLayout({
           <main>
             {children}
 
-            <Toaster />
+            <Toaster
+             />
           </main>
         </Providers>
       </body>

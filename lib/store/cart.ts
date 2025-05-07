@@ -1,5 +1,6 @@
 import { create } from "zustand"
 import { persist, createJSONStorage } from "zustand/middleware"
+import { toast } from 'sonner'; // Import toast
 
 export interface CartItem {
   id: string // variant id
@@ -22,35 +23,46 @@ interface CartStore {
 
 export const useCartStore = create<CartStore>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       items: [],
 
-      addItem: (item) =>
-        set((state) => {
-          const existingItem = state.items.find((i) => i.id === item.id)
+      addItem: (item) => {
+        const existingItem = get().items.find((i) => i.id === item.id);
 
-          if (existingItem) {
-            // Update quantity if item already exists
-            return {
-              items: state.items.map((i) => (i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i)),
-            }
-          }
-
+        if (existingItem) {
+          // Update quantity if item already exists
+          set((state) => ({
+            items: state.items.map((i) =>
+              i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i
+            ),
+          }));
+          toast.success(`${item.name} quantity updated in cart!`); // Show toast
+        } else {
           // Add new item
-          return { items: [...state.items, item] }
-        }),
+          set((state) => ({ items: [...state.items, item] }));
+          toast.success(`${item.name} added to cart!`); // Show toast
+        }
+      },
 
-      removeItem: (id) =>
+      removeItem: (id) => {
         set((state) => ({
           items: state.items.filter((item) => item.id !== id),
-        })),
+        }));
+        toast.error(`Item removed from cart!`); // Show toast
+      },
 
-      updateQuantity: (id, quantity) =>
+      updateQuantity: (id, quantity) => {
         set((state) => ({
-          items: state.items.map((item) => (item.id === id ? { ...item, quantity } : item)),
-        })),
+          items: state.items.map((item) =>
+            item.id === id ? { ...item, quantity } : item
+          ),
+        }));
+      },
 
-      clearCart: () => set({ items: [] }),
+      clearCart: () => {
+        set({ items: [] });
+        toast.success('Cart cleared!');
+      },
     }),
     {
       name: "cart-storage", // name for the storage key
