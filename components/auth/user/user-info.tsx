@@ -1,9 +1,8 @@
 "use client";
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
-import { InfoIcon } from "lucide-react"; // Optional: Add an icon for the header
+import { InfoIcon } from "lucide-react";
 
 interface User {
   id: string;
@@ -25,17 +24,14 @@ export const UserInfo = ({ user }: UserInfoProps) => {
   const router = useRouter();
 
   return (
-    <Card className="shadow-lg border border-gray-200 dark:border-gray-700 rounded-xl w-full max-w-lg lg:max-w-2xl overflow-y-auto bg-white dark:bg-gray-900">
-      {/* Card Header */}
+    <Card className="w-full max-w-lg lg:max-w-2xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-sm rounded-lg">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-gray-900 dark:text-gray-100">
-          <InfoIcon className="h-5 w-5 text-purple-600 dark:text-purple-400" />{" "}
-          {/* Optional icon */}
+        <CardTitle className="flex items-center gap-2 text-gray-800 dark:text-gray-200">
+          <InfoIcon className="h-5 w-5 text-blue-600 dark:text-blue-400" />
           User Information
         </CardTitle>
       </CardHeader>
 
-      {/* Card Content */}
       <CardContent className="space-y-4">
         <InfoItem title="Name" value={user?.name ?? "N/A"} />
         <InfoItem title="Email" value={user?.email ?? "N/A"} />
@@ -56,36 +52,35 @@ export const UserInfo = ({ user }: UserInfoProps) => {
           value={formatDate(user?.emailVerified)}
         />
 
-        {/* Edit Profile Button */}
-        <Button
-          onClick={() => router.push("/settings")}
-          className="w-full sm:w-auto bg-purple-600 hover:bg-purple-700 text-white dark:bg-purple-700 dark:hover:bg-purple-800"
-        >
-          Edit Profile
-        </Button>
+        <div className="flex justify-end pt-2">
+          <Button
+            onClick={() => router.push("/settings")}
+            className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-6 py-2 rounded-md transition-colors"
+          >
+            Edit Profile
+          </Button>
+        </div>
       </CardContent>
     </Card>
   );
 };
 
-// InfoItem Component
 const InfoItem: React.FC<{ title: string; value: string }> = ({
   title,
   value,
 }) => {
   return (
-    <div className="flex flex-row items-start sm:items-center justify-between rounded-lg border p-3 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors border-gray-200 dark:border-gray-700">
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 rounded-lg p-4 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
       <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
         {title}
       </p>
-      <p className="text-sm font-mono text-gray-900 dark:text-gray-100 break-all">
+      <p className="text-sm text-gray-900 dark:text-gray-100 break-all font-medium">
         {value}
       </p>
     </div>
   );
 };
 
-// Helper function to format nullable dates
 const formatDate = (date: Date | null | undefined): string => {
   return date ? new Date(date).toLocaleDateString() : "N/A";
 };

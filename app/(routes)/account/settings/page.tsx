@@ -4,7 +4,7 @@ import { SettingsForm } from "@/components/auth/user/settingsForm";
 
 const SettingsPage = () => {
   return (
-    <div className="flex h-screen items-center justify-center  ">
+    <div className=" items-center justify-center  ">
       {" "}
       <SettingsForm />
     </div>

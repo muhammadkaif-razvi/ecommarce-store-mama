@@ -25,12 +25,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCurrentUser } from "@/hooks/use-current-user";
+
 import { FormError } from "@/components/auth/form-error";
 import FormSuccess from "@/components/auth/form-success";
 import { UserRole } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
 export const SettingsForm = () => {
   const user = useCurrentUser();
@@ -63,9 +64,6 @@ export const SettingsForm = () => {
             setSuccess(data.success);
             update();
             form.reset();
-            setTimeout(() => {
-              router.push("/profile");
-            }, 2000);
           }
         })
         .catch(() => {
@@ -75,18 +73,18 @@ export const SettingsForm = () => {
   };
 
   return (
-    <Card className="w-full max-w-[600px] mx-auto bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700">
+    <Card className="w-full max-w-[600px] mx-auto bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-sm">
       <CardHeader></CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <div className="space-y-4">
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-900 dark:text-gray-100">
+                    <FormLabel className="text-gray-700 dark:text-gray-300">
                       Name
                     </FormLabel>
                     <FormControl>
@@ -94,10 +92,10 @@ export const SettingsForm = () => {
                         {...field}
                         disabled={isPending}
                         placeholder="Name"
-                        className="w-full bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100"
+                        className="w-full bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-red-500 dark:text-red-400" />
                   </FormItem>
                 )}
               />
@@ -108,8 +106,8 @@ export const SettingsForm = () => {
                     name="password"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-gray-900 dark:text-gray-100">
-                          Password
+                        <FormLabel className="text-gray-700 dark:text-gray-300">
+                          Current Password
                         </FormLabel>
                         <FormControl>
                           <Input
@@ -118,10 +116,10 @@ export const SettingsForm = () => {
                             disabled={isPending}
                             placeholder="********"
                             type="password"
-                            className="w-full bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100"
+                            className="w-full bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                           />
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className="text-red-500 dark:text-red-400" />
                       </FormItem>
                     )}
                   />
@@ -130,7 +128,7 @@ export const SettingsForm = () => {
                     name="newPassword"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="text-gray-900 dark:text-gray-100">
+                        <FormLabel className="text-gray-700 dark:text-gray-300">
                           New Password
                         </FormLabel>
                         <FormControl>
@@ -140,10 +138,10 @@ export const SettingsForm = () => {
                             disabled={isPending}
                             placeholder="********"
                             type="password"
-                            className="w-full bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100"
+                            className="w-full bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                           />
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className="text-red-500 dark:text-red-400" />
                       </FormItem>
                     )}
                   />
@@ -155,7 +153,7 @@ export const SettingsForm = () => {
                 name="role"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-900 dark:text-gray-100">
+                    <FormLabel className="text-gray-700 dark:text-gray-300">
                       Role
                     </FormLabel>
                     <Select
@@ -164,26 +162,26 @@ export const SettingsForm = () => {
                       value={field.value}
                     >
                       <FormControl>
-                        <SelectTrigger className="w-full bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
+                        <SelectTrigger className="w-full bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500">
                           <SelectValue placeholder="Select a role" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent className="bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
                         <SelectItem
                           value={UserRole.ADMIN}
-                          className="text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700"
+                          className="hover:bg-blue-50 dark:hover:bg-gray-700 focus:bg-blue-50 dark:focus:bg-gray-700"
                         >
                           Admin
                         </SelectItem>
                         <SelectItem
                           value={UserRole.USER}
-                          className="text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700"
+                          className="hover:bg-blue-50 dark:hover:bg-gray-700 focus:bg-blue-50 dark:focus:bg-gray-700"
                         >
                           User
                         </SelectItem>
                       </SelectContent>
                     </Select>
-                    <FormMessage />
+                    <FormMessage className="text-red-500 dark:text-red-400" />
                   </FormItem>
                 )}
               />
@@ -192,13 +190,13 @@ export const SettingsForm = () => {
                   control={form.control}
                   name="isTwoFactorEnabled"
                   render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700">
                       <div className="space-y-0.5">
-                        <FormLabel className="text-gray-900 dark:text-gray-100">
+                        <FormLabel className="text-gray-700 dark:text-gray-300">
                           Two Factor Authentication
                         </FormLabel>
-                        <FormDescription className="text-gray-600 dark:text-gray-400">
-                          Enable two factor authentication for your account.
+                        <FormDescription className="text-gray-500 dark:text-gray-400">
+                          Enable for enhanced account security
                         </FormDescription>
                       </div>
                       <FormControl>
@@ -206,7 +204,7 @@ export const SettingsForm = () => {
                           disabled={isPending}
                           checked={field.value}
                           onCheckedChange={field.onChange}
-                          className="data-[state=checked]:bg-purple-600 dark:data-[state=checked]:bg-purple-700"
+                          className="data-[state=checked]:bg-blue-600 data-[state=unchecked]:bg-gray-200 dark:data-[state=unchecked]:bg-gray-600"
                         />
                       </FormControl>
                     </FormItem>
@@ -216,13 +214,15 @@ export const SettingsForm = () => {
             </div>
             <FormError message={error} />
             <FormSuccess message={success} />
-            <Button
-              type="submit"
-              disabled={isPending}
-              className="w-full sm:w-auto bg-purple-600 hover:bg-purple-700 dark:bg-purple-700 dark:hover:bg-purple-800 text-white"
-            >
-              Save
-            </Button>
+            <div className="flex justify-end">
+              <Button
+                type="submit"
+                disabled={isPending}
+                className="bg-blue-600 hover:bg-blue-700 dark:bg-blue-700 dark:hover:bg-blue-800 text-white px-6 py-3 rounded-md transition-colors"
+              >
+                {isPending ? "Saving..." : "Save Changes"}
+              </Button>
+            </div>
           </form>
         </Form>
       </CardContent>
