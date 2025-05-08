@@ -11,11 +11,11 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { useCartStore } from "@/lib/store/cart"
 
 import type { Product } from "@/types"
 import { useRouter } from "next/navigation"
 import Currency from "./Currency"
+import { useCart } from "@/hooks/use-cart"
 
 export interface ProductCardProps {
   data: Product
@@ -23,12 +23,10 @@ export interface ProductCardProps {
 
 export const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
   const [quantity, setQuantity] = useState(1)
-  const { addItem } = useCartStore()
+  const { addItem, isSaving } = useCart();
   const router = useRouter();
-  // Get the first variant for pricing display
   const firstVariant = data.variants[0]
 
-  // Get the main product image, prioritizing product images if available
   const mainImage =
     data.variants[0]?.images[0]?.url || "/placeholder.svg?height=300&width=400" || data.images[0]?.url
 
@@ -76,21 +74,21 @@ export const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
           />
         </AspectRatio>
         <div className="absolute top-2 right-2 flex flex-col gap-1">
-          {data.isNewlaunch && (
+          {data.isNewlaunch == true && (
             <Badge className="bg-primary text-primary-foreground whitespace-nowrap text-xs px-2">
               New Launch
             </Badge>
           )}
-          {data.isBestseller && (
+          {data.isBestseller == true && (
             <Badge className="bg-amber-500 text-white whitespace-nowrap text-xs px-2">
               Bestseller
             </Badge>
           )}
-          {/* {data.isFeatured && (
+          {data.isFeatured == true && (
             <Badge className="bg-blue-500 text-white whitespace-nowrap text-xs px-2">
               Trending
             </Badge>
-          )} */}
+          )}
         </div>
       </div>
 
