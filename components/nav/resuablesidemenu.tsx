@@ -78,7 +78,6 @@ export const ResuableSideMenu: React.FC<MenubarProps> = ({
 
     router.push(url);
   };
-  console.log(subcategories)
   return (
     <Collapsible>
       <CollapsibleTrigger className="border-b w-full flex justify-between flex-row py-2">

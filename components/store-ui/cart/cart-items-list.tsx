@@ -3,12 +3,12 @@ import Image from 'next/image';
 export const CartItemList = (
   { items,
     removeItem,
-    isSaving,
+   
     updateQuantity
    }: {
     items: any[];
     removeItem: (id: string) => void;
-    isSaving: boolean;
+  
     updateQuantity: (id: string, quantity: number) => void;
   }
 ) => {
@@ -53,7 +53,7 @@ export const CartItemList = (
           <div className="flex items-center ml-auto">
             <button
               onClick={() => updateQuantity(item.id, item.quantity - 1)}
-              disabled={isSaving || item.quantity <= 1}
+              disabled={ item.quantity <= 1}
               className="px-2 py-1 border rounded disabled:opacity-50 hover:bg-gray-100"
             >
               -
@@ -61,14 +61,12 @@ export const CartItemList = (
             <span className="mx-2 w-8 text-center border rounded">{item.quantity}</span>
             <button
               onClick={() => updateQuantity(item.id, item.quantity + 1)}
-              disabled={isSaving}
               className="px-2 py-1 border rounded disabled:opacity-50 hover:bg-gray-100"
             >
               +
             </button>
             <button
               onClick={() => removeItem(item.id)}
-              disabled={isSaving}
               className="ml-4 text-red-600 hover:text-red-800 disabled:opacity-50"
             >
               Remove

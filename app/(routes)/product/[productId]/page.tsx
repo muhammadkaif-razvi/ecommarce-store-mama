@@ -20,7 +20,6 @@ const ProductPage: React.FC<ProductPageProps> = async ({
   const { productId } = await params;
 
   const varient = await getVarient(productId);
-
   const product = await getProduct(varient.product.id);
 
   const suggCategProducts = await getProducts({

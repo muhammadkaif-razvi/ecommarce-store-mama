@@ -24,6 +24,7 @@ export default async function DashHeader() {
   const ingredients = await getIngredients();
   const fragrance = await getFragrances();
   const firstTenIngredients = ingredients.slice(0, 12);
+  
   return (
     <header className="flex flex-col border-b bg-white fixed w-full z-10 shadow-md">
       <div className="flex flex-row justify-between items-center  lg:border-b  py-2 lg:py-4">

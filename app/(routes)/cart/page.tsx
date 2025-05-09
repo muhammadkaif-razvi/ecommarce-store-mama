@@ -11,13 +11,10 @@ import Link from 'next/link';
 const CartPage = () => {
   const {
     items,
-    isLoading,
-    isSaving,
+  
     error, removeItem, updateQuantity, clearCart } = useCart();
 
-  if (isLoading) {
-    return <div className="container mx-auto p-4">Loading cart...</div>;
-  }
+ 
 
   if (error) {
     return <div className="container mx-auto p-4 text-red-500">Error: {error}</div>;
@@ -52,7 +49,6 @@ const CartPage = () => {
 
   }
 
-  console.log(items)
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -67,9 +63,9 @@ const CartPage = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <CartItemList items={items}
           removeItem={removeItem}
-          updateQuantity={updateQuantity} isSaving={isSaving} />
+          updateQuantity={updateQuantity}  />
 
-        <SummaryTable totalItems={totalItems} totalPrice={totalPrice} clearCart={clearCart} isSaving={isSaving} items={items} />
+        <SummaryTable totalItems={totalItems} totalPrice={totalPrice} clearCart={clearCart}  items={items} />
       </div>
     </div>
   );
