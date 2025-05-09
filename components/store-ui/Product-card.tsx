@@ -4,7 +4,6 @@ import type React from "react"
 
 import { useState } from "react"
 import Image from "next/image"
-import Link from "next/link"
 import { Minus, Plus, ShoppingCart } from "lucide-react"
 
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
@@ -23,7 +22,7 @@ export interface ProductCardProps {
 
 export const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
   const [quantity, setQuantity] = useState(1)
-  const { addItem, isSaving } = useCart();
+  const { addItem } = useCart();
   const router = useRouter();
   const firstVariant = data.variants[0]
 
@@ -131,7 +130,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
               </Button>
             </div>
             <span className="text-sm font-medium">
-              ${firstVariant ? (firstVariant.price * quantity).toFixed(2) : "0.00"}
+              <Currency value={firstVariant ? firstVariant.price * quantity : 0} />
             </span>
           </div>
           <Button className="w-full" onClick={handleAddToCart} disabled={!firstVariant}>

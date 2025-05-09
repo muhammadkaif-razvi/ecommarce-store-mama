@@ -2,22 +2,22 @@
 // import ProductCard from "@/components/ui/product-card";
 // // import MobileFilters from "./components/mobille-filters";
 
-import getBodys from "@/actions/getdatafromAdmin/get-bodys";
+// import getBodys from "@/actions/getdatafromAdmin/get-bodys";
 import getCategory from "@/actions/getdatafromAdmin/get-category";
-import getCombos from "@/actions/getdatafromAdmin/get-combos";
-import getFaces from "@/actions/getdatafromAdmin/get-faces";
-import getFragrances from "@/actions/getdatafromAdmin/get-fragrance";
-import getHairs from "@/actions/getdatafromAdmin/get-hairs";
-import {getIngredients} from "@/actions/getdatafromAdmin/get-Ingredient";
-import getMakeups from "@/actions/getdatafromAdmin/get-makeups";
-import getPrices from "@/actions/getdatafromAdmin/get-prices";
+// import getCombos from "@/actions/getdatafromAdmin/get-combos";
+// import getFaces from "@/actions/getdatafromAdmin/get-faces";
+// import getFragrances from "@/actions/getdatafromAdmin/get-fragrance";
+// import getHairs from "@/actions/getdatafromAdmin/get-hairs";
+// import {getIngredients} from "@/actions/getdatafromAdmin/get-Ingredient";
+// import getMakeups from "@/actions/getdatafromAdmin/get-makeups";
+// import getPrices from "@/actions/getdatafromAdmin/get-prices";
 import {
   getProducts,
 } from "@/actions/getdatafromAdmin/get-products";
 
 import Billboard from "@/components/store-ui/billboard";
 import Container from "@/components/store-ui/container";
-import Currency from "@/components/store-ui/Currency";
+
 import NoResults from "@/components/store-ui/no-results";
 import { ProductCard } from "@/components/store-ui/Product-card";
 
@@ -64,14 +64,14 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
   });
 
   const category = await getCategory((await params).categoryId);
-  const faces = getFaces;
-  const hairs = getHairs;
-  const makeup = getMakeups;
-  const bodys = getBodys;
-  const combos = getCombos;
-  const ingredients = getIngredients;
-  const fragrance = getFragrances;
-  const price = getPrices;
+  // const faces = getFaces;
+  // const hairs = getHairs;
+  // const makeup = getMakeups;
+  // const bodys = getBodys;
+  // const combos = getCombos;
+  // const ingredients = getIngredients;
+  // const fragrance = getFragrances;
+  // const price = getPrices;
 
 
 
@@ -90,7 +90,7 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
                 <ProductCard key={item.id} data={item} />
               ))}
 
-              {/* <Currency value={varient.price} /> */}
+
             </div>
           )}
         </div>

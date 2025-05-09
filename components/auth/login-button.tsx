@@ -24,7 +24,7 @@ export const LoginButton: React.FC<LoginButtonProps> = ({
   if (mode === "modal") {
     return (
       <Dialog>
-        <DialogTrigger asChild={true} >
+        <DialogTrigger asChild={asChild} >
           {children}
         </DialogTrigger>
         <DialogHeader><DialogTitle></DialogTitle></DialogHeader>
