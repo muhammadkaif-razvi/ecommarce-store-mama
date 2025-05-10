@@ -1,18 +1,18 @@
+"use client"
+import { useCart } from '@/hooks/use-cart';
 import Image from 'next/image';
 
 export const CartItemList = (
-  { items,
+  { 
     removeItem,
-   
     updateQuantity
    }: {
-    items: any[];
     removeItem: (id: string) => void;
-  
     updateQuantity: (id: string, quantity: number) => void;
   }
 ) => {
  
+   const { items } = useCart();
 //  const fetchVariant = async(id: string) => {
 //     const variant = await getVarient(id);
 //     return variant;

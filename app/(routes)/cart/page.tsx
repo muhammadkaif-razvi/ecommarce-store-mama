@@ -5,7 +5,6 @@ import { CartItemList } from '@/components/store-ui/cart/cart-items-list';
 import { SummaryTable } from '@/components/store-ui/cart/summary-table';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/hooks/use-cart';
-import { clear } from 'console';
 import { ShoppingCart } from 'lucide-react';
 import Link from 'next/link';
 
@@ -65,7 +64,7 @@ const CartPage = () => {
 
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <CartItemList items={items}
+        <CartItemList 
           removeItem={removeItem}
           updateQuantity={updateQuantity} />
 

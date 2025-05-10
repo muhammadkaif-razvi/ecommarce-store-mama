@@ -30,12 +30,10 @@ import { FormError } from "@/components/auth/form-error";
 import FormSuccess from "@/components/auth/form-success";
 import { UserRole } from "@prisma/client";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { useCurrentUser } from "@/hooks/use-current-user";
 
 export const SettingsForm = () => {
   const user = useCurrentUser();
-  const router = useRouter();
   const { update } = useSession();
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();

@@ -50,6 +50,8 @@ const AddToCart: React.FC<Props> = ({ data }) => {
     }
   };
   const handleBuyNow = (e: React.MouseEvent) => {
+    e.preventDefault();
+
     router.push("/checkout");
   };
 
