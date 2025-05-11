@@ -28,7 +28,7 @@ interface CartState {
   clearCart: () => void;
 }
 
-const LOCAL_STORAGE_CART_KEY = "guestCart";
+const LOCAL_STORAGE_CART_KEY = process.env.CART_STORAGE_KEY || "cart";
 const MAX_DISTINCT_ITEMS = 8; // Limit for the number of different items
 const MAX_VARIANT_QUANTITY = 5; // Limit for the quantity of a single variant
 
