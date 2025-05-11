@@ -22,7 +22,7 @@ import { ProductCard } from "@/components/store-ui/Product-card";
 export const revalidate = 0;
 interface CategoryPageProps {
   params: { categoryId: string };
-  searchParams: {
+    searchParams: {
     faceId?: string;
     hairId?: string;
     makeupId?: string;
@@ -48,7 +48,7 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
     ingredientId,
     fragranceId,
     priceId,
-  } = await searchParams;
+  } =  searchParams;
   const products = await getProducts({
     categoryId: categoryId,
     faceId: faceId,
