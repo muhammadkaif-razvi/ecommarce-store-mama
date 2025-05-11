@@ -48,7 +48,7 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
     ingredientId,
     fragranceId,
     priceId,
-  } =  searchParams;
+  } =  await searchParams;
   const products = await getProducts({
     categoryId: categoryId,
     faceId: faceId,
