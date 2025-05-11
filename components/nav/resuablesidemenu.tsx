@@ -1,5 +1,6 @@
 "use client";
 import {
+  Body,
   Category,
   Combos,
   Face,
