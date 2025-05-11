@@ -1,5 +1,4 @@
 
-
 // import getBodys from "@/actions/getdatafromAdmin/get-bodys";
 import getCategory from "@/actions/getdatafromAdmin/get-category";
 // import getCombos from "@/actions/getdatafromAdmin/get-combos";
@@ -19,36 +18,37 @@ import Container from "@/components/store-ui/container";
 import NoResults from "@/components/store-ui/no-results";
 import { ProductCard } from "@/components/store-ui/Product-card";
 
-export const revalidate = 0;
+ export const revalidate = 0;
 interface CategoryPageProps  {
   params: Promise< {categoryId: string }>;
-    searchParams: {
-    faceId?: string;
-    hairId?: string;
-    makeupId?: string;
-    bodyId?: string;
-    combosId?: string;
-    ingredientId?: string;
-    fragranceId?: string;
-    priceId?: string;
-    categoryId?: string;
-  };
+    searchParams: Promise<{
+    faceId: string;
+    hairId: string;
+    makeupId: string;
+    bodyId: string;
+    combosId: string;
+    ingredientId: string;
+    fragranceId: string;
+    priceId: string;
+  }>;
 }
 const CategoryPage: React.FC<CategoryPageProps> = async ({
   params,
-  searchParams,
+  searchParams
 }) => {
   const { categoryId } = await params;
-  const {
-    faceId,
-    hairId,
-    makeupId,
-    bodyId,
-    combosId,
-    ingredientId,
-    fragranceId,
-    priceId,
-  } =  await searchParams;
+const {
+  faceId,
+  hairId,
+  makeupId,
+  bodyId,
+  combosId,
+  ingredientId,
+  fragranceId,
+  priceId,
+} = await searchParams;
+
+
   const products = await getProducts({
     categoryId: categoryId,
     faceId: faceId,
