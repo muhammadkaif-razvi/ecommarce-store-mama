@@ -54,7 +54,7 @@ const UserDropLinks: React.FC<UserDropLinksProps> = ({ user }) => {
                 }`}
               asChild
             >
-              <Link href="/account/order" className="w-full flex items-center">
+              <Link href="/account/orders" className="w-full flex items-center">
                 <Map className="mr-2 h-4 w-4 text-blue-600 dark:text-blue-400" />
                 Track Order
               </Link>

@@ -1,6 +1,4 @@
-// import Filter from "./components/filter";
-// import ProductCard from "@/components/ui/product-card";
-// // import MobileFilters from "./components/mobille-filters";
+
 
 // import getBodys from "@/actions/getdatafromAdmin/get-bodys";
 import getCategory from "@/actions/getdatafromAdmin/get-category";
@@ -23,7 +21,7 @@ import { ProductCard } from "@/components/store-ui/Product-card";
 
 export const revalidate = 0;
 interface CategoryPageProps {
-  params: Promise<{ categoryId: string }>;
+  params: { categoryId: string };
   searchParams: {
     faceId?: string;
     hairId?: string;
@@ -40,7 +38,7 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
   params,
   searchParams,
 }) => {
-  const { categoryId } = await params;
+  const { categoryId } =  params;
   const {
     faceId,
     hairId,
@@ -86,11 +84,7 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
             <div className="container mx-auto my-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4">
               {products.map((item) => (
                 <ProductCard key={item.id} data={item} />
-              ))}   {products.map((item) => (
-                <ProductCard key={item.id} data={item} />
               ))}
-
-
             </div>
           )}
         </div>
@@ -100,20 +94,4 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
 };
 
 export default CategoryPage;
-{
-  /* <div className="lg:grid lg:grid-cols-5 lg:gap-x-8">
-  <MobileFilters sizes={sizes} colors={colors} />{" "}
-  <div className="hidden lg:block">
-    <Filter valueKey="sizeId" name="Sizes" data={sizes} />{" "}
-    <Filter valueKey="colorId" name="Colors" data={colors} />
-  </div>
-  <div className="mt-6 lg:col-span-4 lg:mt-0">
-    {products.length === 0 && <NoResults />}
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      {products.map((item) => (
-        <ProductCard key={item.id} data={item} />
-      ))}
-    </div>
-  </div>
-</div>; */
-}
+
