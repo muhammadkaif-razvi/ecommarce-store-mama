@@ -20,8 +20,8 @@ import NoResults from "@/components/store-ui/no-results";
 import { ProductCard } from "@/components/store-ui/Product-card";
 
 export const revalidate = 0;
-interface CategoryPageProps {
-  params: { categoryId: string };
+interface CategoryPageProps  {
+  params: Promise< {categoryId: string }>;
     searchParams: {
     faceId?: string;
     hairId?: string;
@@ -48,7 +48,7 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
     ingredientId,
     fragranceId,
     priceId,
-  } = await searchParams;
+  } =  searchParams;
   const products = await getProducts({
     categoryId: categoryId,
     faceId: faceId,
@@ -61,7 +61,7 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
     priceId: priceId,
   });
 
-  const category = await getCategory(params.categoryId);
+  const category = await getCategory(categoryId);
   // const faces = getFaces;
   // const hairs = getHairs;
   // const makeup = getMakeups;
