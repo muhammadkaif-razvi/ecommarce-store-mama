@@ -38,7 +38,7 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
   params,
   searchParams,
 }) => {
-  const { categoryId } =  params;
+  const { categoryId } = await params;
   const {
     faceId,
     hairId,
@@ -48,7 +48,7 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
     ingredientId,
     fragranceId,
     priceId,
-  } =  searchParams;
+  } = await searchParams;
   const products = await getProducts({
     categoryId: categoryId,
     faceId: faceId,
@@ -61,7 +61,7 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
     priceId: priceId,
   });
 
-  const category = await getCategory((await params).categoryId);
+  const category = await getCategory(params.categoryId);
   // const faces = getFaces;
   // const hairs = getHairs;
   // const makeup = getMakeups;

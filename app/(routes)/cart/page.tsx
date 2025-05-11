@@ -12,9 +12,9 @@ const CartPage = () => {
   const {
     items,
     error,
-    removeItem, 
-    updateQuantity, 
-    
+    removeItem,
+    updateQuantity,
+
   } = useCart();
 
 
@@ -59,12 +59,13 @@ const CartPage = () => {
 
   return (
     <div className="container mx-auto p-4 mt-9 lg:mt-24">
-      <h1 className="lg:text-3xl text-xl font-bold mb-4 font-sans">Your Cart ({totalItems} items)</h1>
+      <h1 className="lg:text-3xl text-xl font-bold mb-4 font-sans">
+        Your Cart ({totalItems} items)</h1>
 
 
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <CartItemList 
+        <CartItemList
           removeItem={removeItem}
           updateQuantity={updateQuantity} />
 

@@ -1,78 +1,74 @@
-"use client"
+"use client";
+
+import { Button } from '@/components/ui/button';
 import { useCart } from '@/hooks/use-cart';
+import { Trash2 } from 'lucide-react';
 import Image from 'next/image';
 
-export const CartItemList = (
-  { 
-    removeItem,
-    updateQuantity
-   }: {
-    removeItem: (id: string) => void;
-    updateQuantity: (id: string, quantity: number) => void;
-  }
-) => {
- 
-   const { items } = useCart();
-//  const fetchVariant = async(id: string) => {
-//     const variant = await getVarient(id);
-//     return variant;
-//   };
-  
-  // console.log(fetchVariant(items[0].varientId))
-   
-  return (
-    <div className="md:col-span-2">
-      {items.map(item => (
-        <div key={item.id} className="flex items-center border-b py-4">
+export const CartItemList = ({
+  removeItem,
+  updateQuantity
+}: {
+  removeItem: (id: string) => void;
+  updateQuantity: (id: string, quantity: number) => void;
+}) => {
+  const { items } = useCart();
 
-          {item.image && (
-            <div className="w-16 h-16 relative mr-4 flex-shrink-0">
+  return (
+    <div className="md:col-span-2 space-y-6">
+      {items.map(item => (
+        <div
+          key={item.id}
+          className="flex flex-col md:flex-row items-center md:items-start gap-4 border rounded-lg p-4 shadow-sm transition hover:shadow-md bg-white"
+        >
+          {item.image ? (
+            <div className="w-24 h-24 relative flex-shrink-0 rounded overflow-hidden border">
               <Image
-                src={item.image }
+                src={item.image}
                 alt={item.name || 'Product image'}
                 fill
-                style={{ objectFit: 'cover' }}
-                className="rounded"
-                sizes="64px" 
+                className="object-cover"
+                sizes="96px"
               />
             </div>
-          )}
-          {!item.image && (
-            <div className="w-16 h-16 bg-gray-200 rounded mr-4 flex items-center justify-center text-gray-500 text-sm flex-shrink-0">
+          ) : (
+            <div className="w-24 h-24 bg-gray-100 rounded flex items-center justify-center text-gray-500 text-sm">
               No Image
             </div>
           )}
 
-          <div className="flex-grow">
-            <h3 className="font-semibold">{item.name}</h3>
-            {item.variantName && <p className="text-gray-600 text-sm">{item.variantName}</p>}
-            {item.variantQuantity && <p className="text-gray-500 text-xs">{item.variantQuantity}</p>}
-            <p className="text-gray-700 mt-1">${item.price}</p>
+          <div className="flex flex-col flex-grow space-y-1">
+            <h3 className="font-semibold text-lg text-gray-800">{item.name}</h3>
+            {item.variantName && <p className="text-sm text-gray-600">{item.variantName}</p>}
+            {item.variantQuantity && <p className="text-xs text-gray-500">{item.variantQuantity}</p>}
+            <p className="text-sm text-gray-700 font-medium">${item.price}</p>
           </div>
 
-          <div className="flex items-center ml-auto">
-            <button
+          <div className="flex items-center gap-2 md:ml-auto mt-2 md:mt-0">
+            <Button
               onClick={() => updateQuantity(item.id, item.quantity - 1)}
-              disabled={ item.quantity <= 1}
-              className="px-2 py-1 border rounded disabled:opacity-50 hover:bg-gray-100"
+              disabled={item.quantity <= 1}
+              className="w-8 h-8 rounded-full text-lg border border-gray-300 hover:bg-gray-100 disabled:opacity-50"
             >
               -
-            </button>
-            <span className="mx-2 w-8 text-center border rounded">{item.quantity}</span>
-            <button
+            </Button>
+            <span className="w-10 text-center text-sm font-medium">{item.quantity}</span>
+            <Button
               onClick={() => updateQuantity(item.id, item.quantity + 1)}
-              className="px-2 py-1 border rounded disabled:opacity-50 hover:bg-gray-100"
+              className="w-8 h-8 rounded-full text-lg border border-gray-300 hover:bg-gray-100"
             >
               +
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => removeItem(item.id)}
-              className="ml-4 text-red-600 hover:text-red-800 disabled:opacity-50"
+              variant="ghost"
+              className="text-red-600 hover:text-red-800 p-2"
             >
-              Remove
-            </button>
+              <Trash2 className="h-5 w-5" />
+            </Button>
           </div>
         </div>
       ))}
-    </div>)
-}
+    </div>
+  );
+};

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { DialogTrigger } from "@radix-ui/react-dialog";
 import { LoginForm } from "./LoginForm";
+import { Button } from "../ui/button";
 
 interface LoginButtonProps {
   children: React.ReactNode;
@@ -24,8 +25,8 @@ export const LoginButton: React.FC<LoginButtonProps> = ({
   if (mode === "modal") {
     return (
       <Dialog>
-        <DialogTrigger asChild={asChild} >
-          {children}
+        <DialogTrigger asChild={asChild} className="w-full bg-blue-400 rounded-sm py-2 font-sans" >
+        {children}
         </DialogTrigger>
         <DialogHeader><DialogTitle></DialogTitle></DialogHeader>
         <DialogContent className="p-0 w-auto bg-transparent border-none">
