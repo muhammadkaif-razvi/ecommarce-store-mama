@@ -3,7 +3,7 @@ import React from 'react';
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from 'next/navigation';
-import { User, ListChecks, Settings } from 'lucide-react';
+import { User, Settings } from 'lucide-react';
 import { Separator } from '../ui/separator';
 
 interface AccountSelectorItemProps {
