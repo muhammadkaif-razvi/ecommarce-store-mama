@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { DialogTrigger } from "@radix-ui/react-dialog";
-import { LoginForm } from "./LoginForm";
+import { LoginForm } from "./LoginForm-checkout";
 
 interface LoginButtonProps {
   children: React.ReactNode;
