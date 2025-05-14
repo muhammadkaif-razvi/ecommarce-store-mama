@@ -41,7 +41,7 @@ export const CartItemList = ({
             <h3 className="font-semibold text-lg text-gray-800">{item.name}</h3>
             {item.variantName && <p className="text-sm text-gray-600">{item.variantName}</p>}
             {item.variantQuantity && <p className="text-xs text-gray-500">{item.variantQuantity}</p>}
-            <p className="text-sm text-gray-700 font-medium">${item.price}</p>
+            <p className="text-sm text-gray-700 font-medium">₹{item.price}</p>
           </div>
 
           <div className="flex items-center gap-2 md:ml-auto mt-2 md:mt-0">

@@ -55,7 +55,7 @@ export const AccountSlelector = () => {
 
   const items = [
     { label: 'Profile', href: '/account/profile', icon: <User className="w-full h-full" /> },
-    { label: 'Orders', href: '/account/orders', icon: <ListChecks className="w-full h-full" /> },
+    // { label: 'Orders', href: '/account/orders', icon: <ListChecks className="w-full h-full" /> },
     { label: 'Settings', href: '/account/settings', icon: <Settings className="w-full h-full" /> },
   ];
 

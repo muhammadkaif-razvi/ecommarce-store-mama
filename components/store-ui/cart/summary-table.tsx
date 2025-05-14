@@ -38,11 +38,10 @@ export const SummaryTable = (
         {
           variantIds: items.map((item) => item.id),
           quantities: items.map((item) => item.quantity),
-          id: user.id,
-          name: user.name,
+          id:    user.id,
+          name:  user.name,
           email: user.email,
           phone: user.phonenumber,
-          address: "vatte pally ,hyderabad telengana",
         }
       );
 

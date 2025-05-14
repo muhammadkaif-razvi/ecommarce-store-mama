@@ -99,3 +99,29 @@ export interface Price {
   id: string;
   name: string;
 }
+
+export interface Order {
+  id: string;
+  storeId: string;
+  customerId: string;
+  createdAt: Date;
+  updatedAt: Date;
+
+  orderItems: {
+    id: string;
+    orderId: string;
+    variantId: string;
+    quantity: number;
+    createdAt: Date;
+    updatedAt: Date;
+    status: string;
+   varient:Variant[];
+  }[];
+
+  customer: {
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+  };
+};
