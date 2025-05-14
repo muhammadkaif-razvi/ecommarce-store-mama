@@ -10,8 +10,13 @@ export function ModeToggle() {
   const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
+    
     setMounted(true);
-  }, []);
+
+    if (theme !== "light") {
+      setTheme("light");
+    }
+  }, [setTheme, theme]); 
 
   const toggleTheme = () => {
     if (theme === "system" || theme === "dark") {
