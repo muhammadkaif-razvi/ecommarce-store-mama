@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useCart } from '@/hooks/use-cart';
 import { Trash2 } from 'lucide-react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export const CartItemList = ({
   removeItem,
@@ -13,11 +14,13 @@ export const CartItemList = ({
   updateQuantity: (id: string, quantity: number) => void;
 }) => {
   const { items } = useCart();
+  const router = useRouter();
 
   return (
     <div className="md:col-span-2 space-y-6">
       {items.map(item => (
         <div
+        onClick={() => router.push(`/product/${item.id}`)}
           key={item.id}
           className="flex flex-col md:flex-row items-center md:items-start gap-4 border rounded-lg p-4 shadow-sm transition hover:shadow-md bg-white"
         >
@@ -39,7 +42,7 @@ export const CartItemList = ({
 
           <div className="flex flex-col flex-grow space-y-1">
             <h3 className="font-semibold text-lg text-gray-800">{item.name}</h3>
-            {item.variantName && <p className="text-sm text-gray-600">{item.variantName}</p>}
+            {item.variantName && <p className="text-sm text-gray-600 hover:underline">{item.variantName}</p>}
             {item.variantQuantity && <p className="text-xs text-gray-500">{item.variantQuantity}</p>}
             <p className="text-sm text-gray-700 font-medium">₹{item.price}</p>
           </div>

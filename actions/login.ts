@@ -79,9 +79,9 @@ export const login = async (
     await signIn("credentials", {
       emailOrPhone: existingUser.email || existingUser.phonenumber,
       password,
-      redirectTo:  callbackUrl || DEFAULT_REDIRECT_URL,
+       redirectTo:  callbackUrl || DEFAULT_REDIRECT_URL,
     });
-
+    
     return { success: " Logging in shortly..."  };
   } catch (error) {
     if (error instanceof AuthError) {

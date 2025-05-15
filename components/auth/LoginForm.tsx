@@ -58,11 +58,13 @@ export const LoginForm = () => {
           setError(data.error);
         }
         if (data?.success) {
+          location.reload();
           update();
           form.reset();
           setSuccess(data.success);
         }
         if (data?.twoFactor) {
+          location.reload();
           update();
           setSuccess("Code sent to your email");
           setShowTwoFactor(true);

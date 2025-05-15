@@ -1,4 +1,4 @@
-import { LoginButton } from "@/components/auth/login-button";
+
 import { Button } from "@/components/ui/button";
 import { useCurrentUser } from "@/hooks/use-current-user";
 
@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import axios from "axios";
 import { useCart } from "@/hooks/use-cart";
 import Currency from "../Currency";
+import Link from "next/link";
 
 export const SummaryTable = (
   { totalPrice,
@@ -38,8 +39,8 @@ export const SummaryTable = (
         {
           variantIds: items.map((item) => item.id),
           quantities: items.map((item) => item.quantity),
-          id:    user.id,
-          name:  user.name,
+          id: user.id,
+          name: user.name,
           email: user.email,
           phone: user.phonenumber,
         }
@@ -81,13 +82,9 @@ export const SummaryTable = (
         </Button>
       ) :
         (
-          <LoginButton mode="modal" >
 
-            ˗ˏˋ⚡︎ˎˊ˗ Continue
-
-
-
-          </LoginButton>
+          <Link href="/login" >
+            <Button onClick={() => {location.reload() }} className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 disabled:opacity-50 font-sans">˗ˏˋ⚡︎ˎˊ˗ Continue</Button></Link>
         )}
 
 

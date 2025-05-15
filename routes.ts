@@ -27,4 +27,4 @@ export const authRoutes = [
 ];
 
 export const apiAuthPrefix = "/api/auth"; // Auth API prefix
-export const DEFAULT_REDIRECT_URL = "/"; // Default redirect URL
+export const DEFAULT_REDIRECT_URL = "/cart"; // Default redirect URL

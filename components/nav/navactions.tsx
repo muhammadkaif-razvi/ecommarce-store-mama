@@ -1,7 +1,7 @@
 "use client";
 import { ShoppingCart } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CiUser } from "react-icons/ci";
 import HeadderUser from "../user/headder-user";
 import { useCurrentUser } from "@/hooks/use-current-user";
@@ -10,7 +10,13 @@ import { useCartStore } from "@/lib/store/cart";
 export const NavAction = () => {
   const user = useCurrentUser();
   const router = useRouter();
-    const { items } = useCartStore();
+  const { items } = useCartStore();
+  const [showLogin, setShowLogin] = useState(false);
+
+  useEffect(() => {
+    setShowLogin(!user);
+  }, [user]);
+
   return (
     <div className=" lg:px-36 flex flex-row items-center justify-between lg:space-x-7 md:space-x-5 space-x-3 md:px-8 px-3 ">
       <div className="relative" onClick={() => router.push("/cart")}>
@@ -26,7 +32,7 @@ export const NavAction = () => {
         <HeadderUser />
       ) : (
         <div
-          className="flex flex-row items-center gap-2 cursor-pointer"
+          className={`flex flex-row items-center gap-2 cursor-pointer ${showLogin ? '' : 'hidden'}`}
           onClick={() => router.push("/login")}
         >
           <CiUser size={20} className="text-blue-600 h-6 w-6" />
