@@ -1,7 +1,7 @@
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 import GitHub from "next-auth/providers/github";
-import { NextAuthConfig } from "next-auth";
+import { NextAuthConfig, User } from "next-auth";
 import { LoginSchema } from "@/schemas";
 import { getUserByEmailOrPhone } from "@/data/user";
 import bcrypt from "bcryptjs";
@@ -40,17 +40,19 @@ export const authConfig: NextAuthConfig = {
             return null;
           const passwordMatch = await bcrypt.compare(password, user.password);
 
-          if (passwordMatch){  return {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            image: user.image,
-            phonenumber: user.phonenumber ?? undefined,  
-            emailVerified: user.emailVerified,
-            phoneNumberVerified: user.phoneNumberVerified,
-            role: user.role,
-            isTwoFactorEnabled: user.isTwoFactorEnabled,
-          };};
+          if (passwordMatch) {
+            return {
+              id: user.id,
+              name: user.name ?? undefined,
+              email: user.email,
+              image: user.image,
+              phonenumber: user.phonenumber ?? undefined,
+              emailVerified: user.emailVerified,
+              phoneNumberVerified: user.phoneNumberVerified,
+              role: user.role,
+              isTwoFactorEnabled: user.isTwoFactorEnabled,
+            };
+          }
         }
 
         return null;
