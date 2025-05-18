@@ -5,7 +5,6 @@ import { Plus, Minus, ShoppingCart } from "lucide-react";
 import Currency from "./Currency"; // Assuming this is in a relative path
 import { Variant } from "@/types"; // Adjust the path if needed
 import { LightningBoltIcon } from '@radix-ui/react-icons';
-import { useRouter } from 'next/navigation';
 import axios from "axios"
 import { useCart } from '@/hooks/use-cart';
 import { useCurrentUser } from '@/hooks/use-current-user';
