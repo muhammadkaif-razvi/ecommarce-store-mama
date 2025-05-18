@@ -15,17 +15,22 @@ export const CartItemList = ({
 }) => {
   const { items } = useCart();
   const router = useRouter();
+  const onClick = (id: string) => {
+    router.push(`/product/${id}`);
+  }
 
   return (
     <div className="md:col-span-2 space-y-6">
       {items.map(item => (
         <div
-        onClick={() => router.push(`/product/${item.id}`)}
+
           key={item.id}
           className="flex flex-col md:flex-row items-center md:items-start gap-4 border rounded-lg p-4 shadow-sm transition hover:shadow-md bg-white"
         >
           {item.image ? (
-            <div className="w-24 h-24 relative flex-shrink-0 rounded overflow-hidden border">
+            <div
+              onClick={() => onClick(item.id)}
+              className="w-24 h-24 relative flex-shrink-0 rounded overflow-hidden border">
               <Image
                 src={item.image}
                 alt={item.name || 'Product image'}
@@ -41,8 +46,12 @@ export const CartItemList = ({
           )}
 
           <div className="flex flex-col flex-grow space-y-1">
-            <h3 className="font-semibold text-lg text-gray-800">{item.name}</h3>
-            {item.variantName && <p className="text-sm text-gray-600 hover:underline">{item.variantName}</p>}
+            <h3
+              onClick={() => onClick(item.id)}
+
+              className="font-semibold text-lg text-gray-800">{item.name}</h3>
+            {item.variantName && <p onClick={() => onClick(item.id)}
+              className="text-sm text-gray-600 hover:underline">{item.variantName}</p>}
             {item.variantQuantity && <p className="text-xs text-gray-500">{item.variantQuantity}</p>}
             <p className="text-sm text-gray-700 font-medium">₹{item.price}</p>
           </div>

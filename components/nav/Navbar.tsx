@@ -47,6 +47,7 @@ export const Navbar = () => {
             alt="logo"
             width={170}
             height={60}
+            className="max-w-[120px] sm:max-w-[170px] h-auto sm:h-auto"
           />
         </Link>
 

@@ -14,7 +14,7 @@ export const protectedRoutes = [
   "/profile",
   "/new-verification",
   "/settings",
-  "/platform-setup",
+
   
 ];
 

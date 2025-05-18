@@ -4,17 +4,18 @@ import type React from "react"
 
 import { useState } from "react"
 import Image from "next/image"
-import { Minus, Plus, ShoppingCart } from "lucide-react"
+import { Minus, Plus, ShoppingCart, Bolt } from "lucide-react"
 
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-
+import axios from "axios"
 import type { Product } from "@/types"
 import { useRouter } from "next/navigation"
 import Currency from "./Currency"
 import { useCart } from "@/hooks/use-cart"
+import { useCurrentUser } from "@/hooks/use-current-user"
 
 export interface ProductCardProps {
   data: Product
@@ -22,9 +23,10 @@ export interface ProductCardProps {
 
 export const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
   const [quantity, setQuantity] = useState(1)
-  const { addItem } = useCart();
-  const router = useRouter();
+  const { addItem } = useCart()
+  const router = useRouter()
   const firstVariant = data.variants[0]
+  const user = useCurrentUser()
 
   const mainImage =
     data.variants[0]?.images[0]?.url || "/placeholder.svg?height=300&width=400" || data.images[0]?.url
@@ -56,13 +58,35 @@ export const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
     }
   }
 
-  return (
-    <Card
-      className="h-full overflow-hidden transition-all duration-200 hover:shadow-md w-full ">
-      <div
-        onClick={() => router.push(`/product/${firstVariant.id}`)}
+  const handleBuyNow = async () => {
+    if (!user) {
+      handleAddToCart({ preventDefault: () => { } } as React.MouseEvent)
+      window.location.href = "/login" // Replace "/login" with your actual login page URL
+      return // Stop the function execution
+    }
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
+        {
+          variantIds: [firstVariant.id],
+          quantities: [quantity],
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          phone: user.phonenumber,
+        }
+      )
 
-        className="relative">
+      window.location.href = response.data.url
+    } catch (error) {
+      console.error("Checkout failed:", error)
+      alert("Failed to start checkout.")
+    }
+  }
+
+  return (
+    <Card className="h-full overflow-hidden transition-all duration-200 hover:shadow-md w-full ">
+      <div onClick={() => router.push(`/product/${firstVariant.id}`)} className="relative">
         <AspectRatio ratio={3 / 3}>
           <Image
             src={mainImage || "/placeholder.svg"}
@@ -83,11 +107,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
               Bestseller
             </Badge>
           )}
-          {data.isFeatured == true && (
-            <Badge className="bg-blue-500 text-white whitespace-nowrap text-xs px-2">
-              Trending
-            </Badge>
-          )}
         </div>
       </div>
 
@@ -106,34 +125,34 @@ export const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
       </CardContent>
 
       <CardFooter className="p-4 pt-0">
-        <div className="w-full">
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center border rounded-md">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-4 w-4 md:h-6 md:w-6 rounded-none rounded-l-md"
-                onClick={decrementQuantity}
-                disabled={quantity <= 1}
-              >
-                <Minus className="h-3 w-3" />
-              </Button>
-              <span className="w-8 text-center">{quantity}</span>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-4 w-4 md:h-6 md:w-6 rounded-none rounded-r-md"
-                onClick={incrementQuantity}
-                disabled={!firstVariant || quantity >= 10}
-              >
-                <Plus className="h-3 w-3" />
-              </Button>
-            </div>
-            <span className="text-sm font-medium">
-              <Currency value={firstVariant ? firstVariant.price * quantity : 0} />
-            </span>
-          </div>
-          <Button className="w-full" onClick={handleAddToCart} disabled={!firstVariant}>
+      
+        <div className="flex flex-col items-center justify-between gap-2 w-full">
+            <div className="flex items-center border rounded-md  sm:w-auto">
+          <Button
+            variant={"ghost"}
+            size="icon"
+            className="h-8 w-8 md:h-6 md:w-6 rounded-none rounded-l-md"
+            onClick={decrementQuantity}
+            disabled={quantity <= 1}
+          >
+            <Minus className="h-4 w-4" />
+          </Button>
+          <span className="w-8 text-center text-sm">{quantity}</span>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8 md:h-6 md:w-6 rounded-none rounded-r-md"
+            onClick={incrementQuantity}
+            disabled={!firstVariant || quantity >= 10}
+          >
+            <Plus className="h-4 w-4" />
+          </Button>
+        </div>
+          <Button className="w-full  text-sm font-medium flex items-center justify-center " onClick={handleBuyNow}>
+            <Bolt className="mr-2 h-4 w-4" />
+            Buy Now
+          </Button>
+          <Button className="w-full  text-sm flex items-center justify-center" onClick={handleAddToCart} disabled={!firstVariant}>
             <ShoppingCart className="mr-2 h-4 w-4" />
             Add to Cart
           </Button>

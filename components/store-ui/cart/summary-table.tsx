@@ -84,7 +84,7 @@ export const SummaryTable = (
         (
 
           <Link href="/login" >
-            <Button onClick={() => {location.reload() }} className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 disabled:opacity-50 font-sans">˗ˏˋ⚡︎ˎˊ˗ Continue</Button></Link>
+            <Button  className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 disabled:opacity-50 font-sans">˗ˏˋ⚡︎ˎˊ˗ Continue</Button></Link>
         )}
 
 

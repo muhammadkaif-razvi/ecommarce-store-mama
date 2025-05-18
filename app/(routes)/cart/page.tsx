@@ -5,8 +5,12 @@ import { CartItemList } from '@/components/store-ui/cart/cart-items-list';
 import { SummaryTable } from '@/components/store-ui/cart/summary-table';
 import { Button } from '@/components/ui/button';
 import { useCart } from '@/hooks/use-cart';
+import { useCurrentUser } from '@/hooks/use-current-user';
 import { ShoppingCart } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 const CartPage = () => {
   const {
@@ -17,6 +21,20 @@ const CartPage = () => {
 
   } = useCart();
 
+  const user = useCurrentUser();
+  const { update } = useSession()
+  const router = useRouter()
+   useEffect(() => {
+    if (!user) {
+      update()
+    }
+  }, [user])
+
+  useEffect(() => {
+    if (user && items.length === 0) {
+      router.push('/'); 
+    }
+  }, [user, items, router]);
 
 
   if (error) {

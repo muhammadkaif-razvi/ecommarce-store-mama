@@ -25,7 +25,7 @@ import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { AuthWrapper } from "@/components/auth/AuthWrapper";
 import { login } from "@/actions/login";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 export const LoginForm = () => {
@@ -48,7 +48,7 @@ export const LoginForm = () => {
       password: "",
     },
   });
-
+  const router = useRouter()
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     setError("");
     setSuccess("");
@@ -58,14 +58,16 @@ export const LoginForm = () => {
           setError(data.error);
         }
         if (data?.success) {
-          location.reload();
           update();
           form.reset();
+          router.refresh()
           setSuccess(data.success);
         }
         if (data?.twoFactor) {
           location.reload();
           update();
+          router.refresh()
+
           setSuccess("Code sent to your email");
           setShowTwoFactor(true);
         }

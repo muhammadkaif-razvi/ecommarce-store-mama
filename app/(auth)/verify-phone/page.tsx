@@ -14,7 +14,7 @@ const VerifyPhonePage = () => {
 
   useEffect(() => {
     if (user?.phoneNumberVerified) {
-      router.push("/platform-setup");
+      router.push("/cart");
     }
   }, [user?.phoneNumberVerified, router]);
 

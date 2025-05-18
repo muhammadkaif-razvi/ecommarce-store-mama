@@ -4,24 +4,23 @@ import { Button } from "@/components/ui/button";
 import { Plus, Minus, ShoppingCart } from "lucide-react";
 import Currency from "./Currency"; // Assuming this is in a relative path
 import { Variant } from "@/types"; // Adjust the path if needed
-import { useCartStore } from '@/lib/store/cart';
 import { LightningBoltIcon } from '@radix-ui/react-icons';
 import { useRouter } from 'next/navigation';
+import axios from "axios"
+import { useCart } from '@/hooks/use-cart';
+import { useCurrentUser } from '@/hooks/use-current-user';
 
 interface Props {
   data: Variant;
 }
 
 const AddToCart: React.FC<Props> = ({ data }) => {
-  const router = useRouter();
   const [quantity, setQuantity] = useState(1);
-  const { addItem } = useCartStore();
+  const { addItem } = useCart();
+  const user = useCurrentUser();
 
-  // Get the first variant for pricing display
   const firstVariant = data;
-
-  // Get the main product image.  Adjust this logic as needed.
-  const mainImage = data?.images?.[0]?.url || "/placeholder.svg?height=300&width=400"; //Added a check
+  const mainImage = data?.images?.[0]?.url || "/placeholder.svg?height=300&width=400";
 
   const incrementQuantity = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -49,11 +48,37 @@ const AddToCart: React.FC<Props> = ({ data }) => {
       });
     }
   };
-  const handleBuyNow = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const handleBuyNow = async () => {
+    if (!user) {
+      handleAddToCart({ preventDefault: () => { } } as React.MouseEvent);
+      window.location.href = "/login"; // Replace "/login" with your actual login page URL
+      return; // Stop the function execution
+    }
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
+        {
+          variantIds: [firstVariant.id],
+          quantities: [quantity],
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          phone: user.phonenumber,
+        }
+      );
 
-    router.push("/checkout");
+      window.location.href = response.data.url;
+    } catch (error) {
+      console.error("Checkout failed:", error);
+      alert("Failed to start checkout.");
+    }
   };
+
+
+
+
+
+
 
   return (
     <div className="w-full max-w-[350px] max-h-[250px] border p-3  rounded-lg shadow-lg lg:mt-14 md:mt-10 mt-8">
@@ -101,7 +126,7 @@ const AddToCart: React.FC<Props> = ({ data }) => {
       </Button>
       <Button
         className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded flex items-center justify-center my-2"
-        onClick={handleBuyNow} 
+        onClick={handleBuyNow}
       >
         <LightningBoltIcon className="mr-2 h-4 w-4" />
         Buy Now
