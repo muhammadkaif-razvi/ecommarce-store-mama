@@ -13,6 +13,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import { useTheme } from "next-themes"
 
 interface ProductListProps {
   title: string
@@ -20,7 +21,19 @@ interface ProductListProps {
   className?: string
 }
 
+
+
 const ProductList: React.FC<ProductListProps> = ({ title, items, className }) => {
+    const { theme, setTheme } = useTheme();
+  React.useEffect(() => {
+    
+
+    if (theme !== "light") {
+      setTheme("light");
+    }
+  }, [setTheme, theme]);
+
+
   if (items.length === 0) {
     return (
       <div className={cn("space-y-4", className)}>
