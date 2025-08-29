@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useState } from "react"
 import Image from "next/image"
-import { Minus, Plus, ShoppingCart, Bolt } from "lucide-react"
+import { Minus, Plus, Bolt, ShoppingBag } from "lucide-react"
 
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
@@ -153,7 +153,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
             Buy Now
           </Button>
           <Button className="w-full  text-sm flex items-center justify-center" onClick={handleAddToCart} disabled={!firstVariant}>
-            <ShoppingCart className="mr-2 h-4 w-4" />
+            <ShoppingBag className="mr-2 h-4 w-4" />
             Add to Cart
           </Button>
         </div>

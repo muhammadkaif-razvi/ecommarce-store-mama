@@ -23,7 +23,7 @@ const HeadderUser = () => {
             <div className="flex flex-row space-x-2 items-center px-2">
               {/* usr avtar */}
               <UserAvtar name={user?.name} image={user?.image} 
-              />{" "}
+              />
               <div className="lg:block hidden">
                 <div className=" flex-1 grid text-left text-sm min-w-0 text-muted-foreground dark:text-slate-400">
                   <span className="truncate font-semibold dark:text-slate-100">

@@ -10,9 +10,9 @@ import { Toaster } from "@/components/ui/sonner";
 
 
 export const metadata: Metadata = {
-  title: "Mamaearth Natural Skin & Hair Care Products",
+  title: "Mamaearth clone Natural Skin & Hair Care Products",
 
-  description: " Mamaearth Natural Skin & Hair Care Products",
+  description: " Mamaearth clone Natural Skin & Hair Care Products",
 };
 
 export default async function RootLayout({
